@@ -25,7 +25,7 @@ const SHEET_RSVP      = process.env.SHEET_NAME    || 'rsvp';
 const SHEET_TAMU      = process.env.SHEET_TAMU    || 'tamu';
 const SHEET_COMMENT   = process.env.SHEET_COMMENT || 'comment';
 const GEMINI_API_KEY  = process.env.GEMINI_API_KEY || '';
-const GEMINI_MODEL    = process.env.GEMINI_MODERATION_MODEL || 'gemini-3.8-flash';
+const GEMINI_MODEL    = process.env.GEMINI_MODEL || process.env.GEMINI_MODERATION_MODEL || 'gemini-3.1-flash-lite';
 const ALLOW_LOCAL_COMMENT_STORE = process.env.ALLOW_LOCAL_COMMENT_STORE === 'true';
 const BASE_URL        = process.env.BASE_URL    || `http://localhost:${PORT}`;
 const TOKEN_SECRET    = process.env.TOKEN_SECRET || 'ganti-dengan-secret-yang-kuat';
