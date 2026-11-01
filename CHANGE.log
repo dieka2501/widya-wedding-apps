@@ -24,3 +24,8 @@
 - Menambahkan logo monogram Andi & Widya berbasis SVG di opening dan penutup, serta mengganti halaman terakhir dengan ilustrasi placeholder tanpa foto.
 - Menjadikan bahasa Inggris sebagai bahasa default undangan, menambahkan toggle EN/ID, dan menerjemahkan konten serta pesan dinamis di halaman tamu.
 - Memindahkan lokasi contoh dari Bandung ke Taman Arunika di Sleman, Yogyakarta, termasuk alamat, rute peta, footer, dan ringkasan lokasi admin.
+- Menghapus status akses akad dari backend, form admin, dan RSVP; token baru tidak lagi membawa flag akad, sementara token lama tetap diterima.
+- Menyesuaikan tab `tamu` ke skema Nama, Kuota Tamu, WhatsApp, Token, dan Link; impor serta edit tamu memakai kolom B sebagai kuota.
+- Mengaitkan token dengan nama dan kuota tamu, menampilkan pilihan jumlah hadir sesuai kuota, dan memvalidasi batas tersebut di server.
+- Menyederhanakan pencatatan RSVP di tab `rsvp` menjadi token, nama, respons, jumlah hadir, WhatsApp, pesan, dan waktu submit.
+- Menambahkan hapus per tamu dan reset semua yang menyinkronkan penghapusan ke JSON serta tab `tamu`/`rsvp` di Google Sheets bila terhubung; header sheet dipertahankan dan kegagalan sinkronisasi membatalkan penghapusan lokal.

@@ -575,11 +575,6 @@
                 <label class="form-label" for="rsvp-count" data-en="Number of guests attending" data-id="Jumlah orang yang datang">Jumlah orang yang datang</label>
                 <select class="form-select" id="rsvp-count">
                   <option value="" data-en="Choose a number" data-id="Pilih jumlah">Pilih jumlah</option>
-                  <option value="1" data-en="1 person" data-id="1 orang">1 orang</option><option value="2" data-en="2 people" data-id="2 orang">2 orang</option>
-                  <option value="3" data-en="3 people" data-id="3 orang">3 orang</option><option value="4" data-en="4 people" data-id="4 orang">4 orang</option>
-                  <option value="5" data-en="5 people" data-id="5 orang">5 orang</option><option value="6" data-en="6 people" data-id="6 orang">6 orang</option>
-                  <option value="7" data-en="7 people" data-id="7 orang">7 orang</option><option value="8" data-en="8 people" data-id="8 orang">8 orang</option>
-                  <option value="9" data-en="9 people" data-id="9 orang">9 orang</option><option value="10" data-en="10 people" data-id="10 orang">10 orang</option>
                 </select>
               </div>
             </div>
@@ -697,7 +692,8 @@
 const params = new URLSearchParams(window.location.search);
 const TOKEN = params.get('token');
 const eventDate = new Date('2027-03-20T15:00:00+07:00').getTime();
-let guestHasAkad = false;
+const PUBLIC_GUEST_COUNT_CHOICES = 10;
+let guestAllowedCount = PUBLIC_GUEST_COUNT_CHOICES;
 let currentLanguage = 'en';
 let currentGuestName = '';
 let lastRsvpResponse = null;
@@ -714,10 +710,11 @@ const UI_COPY = {
     invitationFor: 'Invitation for',
     guestDefault: 'Guest of Honor',
     eventPassed: 'Our special day has arrived.',
-    rsvpTokenNeeded: 'RSVP submissions will be available once personal invitation tokens are set up.',
+    rsvpTokenNeeded: 'Please use your personal invitation link to submit your RSVP.',
     rsvpChoose: 'Please choose whether you will attend.',
     rsvpNameMissing: 'Please enter the guest name.',
     rsvpCountMissing: 'Please choose the number of guests attending.',
+    rsvpCountOverLimit: 'The number of guests exceeds the invitation limit.',
     rsvpSending: 'Sending…',
     rsvpSend: 'Send RSVP',
     rsvpAbsentSuccess: 'Thank you for letting us know. Your wishes mean so much to us.',
@@ -725,10 +722,7 @@ const UI_COPY = {
     rsvpAttendSuffix: '. We look forward to celebrating with you.',
     rsvpSubmitFailed: 'Could not submit your RSVP. Please try again.',
     rsvpResponses: {
-      hadir: 'Attending the reception at Taman Arunika',
-      'hadir-kampoeng': 'Attending the ceremony at Taman Arunika',
-      'hadir-hotel': 'Attending the reception at Taman Arunika',
-      'hadir-keduanya': 'Attending both celebrations at Taman Arunika',
+      hadir: 'Attending the celebration at Taman Arunika',
       'tidak-hadir': 'Regretfully unable to attend'
     },
     commentsLoading: 'Loading messages…',
@@ -749,10 +743,11 @@ const UI_COPY = {
     invitationFor: 'Undangan untuk',
     guestDefault: 'Tamu Undangan',
     eventPassed: 'Hari istimewa kami telah tiba.',
-    rsvpTokenNeeded: 'Pengiriman RSVP akan tersedia setelah token undangan personal disiapkan.',
+    rsvpTokenNeeded: 'Silakan gunakan tautan undangan personal untuk mengirim RSVP.',
     rsvpChoose: 'Mohon pilih konfirmasi kehadiran.',
     rsvpNameMissing: 'Mohon isi nama undangan.',
     rsvpCountMissing: 'Mohon pilih jumlah orang yang hadir.',
+    rsvpCountOverLimit: 'Jumlah tamu melebihi kuota undangan.',
     rsvpSending: 'Mengirim…',
     rsvpSend: 'Kirim konfirmasi',
     rsvpAbsentSuccess: 'Terima kasih telah memberi kabar. Doa dan restu Anda sangat berarti bagi kami.',
@@ -760,10 +755,7 @@ const UI_COPY = {
     rsvpAttendSuffix: '. Kami menantikan kebersamaan Anda.',
     rsvpSubmitFailed: 'RSVP gagal dikirim. Silakan periksa koneksi dan coba lagi.',
     rsvpResponses: {
-      hadir: 'Hadir di resepsi Taman Arunika',
-      'hadir-kampoeng': 'Hadir di prosesi Taman Arunika',
-      'hadir-hotel': 'Hadir di resepsi Taman Arunika',
-      'hadir-keduanya': 'Hadir di kedua acara Taman Arunika',
+      hadir: 'Hadir di perayaan Taman Arunika',
       'tidak-hadir': 'Mohon maaf belum dapat hadir'
     },
     commentsLoading: 'Memuat ucapan…',
@@ -832,8 +824,33 @@ try {
   if (savedLanguage === 'id') currentLanguage = 'id';
 } catch (error) { /* English remains the default when storage is unavailable. */ }
 
-function setGuestName(name) {
+function populateGuestCountOptions(maxGuests) {
+  const parsedMax = Number(maxGuests);
+  guestAllowedCount = Number.isSafeInteger(parsedMax) && parsedMax > 0
+    ? parsedMax
+    : PUBLIC_GUEST_COUNT_CHOICES;
+
+  const select = document.getElementById('rsvp-count');
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.setAttribute('data-en', 'Choose a number');
+  placeholder.setAttribute('data-id', 'Pilih jumlah');
+  placeholder.textContent = currentLanguage === 'en' ? 'Choose a number' : 'Pilih jumlah';
+  select.replaceChildren(placeholder);
+
+  for (let count = 1; count <= guestAllowedCount; count++) {
+    const option = document.createElement('option');
+    option.value = String(count);
+    option.setAttribute('data-en', count + (count === 1 ? ' person' : ' people'));
+    option.setAttribute('data-id', count + ' orang');
+    option.textContent = currentLanguage === 'en' ? option.getAttribute('data-en') : option.getAttribute('data-id');
+    select.appendChild(option);
+  }
+}
+
+function setGuestName(name, allowedGuests) {
   currentGuestName = name || '';
+  populateGuestCountOptions(allowedGuests);
   document.getElementById('cover-guest').textContent = currentGuestName || copy('guestDefault');
   const nameField = document.getElementById('rsvp-name');
   nameField.value = name || '';
@@ -858,8 +875,7 @@ async function loadInvitation() {
     const data = await response.json();
     if (!response.ok || !data.valid) { showPublicOnly(); return; }
 
-    setGuestName(data.name);
-    guestHasAkad = Boolean(data.akad);
+    setGuestName(data.name, data.allowedGuests);
     document.getElementById('rsvp-access-note').classList.add('is-hidden');
     document.getElementById('rsvp-body').classList.remove('is-hidden');
 
@@ -1038,9 +1054,8 @@ async function submitRsvp() {
   if (attending && !name) { toast(copy('rsvpNameMissing')); return; }
   if (attending && count === 0) { toast(copy('rsvpCountMissing')); return; }
 
-  const response = attending ? (guestHasAkad ? 'hadir-keduanya' : 'hadir') : 'tidak-hadir';
-  const countAkad = attending && guestHasAkad ? count : 0;
-  const countResepsi = attending ? count : 0;
+  if (attending && count > guestAllowedCount) { toast(copy('rsvpCountOverLimit')); return; }
+  const response = attending ? 'hadir' : 'tidak-hadir';
 
   const button = document.getElementById('rsvp-btn');
   button.disabled = true;
@@ -1050,8 +1065,7 @@ async function submitRsvp() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        token: TOKEN, response: response, message: '', whatsapp: '',
-        count_akad: countAkad, count_resepsi: countResepsi, count: attending ? count : 0
+        token: TOKEN, response: response, message: '', whatsapp: '', count: attending ? count : 0
       })
     });
     const data = await result.json();

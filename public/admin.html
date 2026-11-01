@@ -86,7 +86,7 @@
     td { padding: .75rem .65rem; border-bottom: 1px solid #ebe7df; vertical-align: top; }
     tbody tr:hover { background: #faf8f3; }
     .badge { display: inline-block; padding: .22rem .55rem; border: 1px solid var(--line); color: var(--muted); font-size: .58rem; white-space: nowrap; }
-    .badge-yes, .badge-akad { border-color: #cad2bf; background: #eef1e8; color: var(--sage-deep); }
+    .badge-yes { border-color: #cad2bf; background: #eef1e8; color: var(--sage-deep); }
     .badge-no { border-color: #e5cbc4; background: #f8eeeb; color: var(--red); }
     .badge-pending { border-color: #e7dbc9; background: #f7f0e7; color: #8a765c; }
     .badge-nowa { border-color: var(--line); background: var(--ivory); color: var(--muted); }
@@ -174,11 +174,11 @@
           <div class="field"><label for="g-name">Nama tamu *</label><input type="text" id="g-name" placeholder="Nama atau keluarga"></div>
           <div class="field"><label for="g-wa">No. WhatsApp (opsional)</label><input type="tel" id="g-wa" placeholder="08xxxxxxxxxx"></div>
         </div>
-        <div class="field"><label for="g-akad">Akses acara</label><select id="g-akad"><option value="false">Resepsi saja</option><option value="true">Akad dan resepsi</option></select></div>
+        <div class="field"><label for="g-allowed-guests">Jumlah tamu yang diizinkan *</label><input type="number" id="g-allowed-guests" min="1" step="1" value="1" required></div>
         <button class="btn" type="button" onclick="generateToken()">Buat link undangan</button>
         <div class="output" id="token-out">
           <p><strong>Nama:</strong> <span id="out-name"></span></p>
-          <p><strong>Akses:</strong> <span id="out-akad"></span></p>
+          <p><strong>Kuota tamu:</strong> <span id="out-allowed-guests"></span></p>
           <p><strong>WhatsApp:</strong> <span id="out-wa"></span></p>
           <p><strong>Token:</strong> <code id="out-token"></code></p>
           <p><strong>Link:</strong> <a id="out-link" href="#" target="_blank" rel="noopener"></a> <button class="copy-btn" type="button" onclick="copyText(document.getElementById('out-link').textContent)">Salin</button></p>
@@ -203,23 +203,23 @@
         <span class="status-text">Link undangan dapat disalin dari setiap baris.</span>
       </div>
       <div class="table-wrap"><table>
-        <thead><tr><th>#</th><th>Nama</th><th>Akad</th><th>RSVP</th><th>WhatsApp</th><th>Waktu</th><th>Aksi</th></tr></thead>
+        <thead><tr><th>#</th><th>Nama</th><th>Kuota tamu</th><th>RSVP</th><th>WhatsApp</th><th>Waktu</th><th>Aksi</th></tr></thead>
         <tbody id="guest-tbody"></tbody>
       </table></div>
       <div class="pagination" id="pagination"></div>
     </section>
 
     <section class="card danger-card">
-      <div class="card-head"><div><p class="eyebrow">Pengaturan data</p><h2>Reset data lokal</h2></div></div>
-      <p class="card-intro">Menghapus daftar tamu dan RSVP yang tersimpan di server. Data pada Google Sheets tidak ikut dihapus.</p>
-      <div class="btn-row"><button class="btn btn-danger" type="button" onclick="showResetConfirm()">Reset semua data lokal</button><span class="status-text" id="reset-status"></span></div>
+      <div class="card-head"><div><p class="eyebrow">Pengaturan data</p><h2>Reset semua data</h2></div></div>
+      <p class="card-intro">Menghapus daftar tamu dan RSVP dari JSON lokal. Jika Google Sheets terhubung, data tamu dan RSVP di tab <strong>tamu</strong> dan <strong>rsvp</strong> ikut dihapus.</p>
+      <div class="btn-row"><button class="btn btn-danger" type="button" onclick="showResetConfirm()">Reset semua data</button><span class="status-text" id="reset-status"></span></div>
     </section>
   </main>
 
   <div class="overlay" id="reset-modal" onclick="if(event.target===this)this.classList.remove('show')">
     <div class="modal" style="max-width:430px">
-      <div class="modal-title"><span>Konfirmasi reset</span><button class="modal-close" type="button" aria-label="Tutup" onclick="document.getElementById('reset-modal').classList.remove('show')">&times;</button></div>
-      <p class="modal-note">Semua token tamu dan RSVP lokal akan dihapus. Ketik <strong>RESET</strong> untuk melanjutkan.</p>
+      <div class="modal-title"><span>Konfirmasi reset semua data</span><button class="modal-close" type="button" aria-label="Tutup" onclick="document.getElementById('reset-modal').classList.remove('show')">&times;</button></div>
+      <p class="modal-note">Semua tamu dan RSVP akan dihapus dari JSON lokal. Jika Google Sheets terhubung, seluruh baris data pada tab <strong>tamu</strong> dan <strong>rsvp</strong> ikut dihapus; header tetap dipertahankan. Ketik <strong>RESET</strong> untuk melanjutkan.</p>
       <div class="field"><label for="reset-confirm-input">Konfirmasi</label><input type="text" id="reset-confirm-input" placeholder="Ketik RESET"></div>
       <div class="btn-row" style="justify-content:flex-end"><button class="btn btn-outline btn-sm" type="button" onclick="document.getElementById('reset-modal').classList.remove('show')">Batal</button><button class="btn btn-danger btn-sm" type="button" onclick="doReset()">Reset sekarang</button></div>
     </div>
@@ -231,7 +231,7 @@
       <input type="hidden" id="edit-token"><input type="hidden" id="edit-orig-wa">
       <div class="field"><label for="edit-name">Nama tamu *</label><input type="text" id="edit-name" placeholder="Nama tamu"></div>
       <div class="field"><label for="edit-wa">No. WhatsApp (opsional)</label><input type="tel" id="edit-wa" placeholder="08xxxxxxxxxx" oninput="checkWaChange()"></div>
-      <div class="field"><label for="edit-akad">Akses acara</label><select id="edit-akad"><option value="false">Resepsi saja</option><option value="true">Akad dan resepsi</option></select></div>
+      <div class="field"><label for="edit-allowed-guests">Jumlah tamu yang diizinkan *</label><input type="number" id="edit-allowed-guests" min="1" step="1" required></div>
       <div class="warning" id="edit-wa-warning">Nomor WhatsApp berubah. Beri tahu tamu jika Anda juga mengubah nomor kontak.</div>
       <div class="btn-row" style="justify-content:flex-end"><button class="btn btn-outline btn-sm" type="button" onclick="closeEdit()">Batal</button><button class="btn btn-sm" id="edit-save-btn" type="button" onclick="saveEdit()">Simpan</button></div>
       <p class="status-text" id="edit-status" style="margin-bottom:0;text-align:center"></p>
@@ -283,11 +283,10 @@ async function importTamu() {
     if (!response.ok || !data.success) throw new Error(data.error || 'Impor gagal.');
     const rows = (data.guests || []).map(function(guest, index) {
       const badge = guest.status === 'new' ? 'Baru' : guest.status === 'updated' ? 'Diupdate' : 'Sudah ada';
-      const access = guest.akad ? 'Akad + resepsi' : 'Resepsi saja';
       const link = guest.url
         ? '<a href="' + escAttr(guest.url) + '" target="_blank" rel="noopener">' + esc(guest.url) + '</a> <button class="copy-btn" type="button" onclick="copyText(' + escAttr(JSON.stringify(guest.url)) + ')">Salin</button>'
         : '—';
-      return '<tr><td>' + (index + 1) + '</td><td><strong>' + esc(guest.name) + '</strong></td><td>' + access + '</td><td>' + badge + '</td><td>' + link + '</td></tr>';
+      return '<tr><td>' + (index + 1) + '</td><td><strong>' + esc(guest.name) + '</strong></td><td>' + esc(guest.allowedGuests) + '</td><td>' + badge + '</td><td>' + link + '</td></tr>';
     }).join('');
     document.getElementById('modal-body').innerHTML =
       '<div class="import-summary">' +
@@ -295,11 +294,12 @@ async function importTamu() {
       '<div class="imp-stat"><div class="n">' + data.new + '</div><div class="l">Token baru</div></div>' +
       '<div class="imp-stat"><div class="n">' + data.updated + '</div><div class="l">Diupdate</div></div>' +
       '<div class="imp-stat"><div class="n">' + data.noWa + '</div><div class="l">Tanpa WA</div></div></div>' +
+      (data.invalid ? '<p class="modal-note">' + data.invalid + ' baris dilewati karena kuota tamu di kolom B harus berupa bilangan bulat positif.</p>' : '') +
       '<p class="modal-note">' + (data.writeBackOk === false
         ? 'Token sudah tersimpan lokal, tetapi sebagian link gagal ditulis ke Sheets. Coba impor ulang.'
         : 'Link personal dibuat untuk setiap token; nomor WhatsApp tidak menjadi syarat.') + '</p>' +
-      '<div class="table-wrap"><table class="imp-table"><thead><tr><th>#</th><th>Nama</th><th>Akses</th><th>Status</th><th>Link</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
-    status.textContent = 'Selesai: ' + data.new + ' baru, ' + data.updated + ' diperbarui.';
+      '<div class="table-wrap"><table class="imp-table"><thead><tr><th>#</th><th>Nama</th><th>Kuota tamu</th><th>Status</th><th>Link</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+    status.textContent = 'Selesai: ' + data.new + ' baru, ' + data.updated + ' diperbarui.' + (data.invalid ? ' ' + data.invalid + ' dilewati.' : '');
     await loadGuests();
   } catch (error) {
     document.getElementById('modal-body').innerHTML = '<p class="modal-note">' + esc(error.message) + '</p>';
@@ -311,18 +311,19 @@ async function importTamu() {
 async function generateToken() {
   const name = document.getElementById('g-name').value.trim();
   const wa = document.getElementById('g-wa').value.trim();
-  const akad = document.getElementById('g-akad').value === 'true';
+  const allowedGuests = Number(document.getElementById('g-allowed-guests').value);
   if (!name) { alert('Nama tamu wajib diisi.'); return; }
+  if (!Number.isSafeInteger(allowedGuests) || allowedGuests < 1) { alert('Jumlah tamu harus berupa bilangan bulat minimal 1.'); return; }
   try {
     const response = await fetch('/api/admin/generate-token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-admin-key': KEY },
-      body: JSON.stringify({ name: name, wa: wa, akad: akad })
+      body: JSON.stringify({ name: name, wa: wa, allowedGuests: allowedGuests })
     });
     const data = await response.json();
     if (!response.ok || data.error) throw new Error(data.error || 'Gagal membuat link.');
     document.getElementById('out-name').textContent = data.name;
-    document.getElementById('out-akad').textContent = data.akad ? 'Akad dan resepsi' : 'Resepsi saja';
+    document.getElementById('out-allowed-guests').textContent = data.allowedGuests;
     document.getElementById('out-wa').textContent = data.wa || 'Belum diisi';
     document.getElementById('out-token').textContent = data.token;
     const link = document.getElementById('out-link');
@@ -380,12 +381,14 @@ function renderPage() {
         : esc(guest.wa))
       : '<span class="badge badge-nowa">Belum diisi</span>';
     const time = guest.rsvp ? new Date(guest.rsvp.submittedAt).toLocaleString('id-ID') : '—';
-    const akad = guest.akad ? '<span class="badge badge-akad">Ya</span>' : 'Resepsi';
+    const attendance = guest.rsvp && guest.rsvp.response === 'hadir'
+      ? '<br><small>' + esc(guest.rsvp.count || 0) + ' orang hadir</small>'
+      : '';
     return '<tr>' +
       '<td>' + (start + index + 1) + '</td>' +
       '<td><strong>' + esc(guest.name) + '</strong>' + (guest.rsvp && guest.rsvp.message ? '<br><small>' + esc(guest.rsvp.message.substring(0, 80)) + '</small>' : '') + '</td>' +
-      '<td>' + akad + '</td><td>' + rsvpBadge + '</td><td>' + whatsapp + '</td>' +
-      '<td>' + time + '</td><td class="actions"><button class="copy-btn" type="button" onclick="copyText(' + escAttr(JSON.stringify(url)) + ')">Salin link</button> <button class="copy-btn" type="button" onclick="openEdit(' + escAttr(JSON.stringify(guest.token)) + ')">Edit</button></td></tr>';
+      '<td>' + esc(guest.allowedGuests || '—') + '</td><td>' + rsvpBadge + attendance + '</td><td>' + whatsapp + '</td>' +
+      '<td>' + time + '</td><td class="actions"><button class="copy-btn" type="button" onclick="copyText(' + escAttr(JSON.stringify(url)) + ')">Salin link</button> <button class="copy-btn" type="button" onclick="openEdit(' + escAttr(JSON.stringify(guest.token)) + ')">Edit</button> <button class="copy-btn" type="button" onclick="deleteGuest(' + escAttr(JSON.stringify(guest.token)) + ')">Hapus</button></td></tr>';
   }).join('');
 }
 
@@ -438,11 +441,30 @@ function openEdit(token) {
   document.getElementById('edit-orig-wa').value = guest.wa || '';
   document.getElementById('edit-name').value = guest.name || '';
   document.getElementById('edit-wa').value = guest.wa || '';
-  document.getElementById('edit-akad').value = guest.akad ? 'true' : 'false';
+  document.getElementById('edit-allowed-guests').value = guest.allowedGuests || 1;
   document.getElementById('edit-wa-warning').classList.remove('show');
   document.getElementById('edit-status').textContent = '';
   document.getElementById('edit-save-btn').disabled = false;
   document.getElementById('edit-modal').classList.add('show');
+}
+
+async function deleteGuest(token) {
+  const guest = allGuestsData.find(function(item) { return item.token === token; });
+  if (!guest) return;
+  if (!window.confirm('Hapus undangan untuk ' + guest.name + ' beserta RSVP-nya dari JSON dan Google Sheets jika terhubung?')) return;
+
+  try {
+    const response = await fetch('/api/admin/guest/' + encodeURIComponent(token), {
+      method: 'DELETE',
+      headers: { 'x-admin-key': KEY }
+    });
+    const data = await response.json();
+    if (!response.ok || !data.success) throw new Error(data.error || 'Gagal menghapus tamu.');
+    await loadGuests();
+    alert(data.message);
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
 function closeEdit() {
@@ -459,16 +481,17 @@ async function saveEdit() {
   const token = document.getElementById('edit-token').value;
   const name = document.getElementById('edit-name').value.trim();
   const wa = document.getElementById('edit-wa').value.trim();
-  const akad = document.getElementById('edit-akad').value === 'true';
+  const allowedGuests = Number(document.getElementById('edit-allowed-guests').value);
   const status = document.getElementById('edit-status');
   const button = document.getElementById('edit-save-btn');
   if (!name) { status.textContent = 'Nama tidak boleh kosong.'; return; }
+  if (!Number.isSafeInteger(allowedGuests) || allowedGuests < 1) { status.textContent = 'Jumlah tamu harus berupa bilangan bulat minimal 1.'; return; }
   button.disabled = true;
   status.textContent = 'Menyimpan…';
   try {
     const response = await fetch('/api/admin/guest/' + encodeURIComponent(token), {
       method: 'PUT', headers: { 'Content-Type': 'application/json', 'x-admin-key': KEY },
-      body: JSON.stringify({ name: name, wa: wa, akad: akad })
+      body: JSON.stringify({ name: name, wa: wa, allowedGuests: allowedGuests })
     });
     const data = await response.json();
     if (!response.ok || !data.success) throw new Error(data.error || 'Gagal menyimpan.');
@@ -504,7 +527,7 @@ async function doReset() {
 }
 
 function fmtR(value) {
-  return ({ 'hadir': 'Taman Arunika · Resepsi', 'hadir-kampoeng': 'Taman Arunika · Prosesi', 'hadir-hotel': 'Taman Arunika · Resepsi', 'hadir-keduanya': 'Keduanya', 'tidak-hadir': 'Tidak hadir' })[value] || value;
+  return ({ 'hadir': 'Hadir', 'tidak-hadir': 'Tidak hadir' })[value] || value;
 }
 function esc(value) {
   return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
