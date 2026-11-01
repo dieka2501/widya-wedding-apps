@@ -1,359 +1,353 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Admin Panel — Putri & Dikdik</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,sans-serif;background:#f8f5f0;color:#333;padding:1.5rem}
-h1{font-size:1.5rem;margin-bottom:.25rem;color:#4a3728}
-.sub{color:#888;font-size:.85rem;margin-bottom:2rem}
-.card{background:#fff;border:1px solid #e8e0d5;border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-h2{font-size:1rem;font-weight:600;color:#4a3728;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid #b8972a}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
-@media(max-width:500px){.form-row{grid-template-columns:1fr}}
-label{display:block;font-size:.75rem;font-weight:600;color:#666;margin-bottom:.25rem;letter-spacing:.05em;text-transform:uppercase}
-input,select{width:100%;padding:.6rem .875rem;border:1px solid #ddd;border-radius:4px;font-size:.9rem;outline:none;transition:border-color .2s}
-input:focus,select:focus{border-color:#b8972a}
-.btn{padding:.65rem 1.25rem;background:#4a3728;color:#d4af5a;border:none;border-radius:4px;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.btn:hover{background:#b8972a;color:#fff}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.btn-sm{padding:.4rem .875rem;font-size:.72rem}
-.btn-green{background:#1a7a4a;color:#fff}
-.btn-green:hover{background:#15603a;color:#fff}
-.btn-row{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center}
-.output{margin-top:1rem;padding:1rem;background:#f5ead6;border:1px solid #b8972a;border-radius:4px;font-size:.85rem;word-break:break-all;display:none}
-.output.show{display:block}
-.output a{color:#4a3728;font-weight:600}
-table{width:100%;border-collapse:collapse;font-size:.82rem}
-th{text-align:left;padding:.6rem .75rem;background:#f5ead6;color:#4a3728;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;border-bottom:2px solid #b8972a}
-td{padding:.6rem .75rem;border-bottom:1px solid #f0e8d6;vertical-align:top}
-tr:hover td{background:#fdf8f0}
-.badge{display:inline-block;padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:600}
-.badge-yes{background:#d4edda;color:#155724}
-.badge-no{background:#f8d7da;color:#721c24}
-.badge-pending{background:#fff3cd;color:#856404}
-.badge-akad{background:#d1ecf1;color:#0c5460}
-.badge-nowa{background:#f0e0ff;color:#6a0dad}
-.copy-btn{cursor:pointer;background:none;border:none;color:#b8972a;font-size:.75rem;text-decoration:underline;margin-left:.5rem}
-.edit-btn{cursor:pointer;background:none;border:none;color:#4a3728;font-size:.75rem;text-decoration:underline}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.75rem;margin-bottom:1rem}
-.stat{background:#f5ead6;border-radius:6px;padding:1rem;text-align:center}
-.stat-num{font-size:2rem;font-weight:700;color:#4a3728}
-.stat-lbl{font-size:.7rem;color:#888;text-transform:uppercase;letter-spacing:.08em}
-/* Auth */
-.auth-wrap{max-width:400px;margin:4rem auto}
-.auth-card{background:#fff;border:1px solid #e8e0d5;border-radius:8px;padding:2rem;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center}
-.auth-card h2{font-family:serif;font-size:2rem;color:#4a3728;margin-bottom:.5rem;border:none;padding:0}
-.auth-card p{color:#888;font-size:.85rem;margin-bottom:1.5rem}
-/* Modal */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;justify-content:center;align-items:center;padding:1rem}
-.overlay.show{display:flex}
-.modal{background:#fff;border-radius:8px;padding:1.5rem;max-width:620px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.2)}
-.modal-title{font-size:1.1rem;font-weight:600;color:#4a3728;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid #b8972a;display:flex;justify-content:space-between;align-items:center}
-.import-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:1rem}
-.imp-stat{text-align:center;padding:.75rem;border-radius:6px;background:#f5ead6}
-.imp-stat .n{font-size:1.8rem;font-weight:700;color:#4a3728}
-.imp-stat .l{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:#888}
-.imp-table{width:100%;border-collapse:collapse;font-size:.8rem}
-.imp-table th{text-align:left;padding:.5rem .6rem;background:#f5ead6;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:#4a3728;border-bottom:2px solid #b8972a}
-.imp-table td{padding:.5rem .6rem;border-bottom:1px solid #f0e8d6;word-break:break-all}
-.badge-new{background:#d4edda;color:#155724;display:inline-block;padding:.15rem .5rem;border-radius:10px;font-size:.65rem;font-weight:600}
-.badge-skip{background:#e2e3e5;color:#6c757d;display:inline-block;padding:.15rem .5rem;border-radius:10px;font-size:.65rem;font-weight:600}
-.loading{text-align:center;padding:2.5rem;color:#888}
-.spinner{display:inline-block;width:22px;height:22px;border:2px solid #ddd;border-top-color:#b8972a;border-radius:50%;animation:sp .8s linear infinite;vertical-align:middle;margin-right:.5rem}
-@keyframes sp{to{transform:rotate(360deg)}}
-/* Pagination */
-.pagination{display:flex;align-items:center;gap:.5rem;margin-top:1rem;flex-wrap:wrap}
-.pagination button{padding:.35rem .75rem;border:1px solid #ddd;border-radius:4px;background:#fff;cursor:pointer;font-size:.8rem}
-.pagination button:disabled{opacity:.4;cursor:not-allowed}
-.pagination button.active{background:#4a3728;color:#d4af5a;border-color:#4a3728}
-.pagination span{font-size:.8rem;color:#888}
-/* Search */
-.search-wrap{position:relative;margin-bottom:1rem;max-width:320px}
-.search-wrap input{padding-left:2rem}
-.search-wrap::before{content:'🔍';position:absolute;left:.6rem;top:50%;transform:translateY(-50%);font-size:.85rem}
-/* Edit warning */
-.wa-warning{display:none;margin-top:.75rem;padding:.75rem;background:#fff3cd;border:1px solid #ffc107;border-radius:4px;font-size:.82rem;color:#856404;line-height:1.6}
-.wa-warning.show{display:block}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f0e8">
+  <title>Admin — Widya &amp; Andi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sage: #aab397;
+      --sage-deep: #606c56;
+      --taupe: #bcb09f;
+      --sand: #e4d0b8;
+      --cream: #f0e6d9;
+      --ivory: #faf8f4;
+      --paper: #fffefa;
+      --ink: #3f4038;
+      --muted: #7e7c72;
+      --line: #ded8cd;
+      --red: #9a5f54;
+      --green: #61775d;
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "DM Sans", Arial, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { min-height: 100vh; margin: 0; background: var(--ivory); color: var(--ink); font: 400 14px/1.55 var(--sans); }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    .auth-wrap { display: grid; min-height: 100vh; place-items: center; padding: 1.5rem; background: linear-gradient(135deg, var(--sage) 0%, var(--cream) 58%, var(--sand) 100%); }
+    .auth-card { width: min(440px, 100%); padding: clamp(2rem, 7vw, 3.5rem); border: 1px solid rgba(255,255,255,.8); background: rgba(255,254,250,.88); box-shadow: 0 25px 70px rgba(63,64,56,.12); text-align: center; backdrop-filter: blur(12px); }
+    .auth-mark { display: grid; width: 3.4rem; aspect-ratio: 1; place-items: center; margin: 0 auto 1.2rem; border: 1px solid var(--taupe); border-radius: 50%; color: var(--sage-deep); font: 500 1.1rem var(--serif); }
+    .auth-card h1 { margin: 0; font: 500 3rem/.95 var(--serif); }
+    .auth-card p { margin: .75rem 0 2rem; color: var(--muted); font-size: .78rem; letter-spacing: .08em; }
+    .auth-card label, .field label { display: block; margin-bottom: .4rem; color: var(--muted); font-size: .62rem; font-weight: 500; letter-spacing: .14em; text-align: left; text-transform: uppercase; }
+    .auth-card input, .field input, .field select { width: 100%; min-height: 44px; padding: .7rem .8rem; border: 1px solid var(--line); border-radius: 0; outline: none; background: #fff; color: var(--ink); }
+    .auth-card input:focus, .field input:focus, .field select:focus { border-color: var(--sage-deep); box-shadow: 0 0 0 2px rgba(96,108,86,.1); }
+    .auth-card .field { margin-bottom: 1rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 42px; padding: .7rem 1.1rem; border: 1px solid var(--sage-deep); background: var(--sage-deep); color: #fff; font-size: .62rem; font-weight: 500; letter-spacing: .13em; text-align: center; text-decoration: none; text-transform: uppercase; transition: background .18s, color .18s, border-color .18s; }
+    .btn:hover { border-color: #4b5543; background: #4b5543; }
+    .btn:disabled { cursor: wait; opacity: .55; }
+    .btn-outline { background: transparent; color: var(--sage-deep); }
+    .btn-outline:hover { color: #fff; }
+    .btn-danger { border-color: var(--red); background: var(--red); }
+    .btn-danger:hover { border-color: #7f4b42; background: #7f4b42; }
+    .btn-sm { min-height: 34px; padding: .5rem .75rem; font-size: .56rem; }
+    .auth-error { min-height: 1.1rem; margin: .8rem 0 0 !important; color: var(--red) !important; font-size: .74rem !important; letter-spacing: 0 !important; }
+    .dashboard { width: min(1280px, 100%); margin: 0 auto; padding: 2rem clamp(1rem, 4vw, 3rem) 4rem; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2.2rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line); }
+    .topbrand { display: flex; align-items: center; gap: .9rem; }
+    .topbrand-mark { display: grid; width: 2.7rem; aspect-ratio: 1; place-items: center; border: 1px solid var(--taupe); border-radius: 50%; color: var(--sage-deep); font: 500 1rem var(--serif); }
+    .topbrand small { display: block; color: var(--muted); font-size: .55rem; letter-spacing: .18em; text-transform: uppercase; }
+    .topbrand strong { display: block; font: 500 1.65rem/1 var(--serif); }
+    .topbar-note { color: var(--muted); font-size: .65rem; letter-spacing: .12em; text-align: right; text-transform: uppercase; }
+    .page-intro { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .eyebrow { margin: 0 0 .5rem; color: var(--sage-deep); font-size: .6rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; }
+    .page-intro h1 { margin: 0; font: 500 clamp(2.5rem, 5vw, 4rem)/.9 var(--serif); }
+    .page-intro p:last-child { margin: .7rem 0 0; color: var(--muted); font-size: .8rem; }
+    .grid-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .card { margin-bottom: 1rem; padding: clamp(1.15rem, 2.6vw, 1.8rem); border: 1px solid var(--line); background: var(--paper); box-shadow: 0 8px 25px rgba(66,65,54,.045); }
+    .card-head { display: flex; align-items: start; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+    .card h2 { margin: 0; font: 500 1.85rem/1 var(--serif); }
+    .card-intro { max-width: 610px; margin: .5rem 0 1.2rem; color: var(--muted); font-size: .76rem; line-height: 1.8; }
+    .form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+    .field { margin-bottom: .9rem; }
+    .field label { margin-bottom: .35rem; }
+    .btn-row { display: flex; align-items: center; flex-wrap: wrap; gap: .6rem; }
+    .status-text { color: var(--muted); font-size: .73rem; }
+    .output { display: none; margin-top: 1rem; padding: 1rem; border: 1px solid var(--line); background: var(--cream); overflow-wrap: anywhere; }
+    .output.show { display: block; }
+    .output p { margin: .25rem 0; font-size: .77rem; }
+    .output a { color: var(--sage-deep); }
+    .copy-btn { border: 0; background: none; color: var(--sage-deep); cursor: pointer; font-size: .65rem; text-decoration: underline; }
+    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; }
+    .stat { padding: 1rem; border: 1px solid var(--line); background: var(--ivory); }
+    .stat-num { color: var(--sage-deep); font: 500 2.4rem/1 var(--serif); }
+    .stat-lbl { margin-top: .45rem; color: var(--muted); font-size: .56rem; letter-spacing: .13em; text-transform: uppercase; }
+    .list-tools { display: flex; align-items: center; justify-content: space-between; gap: .8rem; margin-bottom: 1rem; }
+    .search { width: min(340px, 100%); min-height: 38px; padding: .55rem .75rem; border: 1px solid var(--line); outline: none; background: #fff; }
+    .search:focus { border-color: var(--sage-deep); }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .75rem; }
+    th { padding: .75rem .65rem; border-bottom: 1px solid var(--taupe); color: var(--muted); font-size: .56rem; font-weight: 500; letter-spacing: .13em; text-align: left; text-transform: uppercase; white-space: nowrap; }
+    td { padding: .75rem .65rem; border-bottom: 1px solid #ebe7df; vertical-align: top; }
+    tbody tr:hover { background: #faf8f3; }
+    .badge { display: inline-block; padding: .22rem .55rem; border: 1px solid var(--line); color: var(--muted); font-size: .58rem; white-space: nowrap; }
+    .badge-yes, .badge-akad { border-color: #cad2bf; background: #eef1e8; color: var(--sage-deep); }
+    .badge-no { border-color: #e5cbc4; background: #f8eeeb; color: var(--red); }
+    .badge-pending { border-color: #e7dbc9; background: #f7f0e7; color: #8a765c; }
+    .badge-nowa { border-color: var(--line); background: var(--ivory); color: var(--muted); }
+    .pagination { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; margin-top: 1rem; }
+    .pagination button { min-width: 32px; min-height: 30px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); font-size: .67rem; }
+    .pagination button.active { border-color: var(--sage-deep); background: var(--sage-deep); color: #fff; }
+    .pagination button:disabled { cursor: default; opacity: .45; }
+    .pagination span { margin-left: .5rem; color: var(--muted); font-size: .66rem; }
+    .danger-card { border-color: #e3cbc5; }
+    .danger-card h2 { color: var(--red); }
+    .overlay { position: fixed; z-index: 30; inset: 0; display: none; align-items: center; justify-content: center; padding: 1rem; background: rgba(41,43,37,.52); }
+    .overlay.show { display: flex; }
+    .modal { width: min(640px, 100%); max-height: 88vh; overflow: auto; padding: clamp(1.25rem, 4vw, 2rem); background: var(--paper); box-shadow: 0 20px 70px rgba(0,0,0,.22); }
+    .modal-title { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.1rem; padding-bottom: .75rem; border-bottom: 1px solid var(--line); font: 500 1.9rem/1 var(--serif); }
+    .modal-close { border: 0; background: none; color: var(--muted); font-size: 1.5rem; }
+    .modal-note { color: var(--muted); font-size: .78rem; line-height: 1.7; }
+    .import-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; margin: 1rem 0; }
+    .imp-stat { padding: .7rem .35rem; background: var(--cream); text-align: center; }
+    .imp-stat .n { color: var(--sage-deep); font: 500 1.8rem var(--serif); }
+    .imp-stat .l { color: var(--muted); font-size: .52rem; letter-spacing: .1em; text-transform: uppercase; }
+    .imp-table { min-width: 540px; }
+    .warning { display: none; margin: .5rem 0 1rem; padding: .8rem; border: 1px solid #e8d4b8; background: #f8f1e7; color: #806d51; font-size: .72rem; line-height: 1.6; }
+    .warning.show { display: block; }
+    .hidden { display: none !important; }
+    .loading { padding: 2rem; color: var(--muted); text-align: center; }
+    .spinner { display: inline-block; width: 18px; height: 18px; margin-right: .5rem; border: 2px solid var(--line); border-top-color: var(--sage-deep); border-radius: 50%; vertical-align: middle; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width: 760px) {
+      .dashboard { padding-top: 1.2rem; }
+      .grid-two { grid-template-columns: 1fr; }
+      .page-intro { display: block; }
+      .page-intro > .btn { margin-top: 1rem; }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .list-tools { align-items: stretch; flex-direction: column; }
+      .search { width: 100%; }
+      .table-wrap { margin-right: -1.15rem; margin-left: -1.15rem; padding: 0 1.15rem; }
+      .topbar-note { font-size: .53rem; }
+    }
+    @media (max-width: 460px) {
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .topbar { align-items: start; }
+      .topbrand strong { font-size: 1.4rem; }
+      .topbar-note { max-width: 110px; }
+      .import-summary { grid-template-columns: repeat(2, 1fr); }
+      .stats .stat { padding: .8rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
 </head>
 <body>
-
-<!-- Auth -->
-<div class="auth-wrap" id="auth-gate">
-  <div class="auth-card">
-    <h2>P &amp; D</h2>
-    <p>Admin Panel — Undangan Pernikahan</p>
-    <div style="margin-bottom:1rem;text-align:left">
-      <label>Admin Key</label>
-      <input type="password" id="akey" placeholder="Masukkan admin key" onkeydown="if(event.key==='Enter')login()">
-    </div>
-    <button class="btn" onclick="login()" style="width:100%">Masuk</button>
-    <p id="auth-err" style="color:red;font-size:.8rem;margin-top:.75rem;display:none">Key salah. Coba lagi.</p>
-  </div>
-</div>
-
-<!-- Main -->
-<div id="main" style="display:none;max-width:1000px;margin:0 auto">
-  <h1>🌸 Admin Panel</h1>
-  <p class="sub">Undangan Pernikahan Putri &amp; Dikdik — 1 Mei 2026</p>
-
-  <!-- IMPORT CARD -->
-  <div class="card">
-    <h2>📋 Import dari Google Sheets</h2>
-    <p style="font-size:.85rem;color:#666;margin-bottom:1.25rem">
-      Baca daftar tamu dari tab <strong>"tamu"</strong> dan generate token otomatis.<br>
-      Tamu <strong>tanpa No WA</strong> tetap di-import & dapat token, tapi <strong>link tidak digenerate</strong>.<br>
-      Untuk aktifkan link, tambahkan No WA di sheet lalu import ulang.
-    </p>
-    <div class="btn-row">
-      <button class="btn btn-green" id="btn-import" onclick="importTamu()">⬇&nbsp; Import &amp; Generate Token</button>
-      <span id="import-status" style="font-size:.82rem;color:#666"></span>
-    </div>
-  </div>
-
-  <!-- MANUAL CARD -->
-  <div class="card">
-    <h2>✍️ Buat Undangan Manual</h2>
-    <div class="form-row">
-      <div><label>Nama Tamu *</label><input type="text" id="g-name" placeholder="cth: Keluarga Bapak Hendra"></div>
-      <div><label>No. WhatsApp *</label><input type="tel" id="g-wa" placeholder="cth: 08123456789"></div>
-    </div>
-    <div style="margin-bottom:1rem">
-      <label>Akses Akad Nikah</label>
-      <select id="g-akad">
-        <option value="false">❌ Tidak — Hanya Resepsi</option>
-        <option value="true">✅ Ya — Akad + Resepsi</option>
-      </select>
-    </div>
-    <button class="btn" onclick="generateToken()">Generate Link Undangan</button>
-    <div class="output" id="token-out">
-      <p style="margin-bottom:.5rem;font-weight:600;color:#4a3728">✅ Link Undangan berhasil dibuat!</p>
-      <p style="margin-bottom:.5rem"><strong>Nama:</strong> <span id="out-name"></span></p>
-      <p style="margin-bottom:.5rem"><strong>Akad:</strong> <span id="out-akad"></span></p>
-      <p style="margin-bottom:.5rem"><strong>No. WA:</strong> <span id="out-wa"></span></p>
-      <p style="margin-bottom:.75rem"><strong>Token:</strong> <code id="out-token" style="font-size:.8rem"></code></p>
-      <p><strong>Link:</strong><br>
-        <a id="out-link" href="#" target="_blank"></a>
-        <button class="copy-btn" onclick="copyText(document.getElementById('out-link').textContent)">Salin</button>
-      </p>
-    </div>
-  </div>
-
-  <!-- STATS -->
-  <div class="card">
-    <h2>📊 Statistik</h2>
-    <div class="stats">
-      <div class="stat"><div class="stat-num" id="st-total">0</div><div class="stat-lbl">Total Tamu</div></div>
-      <div class="stat"><div class="stat-num" id="st-rsvp">0</div><div class="stat-lbl">Sudah RSVP</div></div>
-      <div class="stat"><div class="stat-num" id="st-hadir">0</div><div class="stat-lbl">Hadir</div></div>
-      <div class="stat"><div class="stat-num" id="st-tidak">0</div><div class="stat-lbl">Tidak Hadir</div></div>
-    </div>
-  </div>
-
-  <!-- GUEST LIST -->
-  <div class="card">
-    <h2>👥 Daftar Tamu</h2>
-    <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem">
-      <button class="btn btn-sm" onclick="loadGuests()">🔄 Refresh</button>
-      <div class="search-wrap" style="flex:1">
-        <input type="text" id="search-input" placeholder="Cari nama tamu…" oninput="onSearch()" style="width:100%">
+  <section class="auth-wrap" id="auth-gate">
+    <div class="auth-card">
+      <div class="auth-mark">P&amp;D</div>
+      <h1>Selamat datang</h1>
+      <p>Panel pengelolaan undangan Widya &amp; Andi</p>
+      <div class="field">
+        <label for="akey">Admin key</label>
+        <input type="password" id="akey" autocomplete="current-password" placeholder="Masukkan admin key" onkeydown="if(event.key==='Enter')login()">
       </div>
+      <button class="btn" type="button" onclick="login()" style="width:100%">Masuk ke panel</button>
+      <p class="auth-error" id="auth-err" role="alert"></p>
     </div>
-    <div style="overflow-x:auto">
-      <table>
-        <thead><tr><th>#</th><th>Nama</th><th>Akad</th><th>RSVP</th><th>WA</th><th>Waktu</th><th>Aksi</th></tr></thead>
+  </section>
+
+  <main class="dashboard hidden" id="main">
+    <header class="topbar">
+      <div class="topbrand"><span class="topbrand-mark">W&amp;A</span><div><small>Wedding dashboard</small><strong>Widya &amp; Andi</strong></div></div>
+      <div class="topbar-note">Yogyakarta · 20 Maret 2027</div>
+    </header>
+
+    <section class="page-intro">
+      <div><p class="eyebrow">Ruang pengelola</p><h1>Daftar tamu</h1><p>Kelola undangan dan pantau konfirmasi kehadiran.</p></div>
+      <button class="btn btn-outline" type="button" onclick="loadGuests()">Segarkan data</button>
+    </section>
+
+    <div class="grid-two">
+      <section class="card">
+        <div class="card-head"><div><p class="eyebrow">Sinkronisasi</p><h2>Impor tamu</h2></div></div>
+        <p class="card-intro">Ambil data dari tab <strong>tamu</strong> di Google Sheets. Setiap tamu mendapat token dan link personal; nomor WhatsApp bersifat opsional.</p>
+        <div class="btn-row"><button class="btn" id="btn-import" type="button" onclick="importTamu()">Impor dari Sheets</button><span class="status-text" id="import-status"></span></div>
+      </section>
+      <section class="card">
+        <div class="card-head"><div><p class="eyebrow">Undangan baru</p><h2>Buat manual</h2></div></div>
+        <div class="form-row">
+          <div class="field"><label for="g-name">Nama tamu *</label><input type="text" id="g-name" placeholder="Nama atau keluarga"></div>
+          <div class="field"><label for="g-wa">No. WhatsApp (opsional)</label><input type="tel" id="g-wa" placeholder="08xxxxxxxxxx"></div>
+        </div>
+        <div class="field"><label for="g-akad">Akses acara</label><select id="g-akad"><option value="false">Resepsi saja</option><option value="true">Akad dan resepsi</option></select></div>
+        <button class="btn" type="button" onclick="generateToken()">Buat link undangan</button>
+        <div class="output" id="token-out">
+          <p><strong>Nama:</strong> <span id="out-name"></span></p>
+          <p><strong>Akses:</strong> <span id="out-akad"></span></p>
+          <p><strong>WhatsApp:</strong> <span id="out-wa"></span></p>
+          <p><strong>Token:</strong> <code id="out-token"></code></p>
+          <p><strong>Link:</strong> <a id="out-link" href="#" target="_blank" rel="noopener"></a> <button class="copy-btn" type="button" onclick="copyText(document.getElementById('out-link').textContent)">Salin</button></p>
+        </div>
+      </section>
+    </div>
+
+    <section class="card">
+      <div class="card-head"><div><p class="eyebrow">Ringkasan</p><h2>Statistik RSVP</h2></div></div>
+      <div class="stats">
+        <div class="stat"><div class="stat-num" id="st-total">0</div><div class="stat-lbl">Total tamu</div></div>
+        <div class="stat"><div class="stat-num" id="st-rsvp">0</div><div class="stat-lbl">Sudah RSVP</div></div>
+        <div class="stat"><div class="stat-num" id="st-hadir">0</div><div class="stat-lbl">Konfirmasi hadir</div></div>
+        <div class="stat"><div class="stat-num" id="st-tidak">0</div><div class="stat-lbl">Tidak hadir</div></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><div><p class="eyebrow">Data personal</p><h2>Semua tamu</h2></div></div>
+      <div class="list-tools">
+        <input class="search" type="search" id="search-input" placeholder="Cari nama tamu…" oninput="onSearch()">
+        <span class="status-text">Link undangan dapat disalin dari setiap baris.</span>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>#</th><th>Nama</th><th>Akad</th><th>RSVP</th><th>WhatsApp</th><th>Waktu</th><th>Aksi</th></tr></thead>
         <tbody id="guest-tbody"></tbody>
-      </table>
+      </table></div>
+      <div class="pagination" id="pagination"></div>
+    </section>
+
+    <section class="card danger-card">
+      <div class="card-head"><div><p class="eyebrow">Pengaturan data</p><h2>Reset data lokal</h2></div></div>
+      <p class="card-intro">Menghapus daftar tamu dan RSVP yang tersimpan di server. Data pada Google Sheets tidak ikut dihapus.</p>
+      <div class="btn-row"><button class="btn btn-danger" type="button" onclick="showResetConfirm()">Reset semua data lokal</button><span class="status-text" id="reset-status"></span></div>
+    </section>
+  </main>
+
+  <div class="overlay" id="reset-modal" onclick="if(event.target===this)this.classList.remove('show')">
+    <div class="modal" style="max-width:430px">
+      <div class="modal-title"><span>Konfirmasi reset</span><button class="modal-close" type="button" aria-label="Tutup" onclick="document.getElementById('reset-modal').classList.remove('show')">&times;</button></div>
+      <p class="modal-note">Semua token tamu dan RSVP lokal akan dihapus. Ketik <strong>RESET</strong> untuk melanjutkan.</p>
+      <div class="field"><label for="reset-confirm-input">Konfirmasi</label><input type="text" id="reset-confirm-input" placeholder="Ketik RESET"></div>
+      <div class="btn-row" style="justify-content:flex-end"><button class="btn btn-outline btn-sm" type="button" onclick="document.getElementById('reset-modal').classList.remove('show')">Batal</button><button class="btn btn-danger btn-sm" type="button" onclick="doReset()">Reset sekarang</button></div>
     </div>
-    <div class="pagination" id="pagination"></div>
   </div>
 
-  <!-- DANGER ZONE -->
-  <div class="card" style="border-color:#f5c6cb">
-    <h2 style="color:#721c24;border-bottom-color:#f5c6cb">⚠️ Danger Zone</h2>
-    <p style="font-size:.85rem;color:#666;margin-bottom:1.25rem">
-      Reset menghapus semua data <strong>guests.json</strong> dan <strong>rsvp.json</strong> di server.<br>
-      Data di Google Sheets <strong>tidak</strong> ikut terhapus. Gunakan setelah selesai testing.
-    </p>
-    <div class="btn-row">
-      <button class="btn" style="background:#c82333;color:#fff" onclick="showResetConfirm()">🗑 Reset Semua Data Lokal</button>
-      <span id="reset-status" style="font-size:.82rem;color:#666"></span>
+  <div class="overlay" id="edit-modal" onclick="if(event.target===this)closeEdit()">
+    <div class="modal" style="max-width:480px">
+      <div class="modal-title"><span>Edit data tamu</span><button class="modal-close" type="button" aria-label="Tutup" onclick="closeEdit()">&times;</button></div>
+      <input type="hidden" id="edit-token"><input type="hidden" id="edit-orig-wa">
+      <div class="field"><label for="edit-name">Nama tamu *</label><input type="text" id="edit-name" placeholder="Nama tamu"></div>
+      <div class="field"><label for="edit-wa">No. WhatsApp (opsional)</label><input type="tel" id="edit-wa" placeholder="08xxxxxxxxxx" oninput="checkWaChange()"></div>
+      <div class="field"><label for="edit-akad">Akses acara</label><select id="edit-akad"><option value="false">Resepsi saja</option><option value="true">Akad dan resepsi</option></select></div>
+      <div class="warning" id="edit-wa-warning">Nomor WhatsApp berubah. Beri tahu tamu jika Anda juga mengubah nomor kontak.</div>
+      <div class="btn-row" style="justify-content:flex-end"><button class="btn btn-outline btn-sm" type="button" onclick="closeEdit()">Batal</button><button class="btn btn-sm" id="edit-save-btn" type="button" onclick="saveEdit()">Simpan</button></div>
+      <p class="status-text" id="edit-status" style="margin-bottom:0;text-align:center"></p>
     </div>
   </div>
-</div>
 
-<!-- Reset Confirm Modal -->
-<div class="overlay" id="reset-modal" onclick="if(event.target===this)this.classList.remove('show')">
-  <div class="modal" style="max-width:420px">
-    <div class="modal-title" style="color:#721c24">⚠️ Konfirmasi Reset</div>
-    <p style="font-size:.9rem;margin-bottom:1rem">Tindakan ini akan menghapus:</p>
-    <ul style="font-size:.85rem;color:#555;margin-bottom:1.5rem;padding-left:1.25rem;line-height:2">
-      <li>Semua token tamu di <strong>guests.json</strong></li>
-      <li>Semua data RSVP di <strong>rsvp.json</strong></li>
-    </ul>
-    <p style="font-size:.85rem;color:#888;margin-bottom:1.5rem">Data di Google Sheets tidak ikut terhapus.</p>
-    <p style="font-size:.85rem;font-weight:600;margin-bottom:.5rem">Ketik <code style="background:#f8d7da;padding:.1rem .4rem;border-radius:3px">RESET</code> untuk konfirmasi:</p>
-    <input type="text" id="reset-confirm-input" placeholder="Ketik RESET" style="margin-bottom:1rem;border-color:#f5c6cb">
-    <div style="display:flex;gap:.75rem;justify-content:flex-end">
-      <button class="btn btn-sm" onclick="document.getElementById('reset-modal').classList.remove('show')">Batal</button>
-      <button class="btn btn-sm" style="background:#c82333;color:#fff" onclick="doReset()">Reset Sekarang</button>
+  <div class="overlay" id="imp-modal" onclick="if(event.target===this)this.classList.remove('show')">
+    <div class="modal">
+      <div class="modal-title"><span>Hasil impor</span><button class="modal-close" type="button" aria-label="Tutup" onclick="document.getElementById('imp-modal').classList.remove('show')">&times;</button></div>
+      <div id="modal-body"></div>
     </div>
   </div>
-</div>
-
-<!-- Edit Guest Modal -->
-<div class="overlay" id="edit-modal" onclick="if(event.target===this)closeEdit()">
-  <div class="modal" style="max-width:460px">
-    <div class="modal-title">
-      <span>✏️ Edit Data Tamu</span>
-      <button onclick="closeEdit()" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:#4a3728;opacity:.5;line-height:1;padding:0 .25rem">&times;</button>
-    </div>
-    <input type="hidden" id="edit-token">
-    <input type="hidden" id="edit-orig-wa">
-    <div style="margin-bottom:1rem">
-      <label>Nama Tamu *</label>
-      <input type="text" id="edit-name" placeholder="Nama tamu">
-    </div>
-    <div style="margin-bottom:1rem">
-      <label>No. WhatsApp</label>
-      <input type="tel" id="edit-wa" placeholder="08xxxxxxxxxx" oninput="checkWaChange()">
-    </div>
-    <div style="margin-bottom:1.25rem">
-      <label>Akses Akad Nikah</label>
-      <select id="edit-akad">
-        <option value="false">❌ Tidak — Hanya Resepsi</option>
-        <option value="true">✅ Ya — Akad + Resepsi</option>
-      </select>
-    </div>
-    <div class="wa-warning" id="edit-wa-warning">
-      ⚠️ <strong>No. WhatsApp berubah.</strong><br>
-      5 digit terakhir untuk autentikasi akan berubah dari <strong id="warn-old-wa5">—</strong> menjadi <strong id="warn-new-wa5">—</strong>.<br>
-      Pastikan Anda memberitahu tamu undangan ini tentang perubahan tersebut.
-    </div>
-    <div style="display:flex;gap:.75rem;justify-content:flex-end">
-      <button class="btn btn-sm" onclick="closeEdit()">Batal</button>
-      <button class="btn btn-sm btn-green" id="edit-save-btn" onclick="saveEdit()">Simpan</button>
-    </div>
-    <p id="edit-status" style="margin-top:.75rem;font-size:.82rem;text-align:center"></p>
-  </div>
-</div>
-
-<!-- Import Result Modal -->
-<div class="overlay" id="imp-modal" onclick="if(event.target===this)this.classList.remove('show')">
-  <div class="modal">
-    <div class="modal-title" style="display:flex;justify-content:space-between;align-items:center">
-      <span>Hasil Import</span>
-      <button onclick="document.getElementById('imp-modal').classList.remove('show')" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:#4a3728;opacity:.5;line-height:1;padding:0 .25rem" title="Tutup">&times;</button>
-    </div>
-    <div id="modal-body"></div>
-  </div>
-</div>
 
 <script>
-let KEY  = '';
-let allGuestsData  = [];
-let filteredData   = [];
-let currentPage    = 1;
-const PAGE_SIZE    = 10;
-const BASE         = location.origin;
+let KEY = '';
+let allGuestsData = [];
+let filteredData = [];
+let currentPage = 1;
+let authError = '';
+const PAGE_SIZE = 10;
+const BASE = location.origin;
 
 function login() {
-  const k = document.getElementById('akey').value.trim();
-  if (!k) return;
-  KEY = k;
-  loadGuests().then(ok => {
-    if (ok) { document.getElementById('auth-gate').style.display='none'; document.getElementById('main').style.display='block'; }
-    else { document.getElementById('auth-err').style.display='block'; KEY=''; }
+  const key = document.getElementById('akey').value.trim();
+  if (!key) return;
+  KEY = key;
+  authError = 'Admin key tidak valid.';
+  loadGuests().then(function(ok) {
+    if (ok) {
+      document.getElementById('auth-gate').classList.add('hidden');
+      document.getElementById('main').classList.remove('hidden');
+      return;
+    }
+    document.getElementById('auth-err').textContent = authError;
+    KEY = '';
   });
 }
 
 async function importTamu() {
-  const btn = document.getElementById('btn-import');
-  const st  = document.getElementById('import-status');
-  btn.disabled = true; st.textContent = '';
-  document.getElementById('modal-body').innerHTML = '<div class="loading"><span class="spinner"></span>Membaca sheet tamu &amp; generate token…</div>';
+  const button = document.getElementById('btn-import');
+  const status = document.getElementById('import-status');
+  button.disabled = true;
+  status.textContent = '';
+  document.getElementById('modal-body').innerHTML = '<div class="loading"><span class="spinner"></span>Membaca daftar tamu dari Sheets…</div>';
   document.getElementById('imp-modal').classList.add('show');
   try {
-    const r = await fetch('/api/admin/import-tamu', { method:'POST', headers:{'x-admin-key':KEY} });
-    const d = await r.json();
-    if (!d.success) { document.getElementById('modal-body').innerHTML=`<p style="color:red">Error: ${d.error}</p>`; return; }
-
-    const rows = (d.guests||[]).map((g,i) => `
-      <tr>
-        <td>${i+1}</td>
-        <td><strong>${esc(g.name)}</strong></td>
-        <td>${g.akad?'<span class="badge badge-akad">Akad+Resepsi</span>':'Resepsi saja'}</td>
-        <td>${
-          g.status==='new'     ? '<span class="badge-new">Baru</span>'     :
-          g.status==='updated' ? '<span class="badge-new" style="background:#fff3cd;color:#856404">Update</span>' :
-                                 '<span class="badge-skip">Ada</span>'
-        }</td>
-        <td style="font-size:.75rem">${
-          g.url
-            ? `<a href="${g.url}" target="_blank" style="color:#4a3728">${g.url}</a>
-               <button class="copy-btn" onclick="copyText('${g.url}')">Salin</button>`
-            : '<span class="badge badge-nowa">Belum ada WA</span>'
-        }</td>
-      </tr>`).join('');
-
-    document.getElementById('modal-body').innerHTML = `
-      <div class="import-summary">
-        <div class="imp-stat"><div class="n">${d.total}</div><div class="l">Total</div></div>
-        <div class="imp-stat"><div class="n" style="color:#1a7a4a">${d.new}</div><div class="l">Token Baru</div></div>
-        <div class="imp-stat"><div class="n" style="color:#e07b00">${d.updated}</div><div class="l">Diupdate</div></div>
-        <div class="imp-stat"><div class="n" style="color:#6a0dad">${d.noWa}</div><div class="l">Belum Ada WA</div></div>
-      </div>
-      <p style="font-size:.8rem;color:${d.writeBackOk===false?'#b00020':'#666'};margin-bottom:.75rem">${
-        d.writeBackOk===false
-          ? '⚠️ Token/link gagal ditulis ke sheet — coba import ulang. Data lokal (.json) sudah terupdate.'
-          : '✅ Token sudah ditulis ke kolom D. Link (kolom E) hanya untuk tamu yang sudah ada No WA.'
-      }</p>
-      <div style="overflow-x:auto"><table class="imp-table">
-        <thead><tr><th>#</th><th>Nama</th><th>Akses</th><th>Status</th><th>Link</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table></div>`;
-
-    st.textContent = `✅ ${d.new} baru, ${d.updated} diupdate, ${d.noWa} belum ada WA`;
-    loadGuests();
-  } catch(e) {
-    document.getElementById('modal-body').innerHTML = `<p style="color:red">Gagal: ${e.message}</p>`;
-  } finally { btn.disabled = false; }
+    const response = await fetch('/api/admin/import-tamu', { method: 'POST', headers: { 'x-admin-key': KEY } });
+    const data = await response.json();
+    if (!response.ok || !data.success) throw new Error(data.error || 'Impor gagal.');
+    const rows = (data.guests || []).map(function(guest, index) {
+      const badge = guest.status === 'new' ? 'Baru' : guest.status === 'updated' ? 'Diupdate' : 'Sudah ada';
+      const access = guest.akad ? 'Akad + resepsi' : 'Resepsi saja';
+      const link = guest.url
+        ? '<a href="' + escAttr(guest.url) + '" target="_blank" rel="noopener">' + esc(guest.url) + '</a> <button class="copy-btn" type="button" onclick="copyText(' + escAttr(JSON.stringify(guest.url)) + ')">Salin</button>'
+        : '—';
+      return '<tr><td>' + (index + 1) + '</td><td><strong>' + esc(guest.name) + '</strong></td><td>' + access + '</td><td>' + badge + '</td><td>' + link + '</td></tr>';
+    }).join('');
+    document.getElementById('modal-body').innerHTML =
+      '<div class="import-summary">' +
+      '<div class="imp-stat"><div class="n">' + data.total + '</div><div class="l">Total</div></div>' +
+      '<div class="imp-stat"><div class="n">' + data.new + '</div><div class="l">Token baru</div></div>' +
+      '<div class="imp-stat"><div class="n">' + data.updated + '</div><div class="l">Diupdate</div></div>' +
+      '<div class="imp-stat"><div class="n">' + data.noWa + '</div><div class="l">Tanpa WA</div></div></div>' +
+      '<p class="modal-note">' + (data.writeBackOk === false
+        ? 'Token sudah tersimpan lokal, tetapi sebagian link gagal ditulis ke Sheets. Coba impor ulang.'
+        : 'Link personal dibuat untuk setiap token; nomor WhatsApp tidak menjadi syarat.') + '</p>' +
+      '<div class="table-wrap"><table class="imp-table"><thead><tr><th>#</th><th>Nama</th><th>Akses</th><th>Status</th><th>Link</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+    status.textContent = 'Selesai: ' + data.new + ' baru, ' + data.updated + ' diperbarui.';
+    await loadGuests();
+  } catch (error) {
+    document.getElementById('modal-body').innerHTML = '<p class="modal-note">' + esc(error.message) + '</p>';
+  } finally {
+    button.disabled = false;
+  }
 }
 
 async function generateToken() {
   const name = document.getElementById('g-name').value.trim();
-  const wa   = document.getElementById('g-wa').value.trim();
-  const akad = document.getElementById('g-akad').value;
-  if (!name) { alert('Nama tamu wajib diisi'); return; }
-  if (!wa)   { alert('No. WhatsApp wajib diisi'); return; }
-  const r = await fetch('/api/admin/generate-token', {
-    method:'POST', headers:{'Content-Type':'application/json','x-admin-key':KEY},
-    body: JSON.stringify({name, wa, akad: akad==='true'})
-  });
-  if (r.status===401) { alert('Admin key salah'); return; }
-  const d = await r.json();
-  if (d.error) { alert('Error: ' + d.error); return; }
-  document.getElementById('out-name').textContent  = d.name;
-  document.getElementById('out-akad').textContent  = d.akad ? 'Ya (Akad + Resepsi)' : 'Tidak (Resepsi saja)';
-  document.getElementById('out-wa').textContent    = d.wa;
-  document.getElementById('out-token').textContent = d.token;
-  const lnk = document.getElementById('out-link');
-  lnk.textContent = d.url; lnk.href = d.url;
-  document.getElementById('token-out').classList.add('show');
-  loadGuests();
+  const wa = document.getElementById('g-wa').value.trim();
+  const akad = document.getElementById('g-akad').value === 'true';
+  if (!name) { alert('Nama tamu wajib diisi.'); return; }
+  try {
+    const response = await fetch('/api/admin/generate-token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-key': KEY },
+      body: JSON.stringify({ name: name, wa: wa, akad: akad })
+    });
+    const data = await response.json();
+    if (!response.ok || data.error) throw new Error(data.error || 'Gagal membuat link.');
+    document.getElementById('out-name').textContent = data.name;
+    document.getElementById('out-akad').textContent = data.akad ? 'Akad dan resepsi' : 'Resepsi saja';
+    document.getElementById('out-wa').textContent = data.wa || 'Belum diisi';
+    document.getElementById('out-token').textContent = data.token;
+    const link = document.getElementById('out-link');
+    link.textContent = data.url;
+    link.href = data.url;
+    document.getElementById('token-out').classList.add('show');
+    await loadGuests();
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
-// ── Load & render guests ──────────────────────────────────────────────────────
 async function loadGuests() {
   try {
-    const r = await fetch('/api/admin/guests', { headers:{'x-admin-key':KEY} });
-    if (r.status===401) return false;
-    allGuestsData = await r.json();
+    const response = await fetch('/api/admin/guests', { headers: { 'x-admin-key': KEY } });
+    if (response.status === 503) { authError = 'ADMIN_KEY belum dikonfigurasi di server.'; return false; }
+    if (response.status === 401) { authError = 'Admin key tidak valid.'; return false; }
+    if (!response.ok) { authError = 'Tidak dapat memuat data tamu.'; return false; }
+    allGuestsData = await response.json();
     applyFilter();
     return true;
-  } catch(e) { return false; }
+  } catch (error) {
+    authError = 'Tidak dapat terhubung ke server.';
+    return false;
+  }
 }
 
 function onSearch() {
@@ -362,10 +356,8 @@ function onSearch() {
 }
 
 function applyFilter() {
-  const q = (document.getElementById('search-input')?.value || '').toLowerCase().trim();
-  filteredData = q
-    ? allGuestsData.filter(g => (g.name||'').toLowerCase().includes(q))
-    : allGuestsData;
+  const query = (document.getElementById('search-input').value || '').toLowerCase().trim();
+  filteredData = query ? allGuestsData.filter(function(guest) { return (guest.name || '').toLowerCase().includes(query); }) : allGuestsData;
   renderPage();
   renderPagination();
   renderStats();
@@ -374,98 +366,79 @@ function applyFilter() {
 function renderPage() {
   const start = (currentPage - 1) * PAGE_SIZE;
   const slice = filteredData.slice(start, start + PAGE_SIZE);
-  let hadir=0, tidak=0, rsvpN=0;
-  // Count stats from full data
-  allGuestsData.forEach(g => {
-    if (g.rsvp) { rsvpN++;
-      if (g.rsvp.response==='tidak-hadir') tidak++; else hadir++;
+  document.getElementById('guest-tbody').innerHTML = slice.map(function(guest, index) {
+    const url = BASE + '/?token=' + encodeURIComponent(guest.token);
+    let rsvpBadge = '<span class="badge badge-pending">Belum RSVP</span>';
+    if (guest.rsvp) {
+      rsvpBadge = guest.rsvp.response === 'tidak-hadir'
+        ? '<span class="badge badge-no">Tidak hadir</span>'
+        : '<span class="badge badge-yes">' + esc(fmtR(guest.rsvp.response)) + '</span>';
     }
-  });
-
-  document.getElementById('guest-tbody').innerHTML = slice.map((g, idx) => {
-    const globalIdx = start + idx + 1;
-    const url       = `${BASE}/?token=${g.token}`;
-    const hasWa     = !!g.wa;
-    let badge = '<span class="badge badge-pending">Belum</span>';
-    if (g.rsvp) {
-      if (g.rsvp.response==='tidak-hadir') badge='<span class="badge badge-no">Tidak Hadir</span>';
-      else badge=`<span class="badge badge-yes">${fmtR(g.rsvp.response)}</span>`;
-    }
-    const waDisplay = hasWa
-      ? (g.rsvp?.whatsapp
-          ? `<a href="https://wa.me/${g.rsvp.whatsapp.replace(/\D/g,'')}" target="_blank" style="color:#25d366">${g.rsvp.whatsapp}</a>`
-          : g.wa)
-      : '<span class="badge badge-nowa">Belum ada WA</span>';
-    const time      = g.rsvp ? new Date(g.rsvp.submittedAt).toLocaleString('id-ID') : '—';
-    const akadBadge = g.akad ? '<span class="badge badge-akad">Ya</span>' : '—';
-    const tokenEsc  = g.token.replace(/'/g,"\\'");
-    return `<tr>
-      <td>${globalIdx}</td>
-      <td>
-        <strong>${esc(g.name)}</strong>
-        ${g.rsvp?.message ? `<br><small style="color:#888">${esc(g.rsvp.message.substring(0,50))}</small>` : ''}
-      </td>
-      <td>${akadBadge}</td>
-      <td>${badge}</td>
-      <td>${waDisplay}</td>
-      <td style="font-size:.72rem;color:#888">${time}</td>
-      <td style="white-space:nowrap">
-        ${hasWa ? `<button class="copy-btn" onclick="copyText('${url}')">Salin Link</button>` : ''}
-        <button class="edit-btn" onclick="openEdit('${tokenEsc}')">Edit</button>
-      </td>
-    </tr>`;
+    const whatsapp = guest.wa
+      ? (guest.rsvp && guest.rsvp.whatsapp
+        ? '<a href="https://wa.me/' + guest.rsvp.whatsapp.replace(/\D/g, '') + '" target="_blank" rel="noopener">' + esc(guest.rsvp.whatsapp) + '</a>'
+        : esc(guest.wa))
+      : '<span class="badge badge-nowa">Belum diisi</span>';
+    const time = guest.rsvp ? new Date(guest.rsvp.submittedAt).toLocaleString('id-ID') : '—';
+    const akad = guest.akad ? '<span class="badge badge-akad">Ya</span>' : 'Resepsi';
+    return '<tr>' +
+      '<td>' + (start + index + 1) + '</td>' +
+      '<td><strong>' + esc(guest.name) + '</strong>' + (guest.rsvp && guest.rsvp.message ? '<br><small>' + esc(guest.rsvp.message.substring(0, 80)) + '</small>' : '') + '</td>' +
+      '<td>' + akad + '</td><td>' + rsvpBadge + '</td><td>' + whatsapp + '</td>' +
+      '<td>' + time + '</td><td class="actions"><button class="copy-btn" type="button" onclick="copyText(' + escAttr(JSON.stringify(url)) + ')">Salin link</button> <button class="copy-btn" type="button" onclick="openEdit(' + escAttr(JSON.stringify(guest.token)) + ')">Edit</button></td></tr>';
   }).join('');
 }
 
 function renderPagination() {
-  const total     = filteredData.length;
+  const total = filteredData.length;
   const totalPages = Math.ceil(total / PAGE_SIZE) || 1;
-  const el = document.getElementById('pagination');
-  if (totalPages <= 1) { el.innerHTML = ''; return; }
-
-  let html = `<button onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹ Prev</button>`;
-  for (let p = 1; p <= totalPages; p++) {
-    if (totalPages > 7 && p > 2 && p < totalPages - 1 && Math.abs(p - currentPage) > 1) {
-      if (p === 3 || p === totalPages - 2) html += `<span>…</span>`;
+  const element = document.getElementById('pagination');
+  if (totalPages <= 1) { element.innerHTML = ''; return; }
+  let html = '<button type="button" onclick="goPage(' + (currentPage - 1) + ')" ' + (currentPage === 1 ? 'disabled' : '') + '>‹</button>';
+  for (let page = 1; page <= totalPages; page++) {
+    if (totalPages > 7 && page > 2 && page < totalPages - 1 && Math.abs(page - currentPage) > 1) {
+      if (page === 3 || page === totalPages - 2) html += '<span>…</span>';
       continue;
     }
-    html += `<button class="${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+    html += '<button type="button" class="' + (page === currentPage ? 'active' : '') + '" onclick="goPage(' + page + ')">' + page + '</button>';
   }
-  html += `<button onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>Next ›</button>`;
-  html += `<span>${total} tamu · halaman ${currentPage}/${totalPages}</span>`;
-  el.innerHTML = html;
+  html += '<button type="button" onclick="goPage(' + (currentPage + 1) + ')" ' + (currentPage === totalPages ? 'disabled' : '') + '>›</button>';
+  html += '<span>' + total + ' tamu · halaman ' + currentPage + '/' + totalPages + '</span>';
+  element.innerHTML = html;
 }
 
-function goPage(p) {
+function goPage(page) {
   const totalPages = Math.ceil(filteredData.length / PAGE_SIZE) || 1;
-  if (p < 1 || p > totalPages) return;
-  currentPage = p;
+  if (page < 1 || page > totalPages) return;
+  currentPage = page;
   renderPage();
   renderPagination();
 }
 
 function renderStats() {
-  let hadir=0, tidak=0, rsvpN=0;
-  allGuestsData.forEach(g => {
-    if (g.rsvp) { rsvpN++;
-      if (g.rsvp.response==='tidak-hadir') tidak++; else hadir++;
-    }
+  let hadir = 0;
+  let tidak = 0;
+  let rsvp = 0;
+  allGuestsData.forEach(function(guest) {
+    if (!guest.rsvp) return;
+    rsvp++;
+    if (guest.rsvp.response === 'tidak-hadir') tidak++;
+    else hadir++;
   });
   document.getElementById('st-total').textContent = allGuestsData.length;
-  document.getElementById('st-rsvp').textContent  = rsvpN;
+  document.getElementById('st-rsvp').textContent = rsvp;
   document.getElementById('st-hadir').textContent = hadir;
   document.getElementById('st-tidak').textContent = tidak;
 }
 
-// ── Edit guest ────────────────────────────────────────────────────────────────
 function openEdit(token) {
-  const g = allGuestsData.find(x => x.token === token);
-  if (!g) return;
-  document.getElementById('edit-token').value    = token;
-  document.getElementById('edit-orig-wa').value  = g.wa || '';
-  document.getElementById('edit-name').value     = g.name || '';
-  document.getElementById('edit-wa').value       = g.wa || '';
-  document.getElementById('edit-akad').value     = g.akad ? 'true' : 'false';
+  const guest = allGuestsData.find(function(item) { return item.token === token; });
+  if (!guest) return;
+  document.getElementById('edit-token').value = token;
+  document.getElementById('edit-orig-wa').value = guest.wa || '';
+  document.getElementById('edit-name').value = guest.name || '';
+  document.getElementById('edit-wa').value = guest.wa || '';
+  document.getElementById('edit-akad').value = guest.akad ? 'true' : 'false';
   document.getElementById('edit-wa-warning').classList.remove('show');
   document.getElementById('edit-status').textContent = '';
   document.getElementById('edit-save-btn').disabled = false;
@@ -476,86 +449,71 @@ function closeEdit() {
   document.getElementById('edit-modal').classList.remove('show');
 }
 
-function wa5digits(wa) {
-  return String(wa||'').replace(/\D/g,'').slice(-5) || '—';
-}
-
 function checkWaChange() {
-  const origWa = document.getElementById('edit-orig-wa').value;
-  const newWa  = document.getElementById('edit-wa').value;
-  const warning = document.getElementById('edit-wa-warning');
-  if (newWa && newWa !== origWa) {
-    document.getElementById('warn-old-wa5').textContent = wa5digits(origWa);
-    document.getElementById('warn-new-wa5').textContent = wa5digits(newWa);
-    warning.classList.add('show');
-  } else {
-    warning.classList.remove('show');
-  }
+  const oldWa = document.getElementById('edit-orig-wa').value;
+  const newWa = document.getElementById('edit-wa').value;
+  document.getElementById('edit-wa-warning').classList.toggle('show', oldWa !== newWa);
 }
 
 async function saveEdit() {
   const token = document.getElementById('edit-token').value;
-  const name  = document.getElementById('edit-name').value.trim();
-  const wa    = document.getElementById('edit-wa').value.trim();
-  const akad  = document.getElementById('edit-akad').value;
-  const st    = document.getElementById('edit-status');
-  if (!name) { st.textContent = '⚠️ Nama tidak boleh kosong'; return; }
-
-  document.getElementById('edit-save-btn').disabled = true;
-  st.textContent = 'Menyimpan…';
+  const name = document.getElementById('edit-name').value.trim();
+  const wa = document.getElementById('edit-wa').value.trim();
+  const akad = document.getElementById('edit-akad').value === 'true';
+  const status = document.getElementById('edit-status');
+  const button = document.getElementById('edit-save-btn');
+  if (!name) { status.textContent = 'Nama tidak boleh kosong.'; return; }
+  button.disabled = true;
+  status.textContent = 'Menyimpan…';
   try {
-    const r = await fetch(`/api/admin/guest/${token}`, {
-      method: 'PUT',
-      headers: { 'Content-Type':'application/json','x-admin-key':KEY },
-      body: JSON.stringify({ name, wa, akad: akad==='true' }),
+    const response = await fetch('/api/admin/guest/' + encodeURIComponent(token), {
+      method: 'PUT', headers: { 'Content-Type': 'application/json', 'x-admin-key': KEY },
+      body: JSON.stringify({ name: name, wa: wa, akad: akad })
     });
-    const d = await r.json();
-    if (d.success) {
-      st.textContent = '✅ Tersimpan';
-      setTimeout(() => closeEdit(), 800);
-      loadGuests();
-    } else {
-      st.textContent = '❌ ' + (d.error || 'Gagal menyimpan');
-      document.getElementById('edit-save-btn').disabled = false;
-    }
-  } catch(e) {
-    st.textContent = '❌ Error: ' + e.message;
-    document.getElementById('edit-save-btn').disabled = false;
+    const data = await response.json();
+    if (!response.ok || !data.success) throw new Error(data.error || 'Gagal menyimpan.');
+    status.textContent = 'Tersimpan.';
+    await loadGuests();
+    window.setTimeout(closeEdit, 600);
+  } catch (error) {
+    status.textContent = error.message;
+    button.disabled = false;
   }
 }
 
-// ── Reset ─────────────────────────────────────────────────────────────────────
 function showResetConfirm() {
   document.getElementById('reset-confirm-input').value = '';
   document.getElementById('reset-modal').classList.add('show');
 }
 
 async function doReset() {
-  const val = document.getElementById('reset-confirm-input').value.trim();
-  if (val !== 'RESET') { alert('Ketik RESET untuk konfirmasi'); return; }
+  if (document.getElementById('reset-confirm-input').value.trim() !== 'RESET') { alert('Ketik RESET untuk konfirmasi.'); return; }
   try {
-    const r = await fetch('/api/admin/reset', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-admin-key': KEY },
+    const response = await fetch('/api/admin/reset', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'x-admin-key': KEY },
       body: JSON.stringify({ confirm: 'RESET' })
     });
-    const d = await r.json();
+    const data = await response.json();
     document.getElementById('reset-modal').classList.remove('show');
-    if (d.success) {
-      document.getElementById('reset-status').textContent = '✅ ' + d.message;
-      loadGuests();
-    } else {
-      document.getElementById('reset-status').textContent = '❌ ' + (d.error || 'Gagal reset');
-    }
-  } catch(e) {
-    document.getElementById('reset-status').textContent = '❌ Gagal: ' + e.message;
+    if (!response.ok || !data.success) throw new Error(data.error || 'Gagal reset.');
+    document.getElementById('reset-status').textContent = data.message;
+    await loadGuests();
+  } catch (error) {
+    document.getElementById('reset-status').textContent = error.message;
   }
 }
 
-function fmtR(v){return({'hadir':'Hadir','hadir-kampoeng':'Kampoeng Percik','hadir-hotel':'Hotel Wahid','hadir-keduanya':'Keduanya','tidak-hadir':'Tidak Hadir'})[v]||v}
-function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function copyText(t){navigator.clipboard.writeText(t).then(()=>alert('Link disalin!'))}
+function fmtR(value) {
+  return ({ 'hadir': 'Taman Arunika · Resepsi', 'hadir-kampoeng': 'Taman Arunika · Prosesi', 'hadir-hotel': 'Taman Arunika · Resepsi', 'hadir-keduanya': 'Keduanya', 'tidak-hadir': 'Tidak hadir' })[value] || value;
+}
+function esc(value) {
+  return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function escAttr(value) { return esc(value); }
+async function copyText(value) {
+  try { await navigator.clipboard.writeText(value); alert('Link disalin.'); }
+  catch (error) { window.prompt('Salin link undangan:', value); }
+}
 </script>
-
 </body>
 </html>

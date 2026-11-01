@@ -1,0 +1,26 @@
+#changelog
+
+## 2026-11-01
+- Merombak tampilan undangan dan panel admin dengan palet sage, taupe, sand, cream, dan ivory dari referensi.
+- Menghapus verifikasi 5 digit WhatsApp pada halaman tamu; token personal tetap dipakai untuk personalisasi dan RSVP. Halaman undangan tetap dapat dibaca tanpa token.
+- Menjadikan nomor WhatsApp opsional dan memastikan setiap tamu memiliki link undangan.
+- Mempertahankan autentikasi admin dan menolak akses API admin bila ADMIN_KEY belum dikonfigurasi.
+- Menghapus halaman dan endpoint check-in.
+- Memperpanjang tanda tangan HMAC untuk token baru, tetap menerima token lama, dan mewajibkan TOKEN_SECRET di production.
+- Menghapus foto dari halaman undangan dan menggantinya dengan bidang warna, monogram, serta ornamen CSS dalam palet sage, taupe, sand, cream, dan ivory.
+- Mengganti nama pasangan pada halaman undangan dan panel admin menjadi Widya & Andy, serta menghapus nama keluarga dan orang tua pasangan lama.
+- Menata ulang opening sebagai kartu undangan tipografis berornamen botani tanpa foto, dengan sapaan tamu, nama mempelai, tanggal, waktu, dan alamat.
+- Menggunakan detail acara contoh Sabtu, 20 Maret 2027 pukul 15.00 WIB di Taman Arunika, Jl. Puspa Raya No. 28, Bandung; menyamakan detail di jadwal, RSVP, hitung mundur, footer, dan panel admin.
+- Menambahkan bagian Our Story setelah opening berupa timeline vertikal tanpa foto, dengan animasi fade-in bertahap dan milestone contoh sementara.
+- Menambahkan halaman The Details setelah Our Story berisi lokasi, tema pakaian, rute, dan akomodasi contoh dengan ilustrasi vektor tanpa foto.
+- Menghapus section kutipan “Looks like we made it” di antara Our Story dan bagian mempelai.
+- Mengganti section “Dua hati, satu perjalanan” dengan timeline dummy pemberkatan dan resepsi, lengkap dengan ikon vektor tanpa foto.
+- Menghapus section “Rangkaian Acara” lama agar The Timeline menjadi satu-satunya rundown acara.
+- Mendesain ulang RSVP seperti referensi “kindly RSVP”: pilihan hadir/tidak hadir, nama undangan otomatis dari token dalam field hanya-baca, serta pilihan jumlah orang yang tampil saat memilih hadir; pengiriman tetap memakai endpoint RSVP yang ada.
+- Menampilkan form RSVP tanpa token untuk sementara dan membuat field nama dapat diisi manual pada mode tersebut; pengiriman tanpa token menampilkan pemberitahuan sampai sistem token aktif.
+- Menambahkan bagian Wedding Gift setelah RSVP dengan kartu transfer bank dan alamat pengiriman, memakai placeholder “Akan diinformasikan” sampai detail tersedia.
+- Menambahkan buku tamu publik terpisah dari RSVP dengan validasi nama/ucapan, penyimpanan lokal di comments.json, dan endpoint daftar komentar berhalaman (8 komentar per halaman).
+- Mengoreksi ejaan nama pasangan menjadi Widya & Andi di halaman undangan dan panel admin mengikuti ejaan pada logo.
+- Menambahkan logo monogram Andi & Widya berbasis SVG di opening dan penutup, serta mengganti halaman terakhir dengan ilustrasi placeholder tanpa foto.
+- Menjadikan bahasa Inggris sebagai bahasa default undangan, menambahkan toggle EN/ID, dan menerjemahkan konten serta pesan dinamis di halaman tamu.
+- Memindahkan lokasi contoh dari Bandung ke Taman Arunika di Sleman, Yogyakarta, termasuk alamat, rute peta, footer, dan ringkasan lokasi admin.

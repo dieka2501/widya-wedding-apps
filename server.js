@@ -23,11 +23,13 @@ const CREDENTIAL_PATH = path.join(__dirname, 'credential.json');
 const SPREADSHEET_ID  = process.env.SPREADSHEET_ID || '';
 const SHEET_RSVP      = process.env.SHEET_NAME    || 'RSVP';
 const SHEET_TAMU      = process.env.SHEET_TAMU    || 'tamu';
-const SHEET_CHECKIN   = process.env.SHEET_CHECKIN || 'check-in';
 const BASE_URL        = process.env.BASE_URL    || `http://localhost:${PORT}`;
 const TOKEN_SECRET    = process.env.TOKEN_SECRET || 'ganti-dengan-secret-yang-kuat';
 
 if (TOKEN_SECRET === 'ganti-dengan-secret-yang-kuat') {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('TOKEN_SECRET wajib disetel dengan nilai acak yang kuat di production.');
+  }
   console.warn('⚠   TOKEN_SECRET belum diset di .env — gunakan nilai acak yang kuat!');
 }
 
@@ -44,18 +46,16 @@ function makeToken(akad) {
   const akadFlag = akad ? '1' : '0';
   const payload  = nonce + akadFlag;
   const sig      = crypto.createHmac('sha256', TOKEN_SECRET)
-                         .update(payload).digest('hex')
-                         .substring(0, 8);
-  return payload + sig; // 33 chars
+                         .update(payload).digest('hex');
+  return payload + sig; // 89 chars
 }
 
 function verifyToken(token) {
-  if (!token || token.length !== 33) return { valid: false };
+  if (!token || (token.length !== 33 && token.length !== 89)) return { valid: false };
   const payload  = token.substring(0, 25);
   const sig      = token.substring(25);
-  const expected = crypto.createHmac('sha256', TOKEN_SECRET)
-                         .update(payload).digest('hex')
-                         .substring(0, 8);
+  const fullSig  = crypto.createHmac('sha256', TOKEN_SECRET).update(payload).digest('hex');
+  const expected = token.length === 33 ? fullSig.substring(0, 8) : fullSig;
   if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) return { valid: false };
   return { valid: true, akad: token[24] === '1' };
 }
@@ -64,17 +64,10 @@ function makeUrl(token) {
   return `${BASE_URL}/?token=${token}`;
 }
 
-// ─── WA Helper ────────────────────────────────────────────────────────────────
-// Ambil 5 digit terakhir nomor WA (strip semua non-digit dulu)
-function wa5(wa) {
-  const digits = String(wa || '').replace(/\D/g, '');
-  return digits.slice(-5);
-}
-
 // ─── Local File Store ─────────────────────────────────────────────────────────
 const guestsFile  = path.join(__dirname, 'guests.json');
 const rsvpFile    = path.join(__dirname, 'rsvp.json');
-const checkinFile = path.join(__dirname, 'checkin.json');
+const commentsFile = path.join(__dirname, 'comments.json');
 const load = f      => fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : {};
 const save = (f, d) => fs.writeFileSync(f, JSON.stringify(d, null, 2));
 
@@ -96,9 +89,9 @@ function canSync() {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function fmtResp(v) {
   return ({
-    'hadir':           'Hadir',
-    'hadir-kampoeng':  'Hadir di Kampoeng Percik (Prosesi)',
-    'hadir-hotel':     'Hadir di Hotel Wahid Prime (Resepsi)',
+    'hadir':           'Hadir di Taman Arunika (Resepsi)',
+    'hadir-kampoeng':  'Hadir di Taman Arunika (Prosesi)',
+    'hadir-hotel':     'Hadir di Taman Arunika (Resepsi)',
     'hadir-keduanya':  'Hadir di Kedua Acara',
     'tidak-hadir':     'Tidak Dapat Hadir',
   })[v] || v;
@@ -190,11 +183,9 @@ async function syncTamuToSheets(token, name, akad, wa, url) {
 // Logic per baris:
 //   - Tidak ada nama             → skip
 //   - Tidak ada token & link     → BARU
-//       - Ada WA  → generate token + link, tulis D+E
-//       - Tidak ada WA → generate token saja, tulis D, E kosong
+//       - Generate token + link, tulis D+E (WA opsional)
 //   - Ada token, tidak ada link  → UPDATE
-//       - Ada WA  → update data, generate link, tulis E
-//       - Tidak ada WA → update data saja, E tetap kosong
+//       - Pertahankan token, update data, isi link di E
 //   - Ada token & link           → EXISTING → refresh cache
 async function importFromTamuSheet() {
   const sheets = await getSheetsClient();
@@ -221,17 +212,17 @@ async function importFromTamuSheet() {
     const hasWa = !!wa;
 
     if (!exToken && !exLink) {
-      // BARU — selalu generate token, link hanya jika ada WA
+      // BARU — token dan link tidak bergantung pada nomor WhatsApp
       const token = makeToken(akad);
-      const url   = hasWa ? makeUrl(token) : '';
+      const url   = makeUrl(token);
       guests[token] = { name, akad, wa };
-      updates.push({ rowNum, token, url, status: 'new', hasWa, writeD: true, writeE: hasWa });
+      updates.push({ rowNum, token, url, status: 'new', hasWa, writeD: true, writeE: true });
 
     } else if (exToken && !exLink) {
-      // UPDATE — pertahankan token, update data, link jika ada WA
-      const url = hasWa ? makeUrl(exToken) : '';
+      // UPDATE — pertahankan token dan pastikan link tersedia
+      const url = makeUrl(exToken);
       guests[exToken] = { name, akad, wa };
-      updates.push({ rowNum, token: exToken, url, status: 'updated', hasWa, writeD: false, writeE: hasWa });
+      updates.push({ rowNum, token: exToken, url, status: 'updated', hasWa, writeD: false, writeE: true });
 
     } else if (exToken && exLink) {
       // EXISTING — refresh cache saja
@@ -290,8 +281,7 @@ async function importFromTamuSheet() {
 // ROUTES
 // ═══════════════════════════════════════════════════════════════════════════════
 
-// ── Pre-validate: cek HMAC + ambil nama (untuk tampil di halaman auth) ────────
-// Tidak verifikasi WA — hanya untuk menampilkan nama di overlay auth
+// ── Ambil data undangan personal berdasarkan token ────────────────────────────
 app.get('/api/pre-validate', async (req, res) => {
   const { token } = req.query;
 
@@ -334,66 +324,56 @@ app.get('/api/pre-validate', async (req, res) => {
 
   if (!guest) return res.status(403).json({ valid: false });
 
-  // 4. Tamu terdaftar tapi belum punya No WA → link belum aktif → UNAUTH
-  if (!guest.wa) return res.status(403).json({ valid: false, reason: 'no_wa' });
-
-  // Kembalikan nama saja — WA tidak dikirim ke client
-  res.json({ valid: true, name: guest.name });
+  // Token pada URL menjadi identitas personal; kode WhatsApp tidak lagi diminta.
+  res.json({ valid: true, name: guest.name, akad: guest.akad });
 });
 
-// ── Full validate: HMAC + verifikasi 5 digit WA ───────────────────────────────
-app.post('/api/validate', async (req, res) => {
-  const { token, wa5: inputWa5 } = req.body;
+// ── Public guestbook comments ────────────────────────────────────────────────
+const COMMENT_PAGE_SIZE = 8;
 
-  // 1. Cek HMAC
-  const result = verifyToken(token);
-  if (!result.valid) return res.status(403).json({ valid: false, reason: 'invalid_token' });
+app.get('/api/comments', (req, res) => {
+  const comments = load(commentsFile);
+  const sorted = (Array.isArray(comments) ? comments : [])
+    .slice()
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  const total = sorted.length;
+  const totalPages = Math.ceil(total / COMMENT_PAGE_SIZE);
+  const requestedPage = Math.max(1, parseInt(req.query.page, 10) || 1);
+  const page = totalPages ? Math.min(requestedPage, totalPages) : 1;
+  const start = (page - 1) * COMMENT_PAGE_SIZE;
 
-  // 2. Cari guest
-  let guest = load(guestsFile)[token];
+  res.json({
+    comments: sorted.slice(start, start + COMMENT_PAGE_SIZE),
+    page,
+    pageSize: COMMENT_PAGE_SIZE,
+    total,
+    totalPages
+  });
+});
 
-  // 3. Fallback ke Sheets
-  if (!guest && canSync()) {
-    try {
-      const sheets = await getSheetsClient();
-      const col    = await sheets.spreadsheets.values.get({
-        spreadsheetId: SPREADSHEET_ID,
-        range: `${SHEET_TAMU}!A:D`,
-      });
-      const rows = col.data.values || [];
-      for (let i = 1; i < rows.length; i++) {
-        if ((rows[i][3] || '').trim() === token) {
-          const name    = (rows[i][0] || '').trim();
-          const wa      = (rows[i][2] || '').trim();
-          const akadRaw = (rows[i][1] || '').trim().toUpperCase();
-          const akad    = akadRaw === 'TRUE' || akadRaw === 'YA' || akadRaw === '1';
-          if (name && wa) {
-            const guests  = load(guestsFile);
-            guests[token] = { name, akad, wa };
-            save(guestsFile, guests);
-            guest = guests[token];
-          }
-          break;
-        }
-      }
-    } catch(e) {
-      console.error('[Validate] Sheets fallback gagal:', e.message);
-    }
+app.post('/api/comments', (req, res) => {
+  const body = req.body || {};
+  const name = typeof body.name === 'string' ? body.name.trim() : '';
+  const message = typeof body.message === 'string' ? body.message.trim() : '';
+  if (!name || !message) {
+    return res.status(400).json({ success: false, message: 'Nama dan ucapan wajib diisi.' });
+  }
+  if (name.length > 80 || message.length > 500) {
+    return res.status(400).json({ success: false, message: 'Nama maksimal 80 karakter dan ucapan maksimal 500 karakter.' });
   }
 
-  // 4. Token tidak terdaftar
-  if (!guest) return res.status(403).json({ valid: false, reason: 'not_registered' });
+  const comments = load(commentsFile);
+  const entry = {
+    id: crypto.randomBytes(16).toString('hex'),
+    name,
+    message,
+    createdAt: new Date().toISOString()
+  };
+  const list = Array.isArray(comments) ? comments : [];
+  list.push(entry);
+  save(commentsFile, list);
 
-  // 5. Verifikasi 5 digit WA
-  const expected5 = wa5(guest.wa);
-  const input5    = String(inputWa5 || '').replace(/\D/g, '').slice(-5);
-
-  if (!expected5 || input5 !== expected5) {
-    return res.status(403).json({ valid: false, reason: 'wrong_wa' });
-  }
-
-  // Akad diambil dari guests.json (bukan token) agar perubahan di sheet langsung berlaku
-  res.json({ valid: true, name: guest.name, akad: guest.akad });
+  res.status(201).json({ success: true, comment: entry });
 });
 
 // ── Cek status RSVP tamu (sudah submit atau belum) ───────────────────────────
@@ -445,6 +425,7 @@ app.post('/api/rsvp', async (req, res) => {
 
 // ── Admin auth middleware ─────────────────────────────────────────────────────
 function adminAuth(req, res, next) {
+  if (!process.env.ADMIN_KEY) return res.status(503).json({ error: 'ADMIN_KEY belum dikonfigurasi' });
   if (req.headers['x-admin-key'] !== process.env.ADMIN_KEY) return res.status(401).json({ error: 'Unauthorized' });
   next();
 }
@@ -453,19 +434,17 @@ function adminAuth(req, res, next) {
 app.post('/api/admin/generate-token', adminAuth, async (req, res) => {
   const { name, akad, wa } = req.body;
   if (!name) return res.status(400).json({ error: 'Name required' });
-  if (!wa)   return res.status(400).json({ error: 'No WA required' });
-
   const isAkad  = akad === true || akad === 'true';
   const token   = makeToken(isAkad);
   const guests  = load(guestsFile);
-  guests[token] = { name, akad: isAkad, wa };
+  guests[token] = { name, akad: isAkad, wa: wa || '' };
   save(guestsFile, guests);
   const url = makeUrl(token);
 
-  syncTamuToSheets(token, name, isAkad, wa, url)
+  syncTamuToSheets(token, name, isAkad, wa || '', url)
     .catch(e => console.error('[Generate] Sync error:', e.message));
 
-  res.json({ token, url, name, akad: isAkad, wa });
+  res.json({ token, url, name, akad: isAkad, wa: wa || '' });
 });
 
 // ── Update guest (semua field, token sebagai primary key) ─────────────────────
@@ -508,7 +487,7 @@ app.put('/api/admin/guest/:token', adminAuth, async (req, res) => {
         const g           = guests[token];
         const newWa       = g.wa || '';
         // Tulis link jika WA baru ada dan (link belum ada ATAU WA berubah)
-        const writeLink   = newWa && (!exLink || prevWa !== newWa);
+        const writeLink   = !exLink || prevWa !== newWa;
         const url         = writeLink ? makeUrl(token) : exLink;
         const range       = writeLink ? `${SHEET_TAMU}!A${rowIdx}:E${rowIdx}` : `${SHEET_TAMU}!A${rowIdx}:C${rowIdx}`;
         const values      = writeLink
@@ -528,7 +507,7 @@ app.put('/api/admin/guest/:token', adminAuth, async (req, res) => {
     }
   }
 
-  const finalUrl = guests[token].wa ? makeUrl(token) : '';
+  const finalUrl = makeUrl(token);
   res.json({ success: true, token, url: finalUrl, ...guests[token] });
 });
 
@@ -550,7 +529,7 @@ app.get('/api/admin/guests', adminAuth, (req, res) => {
   const guests = load(guestsFile);
   const rsvp   = load(rsvpFile);
   res.json(Object.entries(guests).map(([t, g]) => ({
-    token: t, ...g, wa5: wa5(g.wa), rsvp: rsvp[t] || null,
+    token: t, ...g, rsvp: rsvp[t] || null,
   })));
 });
 
@@ -575,87 +554,6 @@ app.post('/api/admin/reset', adminAuth, (req, res) => {
   save(rsvpFile, {});
   console.log(`[Reset] ${guestCount} tamu dan ${rsvpCount} RSVP direset`);
   res.json({ success: true, message: `Reset selesai. ${guestCount} tamu dan ${rsvpCount} RSVP dihapus.` });
-});
-
-// ─── Sync check-in → sheet check-in ──────────────────────────────────────────
-async function syncCheckinToSheets(data) {
-  if (!canSync()) return;
-  try {
-    const sheets = await getSheetsClient();
-    const hdr = await sheets.spreadsheets.values.get({
-      spreadsheetId: SPREADSHEET_ID, range: `${SHEET_CHECKIN}!A1:C1`,
-    });
-    const hasHeader = hdr.data.values?.[0]?.[0] === 'Token';
-    if (!hasHeader) {
-      await sheets.spreadsheets.values.update({
-        spreadsheetId: SPREADSHEET_ID, range: `${SHEET_CHECKIN}!A1`,
-        valueInputOption: 'RAW',
-        requestBody: { values: [['Token', 'Nama Undangan', 'Date time check in']] },
-      });
-    }
-    const col    = await sheets.spreadsheets.values.get({ spreadsheetId: SPREADSHEET_ID, range: `${SHEET_CHECKIN}!A:A` });
-    const tokens = col.data.values || [];
-    let rowIdx   = -1;
-    for (let i = 1; i < tokens.length; i++) {
-      if (tokens[i]?.[0] === data.token) { rowIdx = i + 1; break; }
-    }
-    const row = [
-      data.token, data.name,
-      new Date(data.checkinAt).toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' }),
-    ];
-    if (rowIdx > 0) {
-      await sheets.spreadsheets.values.update({
-        spreadsheetId: SPREADSHEET_ID, range: `${SHEET_CHECKIN}!A${rowIdx}`,
-        valueInputOption: 'RAW', requestBody: { values: [row] },
-      });
-    } else {
-      await sheets.spreadsheets.values.append({
-        spreadsheetId: SPREADSHEET_ID, range: `${SHEET_CHECKIN}!A1`,
-        valueInputOption: 'RAW', insertDataOption: 'INSERT_ROWS',
-        requestBody: { values: [row] },
-      });
-    }
-    console.log(`[Sheets] Check-in synced: ${data.name}`);
-  } catch (e) {
-    console.error(`[Sheets] Check-in sync GAGAL untuk ${data.name}:`, e.message);
-  }
-}
-
-// ── Halaman check-in (untuk petugas) ─────────────────────────────────────────
-app.get('/check-in', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'checkin.html'));
-});
-
-// ── API check-in ─────────────────────────────────────────────────────────────
-app.post('/api/checkin', async (req, res) => {
-  const { token } = req.body;
-  if (!token) return res.status(400).json({ success: false, message: 'Token diperlukan' });
-
-  const result = verifyToken(token);
-  if (!result.valid) return res.status(403).json({ success: false, message: 'Token tidak valid' });
-
-  const guests  = load(guestsFile);
-  const name    = guests[token]?.name || 'Tamu Undangan';
-  const checkins = load(checkinFile);
-
-  if (checkins[token]) {
-    return res.json({
-      success: true,
-      alreadyCheckedIn: true,
-      name,
-      checkinAt: checkins[token].checkinAt,
-    });
-  }
-
-  // First check-in
-  const checkinAt = new Date().toISOString();
-  checkins[token] = { name, checkinAt };
-  save(checkinFile, checkins);
-
-  syncCheckinToSheets({ token, name, checkinAt })
-    .catch(e => console.error('[Checkin] Unhandled sync error:', e.message));
-
-  res.json({ success: true, alreadyCheckedIn: false, name, checkinAt });
 });
 
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));

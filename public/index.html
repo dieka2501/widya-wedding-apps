@@ -1,1690 +1,1120 @@
-<!DOCTYPE html>
-<html lang="id">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Undangan Pernikahan Putri dan Dikdik</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f0e8">
+  <meta name="description" content="Wedding invitation of Widya and Andi.">
+  <title>Widya &amp; Andi — Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      /* ── COLOR PALETTE ──────────────────────────────────────────────── */
-      --tan:    #B9A583;
-      --beige:  #CEC4B6;
-      --navy:   #292F33;
-      --orange: #C9611A;
-      --pure:   #ffffff;
-      --navy-deep:#173E70;
-
-      /* ── FONT ROLES ──────────────────────────────────────────────────── */
-      --font-script: 'Great Vibes', cursive;
-      --font-serif:  'Cormorant Garamond', serif;
-      --font-sans:   'DM Sans', sans-serif;
-
-      /* ── ASSET URLS (diatur lewat PHOTO_CONFIG di JS) ───────────────── */
-      --batik-url: url('/optimized_batik.webp');
-    }
-    html{scroll-behavior:smooth}
-    body{
-      background:var(--beige);
-      color:var(--navy);
-      font-family:var(--font-sans);
-      font-weight:300;
-      line-height:1.8;
-      overflow-x:hidden;
-      position:relative
-    }
-
-    /* ── LOADING ─────────────────────────────────────────────────────── */
-    #loading{display:none;position:fixed;inset:0;background:var(--beige);z-index:9998;justify-content:center;align-items:center;flex-direction:column}
-    #loading.active{display:flex}
-    .ld-ring{width:36px;height:36px;border:2px solid var(--orange);border-top-color:transparent;border-radius:50%;animation:spin .9s linear infinite;margin-bottom:1.25rem}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    
-    /* =========================
-    BATIK SYSTEM (REFactored)
-    ========================= */
     :root {
-        --batik-url: url('/optimized_batik.webp');
-        --batik-kanan-url: url('/batik-sisi-kanan.webp');
-        --batik-orange-kiri-url: url('/batik-orange-kiri-cropped.webp');
-        --batik-putih-kanan-url: url('/batik-putih-kanan-cropped.webp');
-
-        /* ukuran lebih besar karena raster */
-        --batik-size: clamp(400px, 60vw, 900px);
-
-        --batik-opacity: 0.9;
-      }
-
-    /* ── FIRST SECTION (COVER) ───────────────────────────────────────── */
-    #first-section{
-      min-height:100svh;
-      background:#151d45;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:flex-start;
-      text-align:left;
-      padding:clamp(2.75rem,5vw,4.5rem) clamp(1.25rem,4vw,3rem) 9rem;
-      position:relative;
-      overflow:hidden;
+      --sage: #aab397;
+      --sage-deep: #606c56;
+      --taupe: #bcb09f;
+      --sand: #e4d0b8;
+      --cream: #f0e6d9;
+      --ivory: #faf8f4;
+      --paper: #fffefa;
+      --ink: #3f4038;
+      --logo-ink: #4b2b1c;
+      --muted: #7e7c72;
+      --line: #ded8cd;
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "DM Sans", Arial, sans-serif;
+      --shadow: 0 20px 55px rgba(66, 65, 54, .1);
     }
-    
-    /* Photo background — desktop: auto 100% agar foto full tinggi tanpa zoom crop */
-    /* Desktop: foto di kanan dengan lebar fixed, tidak di-cover agar kedua wajah terlihat */
-    #first-section::before{
-      content:'';
-      position:absolute;
-      inset:0;
-      background-color:transparent;
-      background-image:var(--cover-photo, none);
-      background-size:50vw auto;
-      background-position:right 15%;
-      background-repeat:no-repeat;
-      z-index:2;
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+    body { margin: 0; background: var(--ivory); color: var(--ink); font-family: var(--sans); font-weight: 300; }
+    a { color: inherit; }
+    button, input, select, textarea { font: inherit; }
+    .language-switch { position: fixed; z-index: 30; top: 1rem; right: 1rem; display: flex; align-items: center; gap: .15rem; padding: .24rem; border: 1px solid var(--line); background: rgba(250,248,244,.94); box-shadow: 0 5px 18px rgba(63,64,56,.08); backdrop-filter: blur(8px); }
+    .language-button { min-width: 2.35rem; padding: .48rem .55rem; border: 0; background: transparent; color: var(--sage-deep); cursor: pointer; font-size: .59rem; font-weight: 600; letter-spacing: .09em; }
+    .language-button[aria-pressed="true"] { background: var(--sage-deep); color: var(--ivory); }
+    .hero { position: relative; display: grid; min-height: max(760px, 100svh); padding: 2rem 1.2rem; place-items: center; overflow: hidden; isolation: isolate; background: linear-gradient(150deg, var(--cream), var(--ivory) 50%, #e8e2d5); color: var(--ink); text-align: center; }
+    .hero::before { position: absolute; inset: 1.15rem; border: 1px solid rgba(96,108,86,.25); border-radius: 3px; content: ""; pointer-events: none; }
+    .hero::after { position: absolute; z-index: -1; inset: 0; content: ""; background: radial-gradient(ellipse at 50% 46%, rgba(255,255,255,.72), transparent 62%); }
+    .hero-content { position: relative; z-index: 1; width: min(660px, 100%); padding: 3.5rem 1.2rem 4rem; }
+    .hero-kicker, .eyebrow { margin: 0 0 1rem; font-size: .62rem; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; }
+    .hero-kicker { color: var(--sage-deep); }
+    .hero h1 { margin: 1.5rem 0 1.6rem; font: 400 clamp(3.7rem, 12vw, 7rem)/.9 var(--serif); letter-spacing: .12em; text-transform: uppercase; }
+    .hero-name { display: block; }
+    .hero-amp { display: block; margin: .06em 0 .1em; color: var(--sage-deep); font: italic 400 clamp(2.2rem, 5vw, 3.4rem)/.9 var(--serif); letter-spacing: 0; text-transform: lowercase; }
+    .hero-rule { width: min(21rem, 70%); height: 1px; margin: 0 auto 1.25rem; background: var(--taupe); }
+    .hero-invite { margin: 0 0 .4rem; color: var(--muted); font: 500 .68rem/1.7 var(--serif); letter-spacing: .16em; text-transform: uppercase; }
+    .hero-guest { display: grid; gap: .2rem; margin: .75rem 0 1.35rem; font-size: .7rem; letter-spacing: .1em; }
+    .hero-guest strong { color: var(--sage-deep); font: 500 1.45rem/1.2 var(--serif); letter-spacing: .02em; }
+    .opening-date { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; width: min(390px, 100%); margin: 1rem auto .7rem; color: var(--ink); }
+    .opening-date span { padding: .25rem .8rem; font-size: .82rem; font-weight: 500; letter-spacing: .16em; }
+    .opening-date .date-day { border-right: 1px solid var(--taupe); border-left: 1px solid var(--taupe); color: var(--sage-deep); font: 400 2.7rem/1 var(--serif); letter-spacing: .04em; }
+    .hero-time { margin: .5rem 0 1.4rem; color: var(--muted); font-size: .63rem; font-weight: 500; letter-spacing: .17em; text-transform: uppercase; }
+    .hero-venue { display: grid; gap: .32rem; margin: 0 auto; }
+    .hero-venue strong { color: var(--sage-deep); font: 500 1.35rem/1.1 var(--serif); letter-spacing: .04em; }
+    .hero-venue span { color: var(--muted); font-size: .66rem; letter-spacing: .04em; line-height: 1.6; }
+    .svg-symbol-store { position: absolute; width: 0; height: 0; overflow: hidden; }
+    .couple-logo { display: block; width: min(390px, 86vw); height: auto; overflow: visible; color: var(--logo-ink); }
+    .hero-logo { width: min(235px, 65vw); margin: 1rem auto -.5rem; }
+    .botanical { position: absolute; z-index: 0; width: clamp(100px, 17vw, 190px); height: auto; color: var(--sage-deep); opacity: .34; pointer-events: none; }
+    .botanical-left { bottom: 3.2rem; left: -.8rem; }
+    .botanical-right { top: 2.5rem; right: -.7rem; transform: rotate(180deg); color: var(--taupe); }
+    .hero-scroll { position: absolute; z-index: 2; bottom: 1.7rem; left: 50%; display: grid; justify-items: center; gap: .38rem; color: var(--sage-deep); font-size: .54rem; letter-spacing: .19em; text-decoration: none; text-transform: uppercase; transform: translateX(-50%); }
+    .hero-scroll span:last-child { font-size: 1.1rem; line-height: 1; }
+    .section { padding: clamp(5rem, 9vw, 8.5rem) clamp(1.2rem, 7vw, 7.5rem); }
+    .section-inner { width: min(1160px, 100%); margin: 0 auto; }
+    .eyebrow { color: var(--sage-deep); }
+    .section-title { margin: 0; font: 400 clamp(2.7rem, 6vw, 5rem)/.98 var(--serif); letter-spacing: -.025em; }
+    .section-title em { color: var(--sage-deep); font-weight: 400; }
+    .fine-rule { width: 3.2rem; height: 1px; margin: 1.45rem auto; background: var(--taupe); }
+    .our-story { position: relative; overflow: hidden; background: var(--cream); }
+    .story-inner { width: min(920px, 100%); margin: 0 auto; }
+    .story-heading { margin-bottom: 3.5rem; text-align: center; }
+    .story-script { margin: 0; color: var(--sage-deep); font: italic 400 clamp(3.4rem, 9vw, 6rem)/.9 var(--serif); }
+    .story-heart { display: flex; align-items: center; justify-content: center; gap: .8rem; margin: 1.2rem auto .8rem; color: var(--taupe); font-size: 1.1rem; }
+    .story-heart::before, .story-heart::after { width: 5.5rem; height: 1px; background: var(--taupe); content: ""; }
+    .story-intro { max-width: 400px; margin: 0 auto; color: var(--muted); font-size: .77rem; line-height: 1.8; }
+    .story-timeline { position: relative; display: grid; gap: 1.1rem; max-width: 780px; margin: 0 auto; }
+    .story-timeline::before { position: absolute; top: 1rem; bottom: 1rem; left: 50%; width: 1px; background: linear-gradient(180deg, transparent, var(--taupe) 7%, var(--taupe) 93%, transparent); content: ""; transform: translateX(-50%); }
+    .story-item { position: relative; display: grid; grid-template-columns: 1fr 3.5rem 1fr; align-items: center; min-height: 150px; transition-delay: var(--delay, 0ms); }
+    .story-copy { padding: 1.15rem 1.4rem; border-bottom: 1px solid rgba(188,176,159,.55); }
+    .story-item:nth-child(odd) .story-copy { grid-column: 1; grid-row: 1; text-align: right; }
+    .story-item:nth-child(even) .story-copy { grid-column: 3; grid-row: 1; text-align: left; }
+    .story-spacer { grid-row: 1; }
+    .story-item:nth-child(odd) .story-spacer { grid-column: 3; }
+    .story-item:nth-child(even) .story-spacer { grid-column: 1; }
+    .story-node { z-index: 1; grid-column: 2; grid-row: 1; justify-self: center; width: .72rem; aspect-ratio: 1; border: 2px solid var(--cream); border-radius: 50%; background: var(--sage-deep); box-shadow: 0 0 0 1px var(--taupe); }
+    .story-year { display: block; margin-bottom: .38rem; color: var(--sage-deep); font: 500 1.9rem/1 var(--serif); letter-spacing: .12em; }
+    .story-label { display: block; margin-bottom: .45rem; color: #8a806f; font-size: .55rem; font-weight: 500; letter-spacing: .19em; text-transform: uppercase; }
+    .story-copy h3 { margin: 0 0 .4rem; color: var(--ink); font: 500 1.55rem/1.05 var(--serif); }
+    .story-copy p { max-width: 300px; margin: 0; color: var(--muted); font-size: .75rem; line-height: 1.75; }
+    .story-item:nth-child(odd) .story-copy p { margin-left: auto; }
+    .story-placeholder { display: inline-block; margin-top: .65rem; padding: .24rem .48rem; border: 1px solid rgba(188,176,159,.7); color: #857c6c; font-size: .49rem; letter-spacing: .12em; text-transform: uppercase; }
+    .story-branch { display: block; width: min(220px, 55vw); height: auto; margin: 3rem auto 0; color: var(--sage-deep); opacity: .62; }
+    .story-next { display: table; margin: 1.8rem auto 0; color: var(--sage-deep); font-size: .57rem; font-weight: 500; letter-spacing: .16em; text-decoration: none; text-transform: uppercase; }
+    .story-next span { display: inline-block; margin-left: .45rem; transition: transform .2s; }
+    .story-next:hover span { transform: translateY(.2rem); }
+    .event-details { background: var(--ivory); }
+    .details-card { width: min(760px, 100%); margin: 0 auto; overflow: hidden; border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow); }
+    .details-art { position: relative; display: grid; min-height: 190px; place-items: center; overflow: hidden; background: linear-gradient(135deg, var(--sage), #c2c7b2 52%, var(--taupe)); }
+    .details-art::before { position: absolute; width: 16rem; aspect-ratio: 1; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; content: ""; }
+    .details-art svg { position: relative; z-index: 1; width: 120px; height: 120px; color: #fffefa; opacity: .88; }
+    .details-content { padding: clamp(1.5rem, 5vw, 3.2rem); }
+    .details-heading { margin-bottom: 2rem; text-align: center; }
+    .details-pretitle { margin: 0; color: var(--sage-deep); font: italic 400 2.4rem/1 var(--serif); }
+    .details-title { margin: -.1rem 0 .8rem; color: var(--ink); font: 400 clamp(2.7rem, 7vw, 4.5rem)/.95 var(--serif); letter-spacing: .12em; text-transform: uppercase; }
+    .details-heart { color: var(--taupe); font-size: 1.1rem; }
+    .details-dummy { display: inline-block; margin-top: .55rem; padding: .24rem .52rem; border: 1px solid var(--line); color: var(--muted); font-size: .49rem; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
+    .details-list { display: grid; gap: 0; }
+    .details-row { display: grid; grid-template-columns: 3.6rem minmax(0, 1fr); align-items: start; gap: 1.1rem; padding: 1.25rem .15rem; border-top: 1px solid var(--line); }
+    .details-icon { display: grid; width: 3rem; aspect-ratio: 1; place-items: center; border: 1px solid rgba(96,108,86,.26); border-radius: 50%; color: var(--sage-deep); }
+    .details-icon svg { width: 1.45rem; height: 1.45rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.4; }
+    .details-row h3 { margin: .15rem 0 .35rem; color: var(--sage-deep); font-size: .59rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; }
+    .details-row p { margin: 0; color: var(--muted); font: 400 .91rem/1.7 var(--serif); }
+    .details-row strong { color: var(--ink); font-weight: 600; }
+    .details-link { display: inline-block; margin-top: .5rem; color: var(--sage-deep); font-size: .59rem; font-weight: 500; letter-spacing: .12em; text-decoration: none; text-transform: uppercase; }
+    .details-link:hover { text-decoration: underline; }
+    .details-endnote { margin: 1.5rem 0 0; color: var(--muted); font-size: .67rem; line-height: 1.7; text-align: center; }
+    .event-timeline { background: var(--cream); }
+    .schedule-card { width: min(800px, 100%); margin: 0 auto; padding: clamp(1.5rem, 5vw, 3.4rem); border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow); }
+    .schedule-heading { margin-bottom: 2.4rem; text-align: center; }
+    .schedule-pretitle { margin: 0; color: var(--sage-deep); font: italic 400 2.4rem/1 var(--serif); }
+    .schedule-title { margin: -.1rem 0 .8rem; color: var(--ink); font: 400 clamp(2.5rem, 7vw, 4.4rem)/.95 var(--serif); letter-spacing: .13em; text-transform: uppercase; }
+    .schedule-heart { color: var(--taupe); font-size: 1.1rem; }
+    .schedule-note { display: inline-block; margin: .55rem 0 0; padding: .24rem .52rem; border: 1px solid var(--line); color: var(--muted); font-size: .49rem; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
+    .schedule-list { position: relative; display: grid; width: min(660px, 100%); margin: 0 auto; }
+    .schedule-list::before { position: absolute; top: 1.2rem; bottom: 1.2rem; left: 5.65rem; width: 1px; background: linear-gradient(180deg, transparent, var(--taupe) 6%, var(--taupe) 94%, transparent); content: ""; }
+    .schedule-item { position: relative; display: grid; grid-template-columns: 4rem 2rem minmax(0, 1fr); align-items: center; gap: .8rem; min-height: 116px; padding: .8rem 0; transition-delay: var(--delay, 0ms); }
+    .schedule-icon { display: grid; width: 3rem; aspect-ratio: 1; place-items: center; justify-self: center; color: var(--sage-deep); }
+    .schedule-icon svg { width: 2.15rem; height: 2.15rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.35; }
+    .schedule-node { z-index: 1; grid-column: 2; grid-row: 1; justify-self: center; width: .65rem; aspect-ratio: 1; border: 2px solid var(--paper); border-radius: 50%; background: var(--sage-deep); box-shadow: 0 0 0 1px var(--taupe); }
+    .schedule-copy { grid-column: 3; grid-row: 1; padding: .4rem 0 .65rem; border-bottom: 1px solid rgba(188,176,159,.45); }
+    .schedule-time { display: block; margin-bottom: .35rem; color: var(--sage-deep); font: 500 1.45rem/1 var(--serif); letter-spacing: .08em; }
+    .schedule-copy h3 { margin: 0 0 .25rem; color: var(--ink); font-size: .6rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; }
+    .schedule-copy p { margin: 0; color: var(--muted); font: 400 .88rem/1.6 var(--serif); }
+    .schedule-item:last-child .schedule-copy { border-bottom: 0; }
+    .schedule-branch { display: block; width: min(190px, 50vw); height: auto; margin: 1.5rem auto 0; color: var(--sage-deep); opacity: .58; }
+    .watermark { position: fixed; z-index: 4; right: -2.5rem; bottom: 7rem; color: rgba(96,108,86,.08); font: 500 2.3rem var(--serif); letter-spacing: .12em; transform: rotate(-90deg); transform-origin: right center; pointer-events: none; }
+    .countdown { position: relative; overflow: hidden; background: var(--sage); color: #fff; text-align: center; }
+    .countdown::before, .countdown::after { position: absolute; width: 25rem; height: 25rem; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; content: ""; }
+    .countdown::before { top: -16rem; left: -10rem; }
+    .countdown::after { right: -11rem; bottom: -18rem; width: 33rem; height: 33rem; }
+    .countdown .eyebrow { color: #f3eddf; }
+    .countdown .section-title { position: relative; z-index: 1; }
+    .countdown-grid { display: grid; grid-template-columns: repeat(4, minmax(100px, 1fr)); gap: .8rem; width: min(680px, 100%); margin: 3rem auto 0; }
+    .countdown-item { padding: 1.4rem .8rem; border: 1px solid rgba(255,255,255,.4); background: rgba(255,255,255,.08); }
+    .countdown-num { display: block; font: 400 clamp(2.5rem, 6vw, 4.5rem)/1 var(--serif); }
+    .countdown-label { display: block; margin-top: .65rem; font-size: .57rem; letter-spacing: .2em; text-transform: uppercase; opacity: .82; }
+    .countdown-note { min-height: 1.4rem; margin: 1.2rem 0 0; font-size: .65rem; letter-spacing: .1em; opacity: .82; }
+    .rsvp { background: var(--sand); }
+    .rsvp-panel { position: relative; width: min(680px, 100%); margin: 0 auto; padding: clamp(1.5rem, 5vw, 3.5rem); border: 1px solid var(--line); background: var(--ivory); box-shadow: var(--shadow); }
+    .rsvp-heading { margin-bottom: 2rem; text-align: center; }
+    .rsvp-script { margin: 0; color: var(--sage-deep); font: italic 400 clamp(2.5rem, 7vw, 3.8rem)/.95 var(--serif); }
+    .rsvp-title { margin: .1rem 0 .45rem; color: var(--ink); font: 400 clamp(2.8rem, 8vw, 4.5rem)/.95 var(--serif); letter-spacing: .16em; }
+    .rsvp-heart { display: flex; align-items: center; justify-content: center; gap: .75rem; color: var(--taupe); font-size: 1.1rem; }
+    .rsvp-heart::before, .rsvp-heart::after { width: 4.5rem; height: 1px; background: var(--taupe); content: ""; }
+    .rsvp-deadline { margin: 1.1rem 0 0; color: var(--muted); font-size: .59rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; }
+    .rsvp-body { width: min(510px, 100%); margin: 0 auto; }
+    .choice-group { margin: 0; padding: 0; border: 0; }
+    .choice-legend { margin-bottom: .55rem; color: var(--sage-deep); font-size: .58rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; }
+    .attendance-choice { display: flex; align-items: center; gap: .75rem; min-height: 52px; padding: .75rem .1rem; border-bottom: 1px solid var(--line); color: var(--ink); cursor: pointer; font: 400 1rem/1.4 var(--serif); }
+    .attendance-choice input { width: 1rem; height: 1rem; margin: 0; accent-color: var(--sage-deep); }
+    .attendee-details { margin: 1.25rem 0; padding: 1.2rem; border-left: 2px solid var(--sage); background: var(--cream); }
+    .attendee-details:not(.is-hidden) { animation: details-in .32s ease both; }
+    @keyframes details-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .form-group { margin-bottom: 1rem; }
+    .form-label { display: block; margin-bottom: .4rem; color: #68675e; font-size: .58rem; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
+    .form-input, .form-select { width: 100%; min-height: 44px; padding: .7rem .75rem; border: 1px solid var(--line); border-radius: 0; outline: none; background: var(--paper); color: var(--ink); font: 400 .98rem var(--serif); }
+    .form-input:focus, .form-select:focus { border-color: var(--sage-deep); box-shadow: 0 0 0 2px rgba(96,108,86,.1); }
+    .form-input[readonly] { border-color: transparent; border-bottom-color: var(--taupe); background: transparent; }
+    .form-submit { width: 100%; margin-top: 1.2rem; padding: 1rem; border: 0; background: var(--sage-deep); color: #fff; cursor: pointer; font-size: .64rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; transition: background .2s; }
+    .form-submit:hover { background: #4b5543; }
+    .form-submit:disabled { cursor: wait; opacity: .6; }
+    .rsvp-access-note { padding: 1.1rem; border: 1px solid var(--line); color: var(--muted); font-size: .8rem; line-height: 1.7; }
+    .rsvp-success { display: none; padding: 2.2rem 1rem; text-align: center; }
+    .rsvp-success.active { display: block; }
+    .rsvp-success-icon { margin-bottom: .7rem; color: var(--sage-deep); font-size: 2.5rem; }
+    .rsvp-success h3 { margin: 0; font: 500 2.5rem var(--serif); }
+    .rsvp-success p { color: var(--muted); font-size: .86rem; line-height: 1.8; }
+    .comments-panel { width: min(850px, 100%); margin: 3rem auto 0; padding: clamp(1.4rem, 4vw, 2.7rem); border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow); }
+    .comments-heading { margin-bottom: 1.7rem; text-align: center; }
+    .comments-heading .eyebrow { margin-bottom: .55rem; }
+    .comments-heading h3 { margin: 0; color: var(--ink); font: 400 clamp(2rem, 5vw, 3rem)/1.05 var(--serif); }
+    .comments-heading p:last-child { max-width: 520px; margin: .65rem auto 0; color: var(--muted); font: italic 400 1rem/1.7 var(--serif); }
+    .comment-form { display: grid; gap: .85rem; width: min(620px, 100%); margin: 0 auto 2.3rem; }
+    .comment-field { display: grid; gap: .35rem; }
+    .comment-field label { color: var(--sage-deep); font-size: .58rem; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
+    .comment-field input, .comment-field textarea { width: 100%; padding: .75rem; border: 1px solid var(--line); border-radius: 0; outline: none; background: var(--ivory); color: var(--ink); font: 400 .96rem/1.6 var(--sans); }
+    .comment-field textarea { min-height: 110px; resize: vertical; }
+    .comment-field input:focus, .comment-field textarea:focus { border-color: var(--sage-deep); box-shadow: 0 0 0 2px rgba(96,108,86,.1); }
+    .comment-submit { justify-self: end; min-width: 190px; margin-top: .2rem; padding: .9rem 1.1rem; border: 0; background: var(--sage-deep); color: #fff; cursor: pointer; font-size: .61rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; }
+    .comment-submit:hover { background: #4b5543; }
+    .comment-submit:disabled { cursor: wait; opacity: .6; }
+    .comment-status { min-height: 1.2rem; margin: 0; color: var(--sage-deep); font-size: .76rem; }
+    .comments-list-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .8rem; padding-bottom: .65rem; border-bottom: 1px solid var(--line); }
+    .comments-list-heading h4 { margin: 0; color: var(--ink); font: 400 1.7rem/1.1 var(--serif); }
+    .comments-total { color: var(--muted); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; }
+    .comments-list { display: grid; }
+    .comment-item { display: grid; gap: .35rem; padding: 1rem .1rem; border-bottom: 1px solid var(--line); }
+    .comment-meta { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem .8rem; }
+    .comment-name { color: var(--sage-deep); font: 500 1.2rem/1.1 var(--serif); }
+    .comment-date { color: var(--muted); font-size: .6rem; letter-spacing: .04em; }
+    .comment-message { margin: 0; color: var(--ink); font-size: .82rem; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .comments-empty { margin: 0; padding: 1.2rem 0; color: var(--muted); font: italic 400 1rem/1.6 var(--serif); text-align: center; }
+    .comments-pagination { display: flex; align-items: center; justify-content: center; gap: .6rem; margin-top: 1.3rem; }
+    .comments-pagination:empty { display: none; }
+    .page-button { min-height: 38px; padding: .45rem .8rem; border: 1px solid var(--line); background: var(--ivory); color: var(--sage-deep); cursor: pointer; font-size: .62rem; letter-spacing: .04em; }
+    .page-button:hover:not(:disabled) { border-color: var(--sage-deep); }
+    .page-button:disabled { cursor: default; opacity: .45; }
+    .page-indicator { color: var(--muted); font-size: .63rem; white-space: nowrap; }
+    .is-hidden { display: none !important; }
+    .gift { background: var(--ivory); }
+    .gift-heading { max-width: 650px; margin: 0 auto 2.8rem; text-align: center; }
+    .gift-script { margin: 0; color: var(--sage-deep); font: italic 400 clamp(2.2rem, 6vw, 3.3rem)/1 var(--serif); }
+    .gift-title { margin: .2rem 0 .8rem; color: var(--ink); font: 400 clamp(2.3rem, 6vw, 3.5rem)/1.05 var(--serif); }
+    .gift-description { margin: 0; color: var(--muted); font: italic 400 1rem/1.8 var(--serif); }
+    .gift-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; width: min(900px, 100%); margin: 0 auto; }
+    .gift-card { padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--line); background: var(--paper); text-align: center; box-shadow: var(--shadow); }
+    .gift-icon { display: grid; width: 3.5rem; height: 3.5rem; margin: 0 auto 1.1rem; place-items: center; border: 1px solid var(--taupe); border-radius: 50%; color: var(--sage-deep); }
+    .gift-icon svg { width: 1.7rem; height: 1.7rem; }
+    .gift-card h3 { margin: 0 0 1.1rem; color: var(--ink); font: 400 1.8rem/1.15 var(--serif); }
+    .gift-placeholder { display: grid; gap: .35rem; padding: 1.1rem; border: 1px dashed var(--taupe); background: var(--cream); }
+    .gift-placeholder span { color: var(--muted); font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; }
+    .gift-placeholder strong { color: var(--sage-deep); font: italic 400 1.15rem/1.5 var(--serif); }
+    .gift-card-note { margin: 1rem 0 0; color: var(--muted); font-size: .76rem; line-height: 1.7; }
+    .closing { overflow: hidden; padding: clamp(2rem, 7vw, 6rem) clamp(1rem, 5vw, 4rem); background: var(--sand); color: var(--ink); }
+    .closing-card { width: min(820px, 100%); margin: 0 auto; overflow: hidden; border: 1px solid rgba(188,176,159,.55); background: var(--ivory); box-shadow: var(--shadow); }
+    .closing-message { padding: clamp(2rem, 6vw, 3.8rem) 1.2rem 1.2rem; text-align: center; }
+    .closing-script { margin: 0; color: var(--sage-deep); font: italic 400 clamp(2.8rem, 8vw, 5rem)/.95 var(--serif); }
+    .closing-title { margin: .8rem 0 0; color: var(--ink); font-size: .68rem; font-weight: 500; letter-spacing: .2em; line-height: 1.8; text-transform: uppercase; }
+    .closing-heart { margin: .75rem 0 0; color: var(--taupe); font: 400 1.5rem/1 var(--serif); }
+    .closing-photo { position: relative; isolation: isolate; display: grid; min-height: clamp(300px, 54vw, 470px); padding: 1.2rem; place-items: center; overflow: hidden; background: var(--cream); clip-path: polygon(0 0,100% 0,100% 96%,94% 99%,86% 96%,77% 100%,69% 96%,60% 100%,51% 96%,41% 100%,32% 96%,23% 100%,14% 96%,6% 99%,0 96%); }
+    .closing-illustration { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; }
+    .photo-placeholder-label { position: relative; z-index: 1; display: grid; gap: .35rem; max-width: min(390px, 90%); padding: 1rem 1.4rem; border: 1px solid rgba(250,248,244,.9); outline: 1px solid rgba(96,108,86,.26); outline-offset: 5px; background: rgba(250,248,244,.88); color: var(--sage-deep); text-align: center; box-shadow: 0 8px 28px rgba(63,64,56,.1); }
+    .photo-placeholder-label span { font-size: .55rem; font-weight: 500; letter-spacing: .19em; text-transform: uppercase; }
+    .photo-placeholder-label strong { font: italic 400 1.4rem/1.2 var(--serif); }
+    .photo-placeholder-label small { color: var(--muted); font-size: .68rem; line-height: 1.5; }
+    .closing-bottom { display: grid; grid-template-columns: 1fr minmax(180px, 255px); align-items: center; gap: 1.2rem; padding: 1.7rem clamp(1.2rem, 5vw, 3rem) 1.25rem; background: var(--ivory); }
+    .closing-with-love { margin: 0 0 .25rem; color: var(--sage-deep); font: italic 400 clamp(1.8rem, 4vw, 2.5rem)/1 var(--serif); }
+    .closing-names { margin: 0; color: var(--ink); font: 500 clamp(.83rem, 2vw, 1.05rem)/1.5 var(--serif); letter-spacing: .17em; }
+    .closing-logo { width: 100%; max-width: 250px; justify-self: end; }
+    .site-footer { padding: 2.3rem 1rem; background: var(--ivory); color: var(--muted); text-align: center; }
+    .footer-names { margin: 0; color: var(--sage-deep); font: 500 2.1rem var(--serif); }
+    .footer-date { margin: .3rem 0 0; font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; }
+    .toast { position: fixed; z-index: 20; right: 1rem; bottom: 1rem; max-width: calc(100vw - 2rem); padding: .8rem 1rem; background: var(--ink); color: #fff; font-size: .78rem; opacity: 0; pointer-events: none; transform: translateY(1rem); transition: opacity .2s, transform .2s; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .75s ease, transform .75s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @media (max-width: 760px) {
+      .hero { min-height: max(760px, 100svh); padding: 1rem; }
+      .hero::before { inset: .8rem; }
+      .hero-content { padding: 3.5rem .8rem 4rem; }
+      .botanical { width: 110px; opacity: .25; }
+      .opening-date { width: min(340px, 100%); }
+      .story-timeline { gap: .25rem; max-width: 560px; }
+      .story-timeline::before { left: 1rem; }
+      .story-item { grid-template-columns: 2rem minmax(0, 1fr); min-height: 155px; gap: .7rem; }
+      .story-item .story-copy, .story-item:nth-child(odd) .story-copy, .story-item:nth-child(even) .story-copy { grid-column: 2; grid-row: 1; padding: 1rem .8rem; text-align: left; }
+      .story-item .story-copy p, .story-item:nth-child(odd) .story-copy p { margin-left: 0; }
+      .story-node { grid-column: 1; }
+      .story-spacer { display: none; }
+      .story-heading { margin-bottom: 2.6rem; }
+      .story-copy h3 { font-size: 1.4rem; }
+      .details-art { min-height: 155px; }
+      .details-row { grid-template-columns: 2.8rem minmax(0, 1fr); gap: .75rem; }
+      .details-icon { width: 2.45rem; }
+      .schedule-card { padding: 1.3rem 1rem; }
+      .schedule-list { max-width: 540px; }
+      .schedule-list::before { left: 4.55rem; }
+      .schedule-item { grid-template-columns: 3.1rem 1.6rem minmax(0, 1fr); gap: .55rem; min-height: 108px; }
+      .schedule-icon { width: 2.5rem; }
+      .schedule-icon svg { width: 1.9rem; height: 1.9rem; }
+      .schedule-time { font-size: 1.3rem; }
+      .countdown-grid { grid-template-columns: repeat(2, 1fr); max-width: 440px; }
+      .rsvp-panel { padding: 1.5rem 1.1rem; }
+      .comments-panel { margin-top: 2rem; padding: 1.4rem 1rem; }
+      .comment-submit { justify-self: stretch; }
+      .comments-list-heading h4 { font-size: 1.45rem; }
+      .comments-pagination { gap: .35rem; }
+      .page-button { padding: .4rem .55rem; font-size: .57rem; }
+      .page-indicator { font-size: .58rem; }
+      .gift-grid { grid-template-columns: 1fr; max-width: 540px; }
+      .closing-bottom { grid-template-columns: 1fr; gap: .4rem; text-align: center; }
+      .closing-logo { width: min(240px, 76vw); justify-self: center; }
+      .closing-photo { min-height: 340px; }
     }
-    #first-section.has-photo::before{
-      filter:saturate(1.02) contrast(1.03) brightness(.96);
+    @media (max-width: 420px) {
+      .hero h1 { font-size: clamp(2.9rem, 15vw, 4.1rem); letter-spacing: .08em; }
+      .hero-kicker { font-size: .53rem; letter-spacing: .18em; }
+      .opening-date span { padding-right: .45rem; padding-left: .45rem; font-size: .7rem; }
+      .opening-date .date-day { font-size: 2.3rem; }
+      .hero-venue span { font-size: .61rem; }
+      .story-item { grid-template-columns: 1.6rem minmax(0, 1fr); gap: .5rem; }
+      .story-timeline::before { left: .8rem; }
+      .story-item .story-copy, .story-item:nth-child(odd) .story-copy, .story-item:nth-child(even) .story-copy { padding-right: 0; padding-left: .5rem; }
+      .section { padding-right: 1rem; padding-left: 1rem; }
+      .schedule-list::before { left: 4.1rem; }
+      .schedule-item { grid-template-columns: 2.8rem 1.3rem minmax(0, 1fr); gap: .4rem; min-height: 100px; }
+      .schedule-icon { width: 2.3rem; }
+      .schedule-copy p { font-size: .82rem; }
+      .countdown-item { padding: 1.1rem .5rem; }
     }
-
-    /* Gradient overlay — foto pakai cover (full section), gradient ciptakan area teks kiri */
-    #first-section::after{
-      content:'';
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(90deg,
-          rgba(21,29,69,1)    0%,
-          rgba(21,29,69,1)   54%,
-          rgba(21,29,69,.75) 59%,
-          rgba(21,29,69,.25) 64%,
-          rgba(21,29,69,0)   69%,
-          rgba(21,29,69,0)   86%,
-          rgba(21,29,69,.38) 100%),
-        linear-gradient(180deg,
-          rgba(21,29,69,.25) 0%,
-          rgba(21,29,69,0)   18%,
-          rgba(21,29,69,.25) 100%);
-      z-index:3;
-    }
-    
-    /* Content container */
-    .cc{
-      position:relative;
-      z-index:4;
-      width:min(33vw,28rem);
-      min-height:calc(100svh - 12rem);
-      margin:0;
-      padding:1rem 0 0;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-start;
-      align-items:flex-start;
-    }
-    
-    .c-to{
-      font-size:clamp(.58rem, 1.1vw, .72rem);
-      letter-spacing:.24em;
-      text-transform:uppercase;
-      color:var(--pure);
-      opacity:.75;
-      margin-bottom:.75rem;
-      animation:fid 1s ease .2s both
-    }
-
-    /* Guest name - same size as "Kepada Yang Terhormat" */
-    .c-guest{
-      font-family:var(--font-sans);
-      font-size:clamp(.58rem, 1.1vw, .72rem);
-      font-weight:700;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:var(--pure);
-      line-height:1.5;
-      margin-bottom:.6rem;
-      animation:fid 1s ease .4s both;
-      word-wrap:break-word;
-      hyphens:auto;
-      max-width:100%;
-    }
-
-    .c-guest-tag{
-      font-size:clamp(.7rem, 1.3vw, .84rem);
-      letter-spacing:.02em;
-      color:var(--pure);
-      opacity:.72;
-      margin-bottom:2rem;
-      animation:fid 1s ease .6s both;
-      line-height:1.6;
-      max-width:90%;
-    }
-
-    .c-pre{
-      font-size:clamp(.54rem, 1vw, .66rem);
-      letter-spacing:.24em;
-      text-transform:uppercase;
-      color:var(--orange);
-      opacity:.95;
-      margin-bottom:.4rem;
-      animation:fi 1s ease .8s both
-    }
-
-    .c-names{
-      font-family:var(--font-script);
-      font-size:clamp(2.4rem, 4.8vw, 4rem);
-      color:var(--orange);
-      line-height:1.2;
-      text-transform:uppercase;
-      animation:fi 1s ease .95s both;
-      margin-bottom:.35rem;
-    }
-
-    .c-names .amp{
-      font-size:.65em;
-      line-height:.6;
-      opacity:.76;
-      margin:.18rem 0;
-    }
-
-    .c-date{
-      margin-top:.9rem;
-      font-size:clamp(.48rem, .9vw, .6rem);
-      letter-spacing:.34em;
-      text-transform:uppercase;
-      color:var(--pure);
-      opacity:.7;
-      animation:fi 1s ease 1.2s both
-    }
-    
-    .scroll-hint{
-      position:absolute;
-      bottom:2rem;
-      left:50%;
-      transform:translateX(-50%);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:.4rem;
-      color:var(--pure);
-      opacity:.6;
-      animation:bounce 2.5s ease-in-out infinite;
-      font-size:.54rem;
-      letter-spacing:.2em;
-      text-transform:uppercase;
-      z-index:6;
-      pointer-events:none;
-    }
-    
-    /* Batik pattern overlay - ORANGE #C9611A */
-    .cover-batik{
-
-      position:absolute;
-      left:0rem;      
-      bottom:4rem;
-
-      width:clamp(25rem, 41vw, 32rem);
-      height:clamp(50rem, 46vh, 51rem);
-      
-      background:var(--orange);
-
-      z-index:4;
-      pointer-events:none;
-
-      /* ✅ single mask */
-      -webkit-mask-image: var(--batik-orange-kiri-url);
-      mask-image: var(--batik-orange-kiri-url);
-
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-
-      mask-size: 40% auto;
-        -webkit-mask-size: 40% auto;
-
-      -webkit-mask-position: left bottom;
-      mask-position: left bottom;
-
-      /* optional styling */
-      filter: brightness(1.35) saturate(1.2);
-    }
-    /* Wave overlay - right edge of batik, desktop only */
-    /* Color = #151d45 blended with gradient overlay (~0.55 alpha) at batik right edge */
-    .cover-batik-wave{
-      position:absolute;
-      left:calc(clamp(.35rem, 1.4vw, 1.25rem) + clamp(18rem, 34vw, 27rem) - 2rem);
-      bottom:0;
-      width:4.5rem;
-      height:clamp(15rem, 38vh, 24rem);
-      z-index:5;
-      pointer-events:none;
-      color:#0c122d;
-    }
-    .cover-batik-wave svg{
-      display:none;
-      width:100%;
-      height:100%;
-    }
-    
-    /* Wave divider - SOLID ORANGE */
-    #first-section .section-divider{
-      z-index:5;
-      filter:none;
-      position:absolute;
-      bottom:-2px;
-      left:0;
-      width:100%;
-      height:120px;
-      overflow:hidden;
-    }
-    
-    #first-section .section-divider svg{
-      display:block;
-      width:calc(100% + 2px);
-      height:120px;
-    }
-    
-    #first-section .section-divider svg path{
-      fill:var(--orange) !important;
-      opacity:1;
-    }
-    
-    @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
-    @keyframes fi{from{opacity:0}to{opacity:1}}
-    @keyframes fid{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
-
-    /* ── INTRO SECTION (PUISI) ───────────────────────────────────────── */
-    #intro{
-      background:var(--orange);
-      padding:10rem 2rem 12rem;
-      position:relative;
-      overflow:hidden;
-      isolation:isolate;
-      margin-top:0 !important;
-    }
-    
-    #intro .sec-inner{
-      max-width:600px;
-      margin:0;
-      padding:0 2rem;
-      padding-left:3rem;
-      position:relative;
-      z-index:1;
-    }
-    
-    #intro .s-label{
-      color:var(--pure);
-      letter-spacing:.4em;
-      opacity:0.7;
-      text-align:left;
-    }
-    
-    #intro .s-title{
-      color:var(--pure);
-      font-weight:600;
-      font-size:clamp(3rem,6vw,4.5rem);
-      line-height:1.1;
-      text-align:left;
-    }
-    
-    #intro .s-rule{
-      margin-left:0;
-      background:var(--pure);
-      opacity:0.3;
-    }
-    
-    #intro p{
-      color:var(--pure);
-      opacity:0.85;
-      font-size:1rem;
-    }
-    
-    #intro p:last-child{
-      opacity:0.6;
-    }
-    
-    /* Batik pattern untuk intro section */
-    .intro-batik{
-      position:absolute;
-      left:-2.5rem;
-      bottom:1.25rem;
-      width:13rem;
-      height:10rem;
-      border-radius:50%;
-      transform:rotate(-8deg);
-      pointer-events:none;
-      z-index:0;
-      background-image:var(--batik-url);
-      background-repeat:repeat;
-      background-size:260px auto;
-      filter:sepia(1) saturate(8) hue-rotate(340deg) brightness(1.08);
-      opacity:.18;
-      mix-blend-mode:screen;
-    }
-
-    /* ── SHARED SECTION STYLES ───────────────────────────────────────── */
-    .sec{
-      padding:6rem 2rem;
-      position:relative;
-      overflow:hidden;
-      isolation:isolate;
-    }
-    
-    .sec-inner{
-      max-width:720px;
-      margin:0 auto;
-      position:relative;
-      z-index:1;
-    }
-    
-    .s-label{
-      font-size:.58rem;
-      letter-spacing:.4em;
-      text-transform:uppercase;
-      color:var(--orange);
-      opacity:.8;
-      text-align:center;
-      margin-bottom:.75rem
-    }
-    
-    .s-title{
-      font-family:var(--font-serif);
-      font-size:clamp(2rem,5vw,2.8rem);
-      font-weight:300;
-      text-align:center;
-      color:var(--navy);
-      margin-bottom:1.75rem;
-      line-height:1.2
-    }
-    
-    .s-title em{font-style:italic;color:var(--orange)}
-    .s-rule{width:36px;height:2px;background:var(--orange);opacity:.4;margin:0 auto 2.5rem}
-    .s-body{text-align:center;color:var(--navy);font-size:.9rem;line-height:2;opacity:.85}
-
-    /* Section divider (wave) */
-    .section-divider{
-      position:absolute;
-      bottom:-2px;
-      left:0;
-      width:100%;
-      height:120px;
-      overflow:hidden;
-      z-index:1;
-    }
-    
-    .section-divider svg{
-      display:block;
-      width:calc(100% + 2px);
-      height:120px;
-    }
-    
-    .section-divider svg path{
-      opacity:1;
-    }
-
-    /* Batik pattern blocks */
-    .batik-block{
-      position:absolute;
-      pointer-events:none;
-      z-index:0;
-      background-image:var(--batik-url);
-      background-repeat:repeat;
-      background-size:260px auto;
-      opacity:.22;
-      mix-blend-mode:screen;
-      filter:brightness(1.1);
-    }
-    
-    .batik-amber{
-      filter:sepia(1) saturate(8) hue-rotate(340deg) brightness(1.08);
-      opacity:.18;
-    }
-    
-    .batik-ivory{
-      filter:grayscale(1) brightness(1.35);
-      opacity:.2;
-    }
-    
-    .batik-navy{
-      filter:sepia(1) saturate(6) hue-rotate(170deg) brightness(.82);
-      opacity:.14;
-    }
-    
-    .couple-batik{
-      right:-2.5rem;
-      bottom:.5rem;
-      width:11rem;
-      height:10rem;
-      border-radius:46% 54% 50% 50%;
-    }
-    
-    .countdown-batik{
-      left:-1.5rem;
-      bottom:-1rem;
-      width:12rem;
-      height:9rem;
-      border-radius:50%;
-    }
-    
-    .events-batik{
-      right:-1.25rem;
-      top:10rem;
-      width:10rem;
-      height:9rem;
-      border-radius:50%;
-    }
-
-    /* ── COUPLE SECTION (foto kiri + info+batik kanan) ──────────────── */
-    #couple{
-      background:var(--beige);
-      position:relative;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      min-height:80vh;
-      padding:0;          /* override .sec */
-      overflow:hidden;
-    }
-
-    .couple-photo-left{
-      position:relative;
-      overflow:hidden;
-      min-height:50vh;
-      background:var(--navy);
-    }
-
-    /* Gradient seamless — sisi kanan & atas foto fade ke warna beige section */
-    .couple-photo-left::before{
-      content:'';
-      position:absolute;
-      top:0;left:0;
-      width:100%;
-      height:100%;
-      background:
-        linear-gradient(to right,  transparent 40%, var(--beige) 92%),
-        linear-gradient(to bottom, var(--beige) 0%,  transparent 38%);
-      z-index:2;
-      pointer-events:none;
-    }
-
-    .couple-photo-left img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center top;
-      display:block;
-    }
-
-    .couple-photo-left img[src=""]{display:none}
-
-    .couple-info-right{
-      padding:clamp(3rem,6vw,5rem) clamp(2rem,4vw,3.5rem);
-      padding-top:clamp(4rem,10vh,8rem);
-      display:block;
-      flex-direction:column;
-      justify-content:flex-start;
-      position:relative;
-      overflow:hidden;
-    }
-
-    /* Hanya .reveal yang di-stack di atas — bukan semua child */
-    .couple-info-right > .reveal{position:relative;z-index:1}
-
-    /* Batik navy dekoratif — pendekatan sama dengan cover: warna solid + batik sebagai mask */
-    .couple-batik-right-deco{
-        position:absolute;
-        right:1rem;
-        bottom:5rem;
-
-        width:clamp(25rem,38vw,32rem);
-        height:clamp(30rem,38vw,32rem);
-
-        background:#111737;
-
-        -webkit-mask-image: var(--batik-kanan-url);
-          mask-image: var(--batik-kanan-url);
-
-          -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-
-          mask-size: 50% auto;
-          -webkit-mask-size: 50% auto;
-
-          -webkit-mask-position: right bottom;
-          mask-position: right bottom;
-
-          z-index: 0;
-        
-
-      }
-
-    /* Batik deco di countdown — style identik dengan couple */
-    .countdown-batik-deco{
-      display: none;
-      position:absolute;
-      right:-2rem;
-      top:-2rem;
-      bottom:auto;
-      width:clamp(20rem,38vw,32rem);
-      height:clamp(20rem,38vw,32rem);
-      background:#111737;
-      -webkit-mask-image:var(--batik-url), radial-gradient(ellipse 85% 100% at 65% 10%, black 20%, rgba(0,0,0,0.55) 52%, transparent 80%);
-      mask-image:var(--batik-url), radial-gradient(ellipse 85% 100% at 65% 10%, black 20%, rgba(0,0,0,0.55) 52%, transparent 80%);
-      -webkit-mask-repeat:repeat, no-repeat;
-      mask-repeat:repeat, no-repeat;
-      -webkit-mask-size:1200px auto, 100% 100%;
-      mask-size:1200px auto, 100% 100%;
-      -webkit-mask-position:right top, center;
-      mask-position:right top, center;
-      -webkit-mask-composite:source-in;
-      mask-composite:intersect;
-      filter:brightness(1.45) saturate(1.3) drop-shadow(0 0 6px rgba(17,23,55,.35));
-      opacity:0.9;
-      z-index:0;
-      pointer-events:none;
-    }
-
-    /* Batik bridge — di couple section, mengisi area wave agar batik tidak terputus */
-    .countdown-batik-deco{
-        position:absolute;
-        right:-2rem;
-        top:-2rem;
-        bottom:auto;
-
-        width:clamp(20rem,38vw,32rem);
-        height:clamp(20rem,38vw,32rem);
-
-        background:#111737;
-
-        /* 🔥 arah fade dari atas ke tengah */
-        -webkit-mask-image:
-          var(--batik-url),
-          radial-gradient(
-            ellipse 120% 120% at 70% 10%,
-            black 15%,
-            rgba(0,0,0,0.45) 55%,
-            transparent 85%
-          );
-
-        mask-image:
-          var(--batik-url),
-          radial-gradient(
-            ellipse 120% 120% at 70% 10%,
-            black 15%,
-            rgba(0,0,0,0.45) 55%,
-            transparent 85%
-          );
-
-        -webkit-mask-repeat: repeat, no-repeat;
-        mask-repeat: repeat, no-repeat;
-
-        /* 🔥 pakai system (hapus 1200px!) */
-        -webkit-mask-size: var(--batik-size), 100% 100%;
-        mask-size: var(--batik-size), 100% 100%;
-
-        -webkit-mask-position: right top, center;
-        mask-position: right top, center;
-
-        -webkit-mask-composite: source-in;
-        mask-composite: intersect;
-
-        /* 🔥 lebih subtle dari couple */
-        filter: brightness(1.25) saturate(1.15);
-
-        opacity: 0.8;
-
-        z-index:0;
-        pointer-events:none;
-      }
-
-    /* Batik deco di closing section — style identik, warna pure/putih */
-    /* Batik closing — di dalam closing-photo-wrap, di atas foto (z:1) tapi di bawah gradient overlay (z:2) */
-    .closing-batik-deco{
-      display: none;
-      position:absolute;
-      left:-2rem;
-      bottom:-2rem;
-      width:clamp(20rem,38vw,32rem);
-      height:clamp(20rem,38vw,32rem);
-      background:var(--pure);
-      -webkit-mask-image:var(--batik-url), radial-gradient(ellipse 85% 85% at 35% 60%, black 20%, rgba(0,0,0,0.55) 52%, transparent 80%);
-      mask-image:var(--batik-url), radial-gradient(ellipse 85% 85% at 35% 60%, black 20%, rgba(0,0,0,0.55) 52%, transparent 80%);
-      -webkit-mask-repeat:repeat, no-repeat;
-      mask-repeat:repeat, no-repeat;
-       /* 🔥 pakai system (hapus 1200px!) */
-      -webkit-mask-size: var(--batik-size), 100% 100%;
-      mask-size: var(--batik-size), 100% 100%;
-      -webkit-mask-position:left bottom, center;
-      mask-position:left bottom, center;
-      -webkit-mask-composite:source-in;
-      mask-composite:intersect;
-      filter:brightness(1.45) saturate(1.3) drop-shadow(0 0 6px rgba(255,255,255,.25));
-      opacity:0.9;
-      z-index:1;
-      pointer-events:none;
-    }
-
-    /* Batik footer — konsep sama, warna putih, posisi bawah-kiri */
-    .footer-batik-deco{
-      position:absolute;
-      left:-2rem;
-      bottom:-2rem;
-      width:clamp(16rem,32vw,26rem);
-      height:clamp(16rem,32vw,26rem);
-      background:var(--pure);
-      -webkit-mask-image:var(--batik-url), radial-gradient(ellipse 85% 85% at 35% 60%, black 20%, rgba(0,0,0,0.55) 52%, transparent 100%);
-      mask-image:var(--batik-url), radial-gradient(ellipse 85% 85% at 35% 60%, black 20%, rgba(0,0,0,0.55) 52%, transparent 100%);
-      -webkit-mask-repeat:repeat, no-repeat;
-      mask-repeat:repeat, no-repeat;
-      -webkit-mask-size:1200px auto, 100% 100%;
-      mask-size:1200px auto, 100% 100%;
-      -webkit-mask-position:left bottom, center;
-      mask-position:left bottom, center;
-      -webkit-mask-composite:source-in;
-      mask-composite:intersect;
-      filter:brightness(1.45) saturate(1.3) drop-shadow(0 0 6px rgba(255,255,255,.2));
-      opacity:0.18;
-      z-index:0;
-      pointer-events:none;
-    }
-
-    .couple-cards{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-top:1.5rem}
-    .couple-card{text-align:center}
-    .c-role{font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--navy);opacity:.5;margin-bottom:.6rem}
-    /* Nama lebih besar & responsive untuk desktop/tablet */
-    .c-name{font-family:var(--font-script);font-size:clamp(2.6rem,4.5vw,4.8rem);color:var(--orange);line-height:1;margin-bottom:-0.8rem}
-    .c-fullname{font-family:var(--font-script);font-size:clamp(1.5rem,1.2vw,3.05rem);color:var(--orange);margin-top:0;opacity:.8}
-    .c-parents{font-size:clamp(.78rem,1.1vw,.95rem);color:var(--navy);margin-top:.5rem;line-height:1.7;opacity:.7}
-    .c-and{font-family:var(--font-script);font-size:clamp(3rem,5vw,4.5rem);color:var(--orange);opacity:.8;text-align:center}
-
-    /* Wave di couple section harus di atas grid content */
-    #couple .section-divider{z-index:6}
-
-    /* ── COUNTDOWN SECTION ───────────────────────────────────────────── */
-    #countdown{background:var(--tan);position:relative}
-    .cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.5rem}
-    .cd-num{font-family:var(--font-serif);font-size:clamp(2.8rem,8vw,4.5rem);font-weight:300;color:var(--orange);line-height:1;text-align:center}
-    .cd-lbl{font-size:.54rem;letter-spacing:.3em;text-transform:uppercase;color:var(--navy);opacity:.6;margin-top:.4rem;text-align:center}
-
-    /* ── EVENTS SECTION ──────────────────────────────────────────────── */
-    #events{background:var(--beige);position:relative}
-    .event-cards{display:flex;flex-direction:column;gap:1.25rem;margin-top:2rem}
-    .event-card{background:rgba(255,255,255,.4);border-radius:8px;padding:2rem;text-align:center;border:1px solid var(--orange);border-opacity:.2}
-    .e-type{font-size:.56rem;letter-spacing:.4em;text-transform:uppercase;color:var(--orange);opacity:.7;margin-bottom:.75rem}
-    .e-title{font-family:var(--font-serif);font-size:1.9rem;font-weight:300;color:var(--navy);margin-bottom:1.5rem}
-    .e-detail{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.7rem;text-align:left;color:var(--navy);font-size:.875rem;opacity:.85}
-    .e-detail .icon{flex-shrink:0;margin-top:.1rem}
-    .e-detail strong{display:block;font-size:.65rem;letter-spacing:.1em;color:var(--orange);opacity:.8;margin-bottom:.1rem;font-weight:400;text-transform:uppercase}
-    .map-btn{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.25rem;padding:.7rem 1.5rem;background:var(--orange);color:var(--pure);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border-radius:4px;transition:all .25s;border:none}
-    .map-btn:hover{background:var(--navy);transform:translateY(-2px);box-shadow:0 4px 12px rgba(201,97,26,.3)}
-    .dresscode{text-align:center;margin-top:2rem;font-size:.75rem;color:var(--navy);opacity:.5;letter-spacing:.1em}
-
-    /* ── RSVP SECTION ────────────────────────────────────────────────── */
-    #rsvp{background:var(--tan);position:relative}
-    .rsvp-form{background:var(--pure);border-radius:8px;padding:2rem;box-shadow:0 4px 20px rgba(41,47,51,.08);border:1px solid var(--orange);border-opacity:.15}
-    .f-group{margin-bottom:1.25rem}
-    .f-label{display:block;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--navy);opacity:.6;margin-bottom:.5rem}
-    .f-label-sub{font-size:.55rem;letter-spacing:.1em;opacity:.7;text-transform:none;font-style:italic}
-    .f-select:disabled{opacity:.38;cursor:not-allowed;pointer-events:none}
-    .f-input,.f-select,.f-textarea{width:100%;padding:.75rem 1rem;border:1.5px solid var(--orange);border-opacity:.3;border-radius:4px;background:var(--beige);color:var(--navy);font-family:var(--font-sans);font-size:.9rem;transition:all .25s;outline:none}
-    .f-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='none' stroke='%23C9611A' stroke-opacity='.6' stroke-width='1.5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;cursor:pointer}
-    .f-input:focus,.f-select:focus,.f-textarea:focus{border-color:var(--orange);border-opacity:1;box-shadow:0 0 0 3px rgba(201,97,26,.1)}
-    .f-textarea{resize:vertical;min-height:80px}
-    .submit-btn{width:100%;padding:1rem;background:var(--orange);color:var(--pure);border:none;border-radius:4px;font-family:var(--font-sans);font-size:.72rem;letter-spacing:.35em;text-transform:uppercase;cursor:pointer;transition:all .25s;margin-top:.5rem;font-weight:500}
-    .submit-btn:hover{background:var(--navy);transform:translateY(-2px);box-shadow:0 4px 12px rgba(201,97,26,.3)}
-    .submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-    .rsvp-success{display:none;text-align:center;padding:2.5rem 1rem}
-    .rsvp-success.active{display:block}
-    .rsvp-success-icon{font-size:2.5rem;margin-bottom:1rem}
-    .rsvp-success h3{font-family:var(--font-serif);font-size:1.8rem;color:var(--navy);margin-bottom:.5rem}
-
-    /* ── CLOSING PHOTO SECTION ──────────────────────────────────────── */
-    #closing-photo{background:#151d45;position:relative;overflow:hidden;min-height:80vh}
-    .closing-photo-wrap{position:relative;width:100%;min-height:80vh}
-    .closing-photo-wrap::before{
-      content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
-      background:
-        linear-gradient(to right,  #151d45 0%, transparent 22%, transparent 78%, #151d45 100%),
-        linear-gradient(to bottom, #151d45 0%, transparent 18%, transparent 76%, #151d45 100%);
-    }
-    .closing-photo-wrap img{width:100%;min-height:80vh;object-fit:cover;object-position:center top;display:block}
-    .closing-photo-wrap img[src=""]{display:none}
-
-    /* ── FOOTER ──────────────────────────────────────────────────────── */
-    footer{background:#151d45;text-align:center;padding:3rem 1.5rem;position:relative;overflow:hidden;isolation:isolate}
-    footer>*{position:relative;z-index:1}
-    .f-names{font-family:var(--font-script);font-size:2.5rem;color:var(--orange);margin-bottom:.5rem}
-    footer p{font-size:.65rem;letter-spacing:.15em;color:var(--beige);opacity:.5}
-
-    /* ── PHOTO SECTION ───────────────────────────────────────────────── */
-    #photo-section{background:var(--tan);padding:0;position:relative;isolation:isolate}
-    .photo-split{display:grid;grid-template-columns:1fr 1fr;min-height:90vh}
-    .photo-split-img{position:relative;overflow:hidden;min-height:420px}
-    .photo-split-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-    .photo-split-body{
-      background:var(--beige);
-      display:flex;flex-direction:column;
-      justify-content:center;align-items:flex-start;
-      padding:4rem 3rem;
-      position:relative;
-      overflow:hidden;
-    }
-    .photo-split-body>*{position:relative;z-index:1}
-    .ps-label{font-size:.58rem;letter-spacing:.4em;text-transform:uppercase;color:var(--orange);opacity:.8;margin-bottom:.75rem}
-    .ps-title{font-family:var(--font-script);font-size:clamp(2.8rem,6vw,4.2rem);color:var(--orange);line-height:1.2;margin-bottom:1.25rem}
-    .ps-date{font-family:var(--font-serif);font-size:1.1rem;font-weight:300;color:var(--navy);letter-spacing:.05em;margin-bottom:.5rem;opacity:.85}
-    .ps-venue{font-size:.82rem;color:var(--navy);opacity:.7;line-height:1.8}
-    .ps-rule{width:36px;height:2px;background:var(--orange);opacity:.4;margin:1.75rem 0}
-    .ps-quote{font-family:var(--font-serif);font-style:italic;font-size:1rem;color:var(--navy);line-height:1.8;opacity:.75}
-
-    /* ── GATE ────────────────────────────────────────────────────────── */
-    #gate{display:none;position:fixed;inset:0;background:var(--tan);z-index:9999;padding:2.5rem}
-    #gate.active{display:flex}
-    #gate.has-photo{background-size:cover;background-position:center}
-    #gate.has-photo::before{
-      content:'';position:absolute;inset:0;
-      background:linear-gradient(135deg,rgba(185,165,131,.9) 0%,rgba(41,47,51,.8) 100%);
-      backdrop-filter:blur(2px);
-    }
-    #gate.has-photo .gate-inner{z-index:2}
-    .gate-inner{
-      position:relative;width:100%;height:100%;z-index:2;
-      display:flex;flex-direction:column;
-      align-items:center;justify-content:center;
-    }
-    .gate-bride{font-family:var(--font-script);font-size:clamp(4rem,16vw,9rem);color:var(--orange);line-height:1.1;text-align:center;align-self:flex-start;padding-left:32%;animation:gfade 1s ease .1s both}
-    .gate-amp{font-family:var(--font-script);font-size:clamp(2.5rem,9vw,5rem);color:var(--orange);opacity:.3;line-height:1.2;text-align:center;animation:gfade 1s ease .5s both}
-    .gate-groom{font-family:var(--font-script);font-size:clamp(4rem,16vw,9rem);color:var(--orange);line-height:1.1;text-align:center;padding-left:27%;animation:gfade 1s ease .9s both}
-    /* Tablet */
-    @media(min-width:769px) and (max-width:1100px){
-      .gate-bride{padding-left:24%}
-      .gate-groom{padding-left:29%}
-    }
-    /* Mobile */
-    @media(max-width:768px){
-      .gate-bride{padding-left:10%}
-      .gate-groom{padding-left:34%}
-    }
-    .gate-msg{position:absolute;bottom:2.5rem;left:0;right:0;text-align:center;color:var(--navy);font-size:.75rem;letter-spacing:.18em;line-height:2.2;opacity:.6;animation:gfade 1s ease 1.2s both}
-    #gate.has-photo .gate-msg{color:var(--pure);opacity:.8}
-    @keyframes gfade{from{opacity:0}to{opacity:1}}
-
-    /* ── WA AUTH ─────────────────────────────────────────────────────── */
-    #wa-auth{display:none;position:fixed;inset:0;background:var(--tan);z-index:9990;justify-content:center;align-items:center;padding:2rem}
-    #wa-auth.active{display:flex}
-    #wa-auth.has-photo{background-size:cover;background-position:center}
-    #wa-auth.has-photo::before{
-      content:'';position:absolute;inset:0;
-      background:rgba(41,47,51,.6);
-      backdrop-filter:blur(8px);
-    }
-    #wa-auth.has-photo .auth-card{position:relative;z-index:2}
-    .auth-card{background:var(--pure);border-radius:10px;padding:2.5rem 2rem;max-width:420px;width:100%;box-shadow:0 8px 40px rgba(41,47,51,.2);text-align:center;position:relative;z-index:2}
-    .auth-monogram{font-family:var(--font-script);font-size:3rem;color:var(--orange);margin-bottom:1.25rem;line-height:1}
-    .auth-to{font-size:.9rem;letter-spacing:.3em;text-transform:uppercase;color:var(--navy);opacity:.5;margin-bottom:.3rem}
-    .auth-name{font-family:var(--font-serif);font-size:2rem;color:var(--navy);font-weight:400;margin-bottom:.25rem;line-height:1.2}
-    .auth-desc{font-size:.70rem;color:var(--navy);opacity:.6;margin-bottom:2rem;line-height:1.7}
-    .auth-label{display:block;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--navy);opacity:.6;margin-bottom:.5rem;text-align:left}
-    .auth-input{width:100%;padding:.85rem 1rem;border:1.5px solid var(--orange);border-opacity:.3;border-radius:4px;background:var(--beige);color:var(--navy);font-family:var(--font-sans);font-size:1.1rem;letter-spacing:.3em;text-align:center;outline:none;transition:all .2s}
-    .auth-input:focus{border-color:var(--orange);border-opacity:1;box-shadow:0 0 0 3px rgba(201,97,26,.1)}
-    .auth-btn{width:100%;margin-top:1rem;padding:.9rem;background:var(--orange);color:var(--pure);border:none;border-radius:4px;font-family:var(--font-sans);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;transition:all .2s;font-weight:500}
-    .auth-btn:hover{background:var(--navy);transform:translateY(-2px)}
-    .auth-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-    .auth-error{display:none;margin-top:1rem;padding:.85rem 1rem;background:#ffe5e5;border:1px solid var(--orange);border-radius:4px;font-size:.82rem;color:var(--navy);line-height:1.6}
-    .auth-error.active{display:block}
-    .auth-divider{height:1px;background:var(--orange);opacity:.2;margin:1.5rem 0}
-    .auth-note{font-size:.72rem;color:var(--navy);opacity:.5;line-height:1.7}
-
-    /* ── WATERMARK ───────────────────────────────────────────────────── */
-    #watermark{
-      display:none;
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:8000;
-      opacity:.18;
-      mix-blend-mode:difference;
-      background-repeat:repeat;
-    }
-
-    /* ── TOAST ───────────────────────────────────────────────────────── */
-    .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--navy);color:var(--pure);padding:.875rem 1.5rem;border-radius:4px;font-size:.875rem;transition:transform .4s ease;z-index:9000;white-space:nowrap}
-    .toast.show{transform:translateX(-50%) translateY(0)}
-
-    .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
-    .reveal.visible{opacity:1;transform:translateY(0)}
-
-    /* ── RESPONSIVE ──────────────────────────────────────────────────── */
-
-    /* Tablet / iPad: foto fill full height, gradient solid sampai batas teks */
-    @media(min-width:769px) and (max-width:1100px){
-      #first-section::before{
-        background-size:auto 100%;
-        background-position:right center;
-      }
-      #first-section::after{
-        background:
-          linear-gradient(90deg,
-            rgba(21,29,69,1)    0%,
-            rgba(21,29,69,1)   4%,
-            rgba(21,29,69,.7)  40%,
-            rgba(21,29,69,.2)  46%,
-            rgba(21,29,69,0)   52%,
-            rgba(21,29,69,0)   86%,
-            rgba(21,29,69,.35) 100%),
-          linear-gradient(180deg,
-            rgba(21,29,69,.2)  0%,
-            rgba(21,29,69,0)   15%,
-            rgba(21,29,69,.2)  100%);
-      }
-    }
-
-    @media(max-width:680px){
-      .photo-split{grid-template-columns:1fr}
-      .photo-split-img{min-height:65vw}
-      .photo-split-body{align-items:center;text-align:center;padding:3rem 2rem}
-      .ps-rule{margin:1.75rem auto}
-    }
-
-    @media(max-width:768px){
-      /* Mobile: foto full-cover, teks overlay kiri */
-      
-      #first-section{
-        align-items:flex-start;
-        text-align:left;
-        padding:3rem 1.5rem 9rem;
-         position: relative; /* 🔥 penting untuk anchor */
-      }
-      #first-section .section-divider{
-        position: absolute;   /* 🔥 WAJIB */
-        bottom: -2px;         /* 🔥 WAJIB */
-        left: 0;
-
-        width: 100%;
-        height: 120px;
-
-        display: block;
-        pointer-events: none;
-        z-index: 5;
-      }
-      #first-section::before{
-        background-size:cover;
-        background-position:center 20%;
-      }
-      /* Mobile gradient: kiri lebih gelap agar teks terbaca */
-      #first-section::after{
-            background: none;
-              
-          }
-
-      .cc{
-        width:100%;
-        max-width:500px;
-        align-items:flex-start;
-      }
-
-      .c-to{text-align:left}
-      .c-guest{text-align:left;font-size:clamp(.6rem, 3vw, .78rem);letter-spacing:.2em}
-      .c-guest-tag{text-align:left;max-width:100%}
-      .c-names{font-size:clamp(2rem, 8vw, 3rem)}
-      .c-date{font-size:clamp(.46rem, 2.4vw, .6rem);letter-spacing:.28em}
-
-      .cover-batik{
-        display:block;
-        left:0;
-        bottom:4rem;
-        width:clamp(19rem, 43vw, 20rem);
-        height:clamp(22rem, 31vh, 34rem);
-        -webkit-mask-image:var(--batik-orange-kiri-url);
-        mask-image:var(--batik-orange-kiri-url);
-        mask-size: 50% auto;
-        -webkit-mask-size: 50% auto;
-        filter:none;
-        z-index:2;
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-        /* clip-path: polygon( */
-            /* 0% 0%,   kiri atas masuk */
-            /* 60% 0%, */
-            /* 100% 100%, */
-            /* 0% 100%   kiri bawah full */
-          /* ); */
-      }
-      .cover-batik-wave{display:none}
-
-      #intro .sec-inner{
-        padding-left:2rem;
-      }
-
-      /* ── Couple section: stack vertikal, teks kiri ── */
-      #couple{grid-template-columns:1fr}
-      .couple-photo-left{min-height:65vw}
-      .couple-info-right{padding:2.5rem 1.5rem 5rem}
-      .couple-info-right .s-label{text-align:left}
-      .couple-cards{grid-template-columns:1fr;gap:.5rem}
-      .couple-card{text-align:left}
-      /* & tidak dirotasi, cukup tampil di antara dua kartu */
-      .c-and{transform:rotate(0deg);text-align:left;opacity:.8;font-size:2.5rem}
-
-      /* Mobile: lebar tetap, tinggi ditambah, ukuran motif setengahnya */
-      .couple-batik-right-deco{
-          position: absolute;
-          right: 0.6rem;
-          bottom: 5rem;
-
-          width: clamp(20rem, 38vw, 32rem);
-          height: clamp(50rem, 38vw, 55rem);
-
-          background: #111737;
-
-          -webkit-mask-image: var(--batik-kanan-url);
-          mask-image: var(--batik-kanan-url);
-
-          -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-
-          mask-size: 50% auto;
-          -webkit-mask-size: 50% auto;
-
-          -webkit-mask-position: right bottom;
-          mask-position: right bottom;
-
-          z-index: 0;
-      }
-      /* Mobile: hanya gradient tipis di bawah foto → beige */
-      .couple-photo-left::before{
-        background:
-          linear-gradient(to bottom, var(--beige) 0%, transparent 6%),
-          linear-gradient(to top,    var(--beige) 0%, transparent 12%);
-      }
-      .countdown-batik-deco{
-        display: none;
-        width: clamp(10rem, 45vw, 16rem);  /* 🔥 override */     
-        right:-2rem;
-        bottom: 0;
-        transform: translateY(40px); /* 🔥 adjust ini */
-        -webkit-mask-size: var(--batik-size);
-        mask-size: var(--batik-size);
-        z-index:5;
-        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-        
-      }
-        .couple .section-divider{
-          position: relative;
-        }     
-        .couple .section-divider svg{
-        position: relative;
-        z-index: 2;
-        mix-blend-mode: destination-in; /* 🔥 MAGIC */
-      }
-      
-      
-
-      .countdown-batik-bridge{
-        display: none;
-        width:clamp(6rem,55vw,10rem);
-        height:clamp(6rem,12vh,9rem);
-        right:-1rem;
-        -webkit-mask-size: var(--batik-size);
-        mask-size: var(--batik-size);
-      }
-
-      .closing-batik-deco,
-      .footer-batik-deco{
-        position: absolute;
-        display: none;
-
-        right: 9rem;
-        top: -5rem;
-
-        width: clamp(13rem, 43vw, 20rem);
-        height: clamp(22rem, 31vh, 34rem);
-
-        background: #ffffff;
-
-        -webkit-mask-image: var(--batik-putih-kanan-url);
-        mask-image: var(--batik-putih-kanan-url);
-
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-
-        -webkit-mask-size: 50% auto;
-        mask-size: 50% auto;
-
-        -webkit-mask-position: right bottom; /* 🔥 INI KUNCI */
-        mask-position: right bottom;
-                  
-      }
-      .closing-photo-wrap img{width:100%;min-height:80vh;object-fit:cover;object-position:right top;display:block}
-      .closing-photo-wrap::before{
-      content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
-      background:
-        /* linear-gradient(to right,  #151d45 0%, transparent 22%, transparent 78%, #151d45 100%), */
-        linear-gradient(to bottom, #151d45 0%, transparent 18%, transparent 76%, #151d45 100%);
-    }
-      .cd-grid{grid-template-columns:repeat(2,1fr)}
-    }
-    
-    @media(min-width:600px){
-      .event-cards{flex-direction:row}
-      .event-card{flex:1}
-    }
-
-    /* ── TABLET (769–1100px) ─────────────────────────────────────────── */
-    @media(min-width:769px) and (max-width:1100px){
-      /* Teks column lebih lebar dari mobile */
-      .cc{ width:min(52vw,28rem); }
-      /* Batik proporsional untuk tablet */
-      .cover-batik{
-         position:absolute;
-          left:0rem;      
-          bottom:4rem;
-
-          width:clamp(25rem, 41vw, 32rem);
-          height:clamp(50rem, 46vh, 51rem);
-          
-          background:var(--orange);
-
-          z-index:4;
-          pointer-events:none;
-
-          /* ✅ single mask */
-          -webkit-mask-image: var(--batik-orange-kiri-url);
-          mask-image: var(--batik-orange-kiri-url);
-
-          -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-
-          mask-size: 40% auto;
-            -webkit-mask-size: 40% auto;
-
-          -webkit-mask-position: left bottom;
-          mask-position: left bottom;
-
-          /* optional styling */
-          filter: brightness(1.35) saturate(1.2);
-      }
-      .cover-batik-wave{display:none}
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
-
-<!-- WA AUTH OVERLAY -->
-<div id="wa-auth">
-  <div class="auth-card">
-    <div class="auth-monogram">P &amp; D</div>
-    <p class="auth-to">Undangan Pernikahan untuk</p>
-    <h2 class="auth-name" id="auth-guest-name">—</h2>
-    <p class="auth-desc">
-      Untuk memastikan undangan ini sampai ke tangan yang tepat,<br>
-      mohon masukkan <strong>5 digit yang diberikan kepada anda.</strong>
-    </p>
-    <label class="auth-label">5 Digit Rahasia</label>
-    <input
-      type="tel" id="auth-wa-input" class="auth-input"
-      maxlength="5" placeholder="_ _ _ _ _"
-      oninput="this.value=this.value.replace(/\D/g,'')"
-      onkeydown="if(event.key==='Enter') submitAuth()"
-    />
-    <button class="auth-btn" id="auth-btn" onclick="submitAuth()">Buka Undangan</button>
-    <div class="auth-error" id="auth-error">
-      <strong>Nomor tidak sesuai.</strong><br>
-      Silakan hubungi pengirim link undangan ini untuk mendapatkan bantuan.
-    </div>
-    <div class="auth-divider"></div>
-    <p class="auth-note">
-      Link undangan ini bersifat personal dan hanya berlaku untuk Anda.<br>
-      Data Anda aman dan tidak akan dibagikan kepada pihak lain.
-    </p>
+  <div class="language-switch" role="group" aria-label="Choose language" data-en-aria="Choose language" data-id-aria="Pilih bahasa">
+    <button class="language-button" type="button" data-language="en" aria-pressed="true" onclick="setLanguage('en')">EN</button>
+    <button class="language-button" type="button" data-language="id" aria-pressed="false" onclick="setLanguage('id')">ID</button>
   </div>
-</div>
-
-<!-- GATE -->
-<div id="gate">
-  <div class="gate-inner">
-    <div class="gate-bride">Putri</div>
-    <div class="gate-amp">&amp;</div>
-    <div class="gate-groom">Dikdik</div>
-    <p class="gate-msg">Undangan ini bersifat personal.<br>Silakan buka melalui link yang telah dibagikan kepada Anda.</p>
-  </div>
-</div>
-
-<!-- LOADING -->
-<div id="loading">
-  <div class="ld-ring"></div>
-  <p style="font-size:.7rem;letter-spacing:.2em;color:var(--navy)">Memuat undangan&hellip;</p>
-</div>
-
-<!-- FIRST SECTION (COVER) -->
-<section id="first-section" class="pattern-1">
-  <div class="cover-batik" aria-hidden="true"></div>
-  <div class="cover-batik-wave" aria-hidden="true">
-    <svg preserveAspectRatio="none" viewBox="0 0 60 100" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 30 0 Q 0 10 30 20 Q 60 30 30 40 Q 0 50 30 60 Q 60 70 30 80 Q 0 90 30 100 L 60 100 L 60 0 Z" fill="currentColor"/>
-    </svg>
-  </div>
-  <div class="cc">
-    <p class="c-to">Kepada Yang Terhormat</p>
-    <h1 class="c-guest" id="cover-guest">Tamu Undangan</h1>
-    <p class="c-guest-tag">Anda diundang untuk hadir</p>
-    <p class="c-pre">Di pernikahan</p>
-    <div class="c-names">Putri<span class="amp"> &amp; </span>Dikdik</div>
-    <p class="c-date">Sabtu, 2 Mei 2026</p>
-  </div>
-  <div class="scroll-hint"><span>Gulir ke Bawah</span><span>↓</span></div>
-  <div class="section-divider">
-    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path d="M0,60 Q300,100 600,60 T1200,60 L1200,120 L0,120 Z"/>
-    </svg>
-  </div>
-</section>
-
-<!-- INTRO SECTION (PUISI) -->
-<div id="intro" class="sec">
-  <div class="sec-inner">
-    <div class="reveal">      
-      <h2 class="s-title">Looks like we made it</h2>
-      <div class="s-rule"></div>
-      <p>We might took the long way, we knew we'd get there someday</p>      
-    </div>
-  </div>
-  <!-- Wave ke section 3 (beige) -->
-  <div class="section-divider" aria-hidden="true">
-    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path d="M0,60 Q300,100 600,60 T1200,60 L1200,120 L0,120 Z" style="fill:#CEC4B6"/>
-    </svg>
-  </div>
-</div>
-
-<!-- COUPLE SECTION: foto kiri + info+batik kanan -->
-<div id="couple">
-  <!-- Kiri: foto mempelai -->
-  <div class="couple-photo-left">
-    <img id="photo-main" src="" alt="Foto Putri &amp; Dikdik" />
-  </div>
-  <!-- Kanan: info mempelai + dekorasi batik biru -->
-  <div class="couple-info-right">
-    <div class="couple-batik-right-deco" aria-hidden="true"></div>
-     <!-- <img src="/batik-sisi-kanan.webp" class="couple-batik-right-deco" /> -->
-    <div class="reveal">
-      <p class="s-label" style="text-align:center">Mempelai</p>
-      <div class="couple-cards">
-        <div class="couple-card">
-          <p class="c-role">Mempelai Wanita</p>
-          <p class="c-name">PUTRI</p>
-          <p class="c-fullname">CAHYANINGTYAS</p>
-          <p class="c-parents">Putri dari<br><strong>Bapak Basuki Budi Untoro &amp; Ibu Kristiyatmi</strong></p>
+  <svg class="svg-symbol-store" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="andi-widya-logo" viewBox="0 0 620 430">
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M34 258C111 224 170 190 229 144 313 78 403 86 568 125" stroke-width="2.2" opacity=".9"/>
+        <path d="M43 267C123 220 201 187 275 203c69 15 102 55 165 31 45-17 81-47 133-78" stroke-width="5.5"/>
+        <path d="M273 269c-55 41 13 96 115 48 49-23 83-55 122-93" stroke-width="4.2"/>
+        <path d="M162 143l43-24M174 154l39-21M428 133l39-17M444 145l35-15" stroke-width="1.4" opacity=".8"/>
+      </g>
+      <text x="230" y="206" fill="currentColor" font-family="Cormorant Garamond, Didot, Georgia, serif" font-size="238" font-weight="500">A</text>
+      <text x="274" y="347" fill="currentColor" font-family="Cormorant Garamond, Didot, Georgia, serif" font-size="220" font-weight="500">W</text>
+      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
+        <circle cx="105" cy="168" r="19"/><circle cx="165" cy="168" r="19"/>
+        <path d="M105 168l28-45 32 45h-49l25-38h24M133 123l-19-5M146 122l14-10"/>
+        <path d="M130 122l-7-26 16-13M124 99l-18 9 13 12M139 83l10-9"/>
+      </g>
+      <circle cx="148" cy="71" r="7" fill="currentColor"/>
+      <path d="M137 84l-13 17 21 9 14 20 8-5-13-26-12-7 13-6-8-8Z" fill="currentColor"/>
+      <g fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="516" cy="91" r="8"/>
+        <path d="M511 101c-12 5-19 15-20 29l-21 15 5 6 28-12 11-16 8 19-19 35 7 4 29-37-12-30 17-8 18 18 5-5-15-27-25-5-12 14Z"/>
+        <path d="M503 108l-27-14-20 2-2 6 23 1 20 18M520 108l27-21 24-7 2 7-21 12-18 25" fill="none" stroke-width="5"/>
+        <path d="M505 145c-13 15-25 32-36 53 19-7 37-20 55-38l10 34c10-18 16-37 18-56l-20-17Z"/>
+      </g>
+      <path d="M83 397h71m315 0h69" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <text x="310" y="407" fill="currentColor" font-family="Cormorant Garamond, Didot, Georgia, serif" font-size="24" letter-spacing="8" text-anchor="middle">ANDI &amp; WIDYA</text>
+    </symbol>
+  </svg>
+  <main id="top">
+    <section id="first-section" class="hero">
+      <svg class="botanical botanical-left" viewBox="0 0 150 350" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.4">
+          <path d="M-8 340C42 277 68 218 54 154 45 111 50 73 82 23"/>
+          <path d="M37 276c-10-25-26-41-48-49M51 224c21-24 43-35 70-34M57 173c-23-17-38-37-47-62M55 126c21-22 42-33 66-36M67 82c-12-19-17-37-16-57"/>
+          <path d="M-4 227c17-2 29 5 37 22-18 2-30-5-37-22ZM101 208c8-17 21-25 39-25-7 17-20 25-39 25ZM8 111c17 0 29 8 35 25-18 0-29-8-35-25ZM98 93c8-17 21-25 39-25-8 17-21 25-39 25ZM43 34c15 6 23 18 23 36-16-6-24-18-23-36Z" fill="currentColor" fill-opacity=".16"/>
+        </g>
+      </svg>
+      <svg class="botanical botanical-right" viewBox="0 0 150 350" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.4">
+          <path d="M-8 340C42 277 68 218 54 154 45 111 50 73 82 23"/>
+          <path d="M37 276c-10-25-26-41-48-49M51 224c21-24 43-35 70-34M57 173c-23-17-38-37-47-62M55 126c21-22 42-33 66-36M67 82c-12-19-17-37-16-57"/>
+          <path d="M-4 227c17-2 29 5 37 22-18 2-30-5-37-22ZM101 208c8-17 21-25 39-25-7 17-20 25-39 25ZM8 111c17 0 29 8 35 25-18 0-29-8-35-25ZM98 93c8-17 21-25 39-25-8 17-21 25-39 25ZM43 34c15 6 23 18 23 36-16-6-24-18-23-36Z" fill="currentColor" fill-opacity=".16"/>
+        </g>
+      </svg>
+      <div class="hero-content">
+        <p class="hero-kicker" data-en="Together with our families" data-id="Bersama keluarga">Bersama keluarga</p>
+        <h1><span class="hero-name">Widya</span><span class="hero-amp" data-en="and" data-id="dan">and</span><span class="hero-name">Andi</span></h1>
+        <div class="hero-rule"></div>
+        <p class="hero-invite" data-en-html="Joyfully, we invite you<br>to celebrate our wedding" data-id-html="Dengan penuh sukacita,<br>kami mengundang Anda merayakan pernikahan kami">Dengan penuh sukacita,<br>kami mengundang Anda untuk merayakan pernikahan</p>
+        <div class="hero-guest"><span data-en="Dear" data-id="Kepada Yang Terhormat">Kepada Yang Terhormat</span><strong id="cover-guest">Guest of Honor</strong></div>
+        <div class="opening-date" aria-label="Saturday, March 20, 2027" data-en-aria="Saturday, March 20, 2027" data-id-aria="Sabtu, 20 Maret 2027">
+          <span data-en="MAR" data-id="MAR">MAR</span><span class="date-day">20</span><span>2027</span>
         </div>
-        <div class="c-and">&amp;</div>
-        <div class="couple-card">
-          <p class="c-role">Mempelai Pria</p>
-          <p class="c-name">DIKDIK</p>
-          <p class="c-fullname">KUSDINAR</p>
-          <p class="c-parents">Putra dari<br><strong>Bapak E. Kusmana &amp; Ibu E. Suryati</strong></p>
+        <p class="hero-time" data-en="Saturday · 3:00 PM WIB" data-id="Sabtu · Pukul 15.00 WIB">Sabtu · Pukul 15.00 WIB</p>
+        <div class="hero-rule"></div>
+        <div class="hero-venue"><strong>Taman Arunika</strong><span data-en-html="Jl. Kaliurang KM 8<br>Sleman, Yogyakarta, Indonesia" data-id-html="Jl. Kaliurang KM 8<br>Sleman, DI Yogyakarta">Jl. Kaliurang KM 8<br>Sleman, DI Yogyakarta</span></div>
+        <svg class="couple-logo hero-logo" viewBox="0 0 620 430" role="img" aria-label="Andi and Widya monogram logo" data-en-aria="Andi and Widya monogram logo" data-id-aria="Logo monogram Andi dan Widya"><use href="#andi-widya-logo"></use></svg>
+      </div>
+      <a class="hero-scroll" href="#our-story"><span data-en="Explore the invitation" data-id="Lihat detail undangan">Lihat detail undangan</span><span>⌄</span></a>
+    </section>
+
+    <section id="our-story" class="section our-story">
+      <div class="story-inner">
+        <header class="story-heading reveal">
+          <p class="eyebrow" data-en="The journey of Widya &amp; Andi" data-id="Perjalanan Widya &amp; Andi">Perjalanan Widya &amp; Andi</p>
+          <h2 class="story-script" data-en="Our Story" data-id="Kisah Kami">Our Story</h2>
+          <div class="story-heart" aria-hidden="true">♡</div>
+          <p class="story-intro" data-en="Every story has a beginning, grows with time, and brings two hearts to their special day." data-id="Setiap kisah punya awal, tumbuh melalui waktu, dan membawa dua hati menuju hari istimewa.">Setiap kisah punya awal, tumbuh melalui waktu, dan membawa dua hati menuju hari istimewa.</p>
+        </header>
+
+        <div class="story-timeline" aria-label="Timeline of Widya and Andi’s journey" data-en-aria="Timeline of Widya and Andi’s journey" data-id-aria="Timeline perjalanan Widya dan Andi">
+          <article class="story-item reveal" style="--delay:0ms">
+            <div class="story-copy">
+              <span class="story-year">20XX</span>
+              <span class="story-label" data-en="The beginning" data-id="Bab pertama">Bab pertama</span>
+              <h3 data-en="Our first meeting" data-id="Pertemuan pertama">Pertemuan Pertama</h3>
+              <p data-en="Add the story of how Widya and Andi first met." data-id="Tuliskan bagaimana Widya dan Andi pertama kali bertemu.">Tuliskan bagaimana Widya dan Andi pertama kali bertemu.</p>
+              <span class="story-placeholder" data-en="Sample story" data-id="Contoh sementara">Contoh sementara</span>
+            </div>
+            <span class="story-node" aria-hidden="true"></span><span class="story-spacer" aria-hidden="true"></span>
+          </article>
+          <article class="story-item reveal" style="--delay:120ms">
+            <div class="story-copy">
+              <span class="story-year">20XX</span>
+              <span class="story-label" data-en="Growing closer" data-id="Semakin dekat">Semakin dekat</span>
+              <h3 data-en="Growing together" data-id="Tumbuh bersama">Tumbuh Bersama</h3>
+              <p data-en="Share the moment your life together began to bloom." data-id="Ceritakan momen ketika perjalanan bersama mulai bertumbuh.">Ceritakan momen ketika perjalanan bersama mulai bertumbuh.</p>
+              <span class="story-placeholder" data-en="Sample story" data-id="Contoh sementara">Contoh sementara</span>
+            </div>
+            <span class="story-node" aria-hidden="true"></span><span class="story-spacer" aria-hidden="true"></span>
+          </article>
+          <article class="story-item reveal" style="--delay:240ms">
+            <div class="story-copy">
+              <span class="story-year">20XX</span>
+              <span class="story-label" data-en="One future" data-id="Satu tujuan">Satu tujuan</span>
+              <h3 data-en="The proposal" data-id="Hari lamaran">Hari Lamaran</h3>
+              <p data-en="Add the story behind your decision to take this step together." data-id="Tambahkan cerita di balik keputusan untuk melangkah bersama.">Tambahkan cerita di balik keputusan untuk melangkah bersama.</p>
+              <span class="story-placeholder" data-en="Sample story" data-id="Contoh sementara">Contoh sementara</span>
+            </div>
+            <span class="story-node" aria-hidden="true"></span><span class="story-spacer" aria-hidden="true"></span>
+          </article>
+          <article class="story-item reveal" style="--delay:360ms">
+            <div class="story-copy">
+              <span class="story-year">2027</span>
+              <span class="story-label" data-en="A new chapter" data-id="Babak baru">Babak baru</span>
+              <h3 data-en="Our wedding day" data-id="Hari bahagia">Hari Bahagia</h3>
+              <p data-en="On March 20, 2027, Widya and Andi’s story continues with a promise for life." data-id="Pada 20 Maret 2027, kisah Widya dan Andi berlanjut dalam janji pernikahan.">Pada 20 Maret 2027, kisah Widya dan Andi berlanjut dalam janji pernikahan.</p>
+            </div>
+            <span class="story-node" aria-hidden="true"></span><span class="story-spacer" aria-hidden="true"></span>
+          </article>
+        </div>
+
+        <svg class="story-branch" viewBox="0 0 240 70" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5">
+            <path d="M18 52C72 47 130 35 220 14"/>
+            <path d="M53 45C43 32 31 25 16 24M83 40c-1-16 3-28 13-39M114 34c11-14 22-21 38-24M148 28c2 15 8 26 21 35M181 22c11-10 23-15 38-16"/>
+            <path d="M15 24c15-2 26 4 31 19-16 2-27-4-31-19ZM96 1c10 12 10 25 0 39C86 28 86 15 96 1ZM152 10c15 4 22 14 22 29-15-4-22-14-22-29ZM169 63c-1-16 6-27 21-33 1 16-6 27-21 33ZM219 6c-5 15-16 22-32 21 5-15 16-22 32-21Z" fill="currentColor" fill-opacity=".14"/>
+          </g>
+        </svg>
+        <a class="story-next" href="#event-details"><span data-en="Wedding details" data-id="Informasi acara">Informasi acara</span> <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+
+    <section id="event-details" class="section event-details">
+      <div class="details-card reveal">
+        <div class="details-art" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <path d="M18 98h84M27 98V51l33-27 33 27v47M42 98V67a18 18 0 0 1 36 0v31M39 54h8m26 0h8M58 24V12h5v8M23 98V55m74 43V55" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+            <path d="M16 52 60 16l44 36M52 98V68h16v30" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="details-content">
+          <header class="details-heading">
+            <p class="details-pretitle" data-en="the" data-id="seputar">the</p>
+            <h2 class="details-title" data-en="Details" data-id="Rincian Acara">Details</h2>
+            <span class="details-heart" aria-hidden="true">♡</span><br>
+            <span class="details-dummy" data-en="Sample information" data-id="Informasi contoh sementara">Informasi contoh sementara</span>
+          </header>
+          <div class="details-list">
+            <article class="details-row">
+              <span class="details-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z"/><circle cx="12" cy="9" r="2.2"/></svg>
+              </span>
+              <div><h3 data-en="Ceremony &amp; reception" data-id="Prosesi &amp; resepsi">Prosesi &amp; resepsi</h3><p data-en-html="<strong>Taman Arunika</strong><br>Saturday, March 20, 2027<br>Ceremony at 3:00 PM WIB · Reception at 6:30 PM WIB<br>Jl. Kaliurang KM 8, Sleman, Yogyakarta, Indonesia" data-id-html="<strong>Taman Arunika</strong><br>Sabtu, 20 Maret 2027<br>Prosesi pukul 15.00 WIB · Resepsi pukul 18.30 WIB<br>Jl. Kaliurang KM 8, Sleman, DI Yogyakarta"><strong>Taman Arunika</strong><br>Sabtu, 20 Maret 2027<br>Prosesi pukul 15.00 WIB · Resepsi pukul 18.30 WIB<br>Jl. Kaliurang KM 8, Sleman, DI Yogyakarta</p></div>
+            </article>
+            <article class="details-row">
+              <span class="details-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M7 4 4.5 6.5 7 9l1.5-1.5 1.8 1.8a6.2 6.2 0 0 0 8.8 8.8l-4.3-4.3-2.1 1-3.2-3.2 1-2.1L6.2 5Z"/><path d="m15 4 5 5m-2-6 3 3-5 5-3-3Z"/></svg>
+              </span>
+              <div><h3 data-en="Dress code" data-id="Tema pakaian">Tema pakaian</h3><p data-en="Formal attire in soft, nature-inspired tones. Take inspiration from sage, taupe, sand, and cream." data-id="Formal dengan warna lembut bernuansa alam. Palet sage, taupe, sand, dan cream menjadi inspirasi busana.">Formal dengan warna lembut bernuansa alam. Palet sage, taupe, sand, dan cream menjadi inspirasi busana.</p></div>
+            </article>
+            <article class="details-row">
+              <span class="details-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M3 17h18l-1.8-6.5a2 2 0 0 0-1.9-1.5H6.7a2 2 0 0 0-1.9 1.5L3 17Z"/><path d="M5 17v2m14-2v2M6 12h12M8 9l1-3h6l1 3"/><circle cx="7" cy="15" r=".8"/><circle cx="17" cy="15" r=".8"/></svg>
+              </span>
+              <div><h3 data-en="Getting there" data-id="Rute menuju lokasi">Rute menuju lokasi</h3><p data-en="From central Yogyakarta, head toward Jalan Kaliurang and follow the signs to Taman Arunika. The travel time and starting point are sample details." data-id="Dari pusat Kota Yogyakarta, arahkan perjalanan ke Jalan Kaliurang dan ikuti petunjuk menuju Taman Arunika. Waktu tempuh serta titik keberangkatan ini masih contoh.">Dari pusat Kota Yogyakarta, arahkan perjalanan ke Jalan Kaliurang dan ikuti petunjuk menuju Taman Arunika. Waktu tempuh serta titik keberangkatan ini masih contoh.</p><a class="details-link" href="https://maps.google.com/?q=Taman+Arunika+Sleman+Yogyakarta" target="_blank" rel="noopener" data-en="View sample map ↗" data-id="Lihat peta contoh ↗">Lihat peta contoh ↗</a></div>
+            </article>
+            <article class="details-row">
+              <span class="details-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H3zM7 20v-5h10v5M8 9h.01M12 9h.01M16 9h.01"/></svg>
+              </span>
+              <div><h3 data-en="Accommodation" data-id="Akomodasi">Akomodasi</h3><p data-en="Hotel recommendations and parking information near the venue will be added once the event details are confirmed." data-id="Rekomendasi hotel dan informasi parkir di sekitar lokasi akan ditambahkan setelah detail acara dikonfirmasi.">Rekomendasi hotel dan informasi parkir di sekitar lokasi akan ditambahkan setelah detail acara dikonfirmasi.</p></div>
+            </article>
+          </div>
+          <p class="details-endnote" data-en="All information on this page is sample content for now." data-id="Seluruh informasi pada halaman ini merupakan contoh sementara.">Seluruh informasi pada halaman ini merupakan contoh sementara.</p>
         </div>
       </div>
-    </div>
-  </div>
-  <!-- Batik bridge: mengisi area wave couple→countdown agar batik tidak putus -->
-  <div class="countdown-batik-bridge" aria-hidden="true"></div>
-  <!-- Wave couple → countdown (beige ke tan) -->
-  <div class="section-divider" aria-hidden="true">
-    <div class="wave-batik"></div>
-    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path d="M0,60 Q300,100 600,60 T1200,60 L1200,120 L0,120 Z" style="fill:#B9A583"/>
-    </svg>
-  </div>
-</div>
+    </section>
 
-<!-- COUNTDOWN SECTION -->
-<div id="countdown" class="sec">
-  <div class="batik-block batik-amber countdown-batik" aria-hidden="true"></div>
-  <div class="countdown-batik-deco" aria-hidden="true"></div>
-  <div class="sec-inner">
-    <div class="reveal">
-      <p class="s-label">Menuju Hari Istimewa</p>
-      <h2 class="s-title">Hitung Mundur</h2>
-      <div class="s-rule"></div>
-      <div class="cd-grid">
-        <div><div class="cd-num" id="cd-d">00</div><div class="cd-lbl">Hari</div></div>
-        <div><div class="cd-num" id="cd-h">00</div><div class="cd-lbl">Jam</div></div>
-        <div><div class="cd-num" id="cd-m">00</div><div class="cd-lbl">Menit</div></div>
-        <div><div class="cd-num" id="cd-s">00</div><div class="cd-lbl">Detik</div></div>
+    <section id="event-timeline" class="section event-timeline">
+      <div class="schedule-card">
+        <header class="schedule-heading reveal">
+          <p class="schedule-pretitle" data-en="the" data-id="susunan">the</p>
+          <h2 class="schedule-title" data-en="Timeline" data-id="Susunan Acara">Timeline</h2>
+          <span class="schedule-heart" aria-hidden="true">♡</span><br>
+          <p class="schedule-note" data-en="Sample event schedule" data-id="Rundown acara contoh sementara">Rundown acara contoh sementara</p>
+        </header>
+        <div class="schedule-list" aria-label="Wedding ceremony and reception schedule" data-en-aria="Wedding ceremony and reception schedule" data-id-aria="Urutan acara pemberkatan dan resepsi">
+          <article class="schedule-item reveal" style="--delay:0ms">
+            <span class="schedule-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="12" cy="18" r="7"/><circle cx="20" cy="18" r="7"/><path d="M9 10V7m0 0h3m11 3V7m0 0h-3"/></svg></span>
+            <span class="schedule-node" aria-hidden="true"></span>
+            <div class="schedule-copy"><time class="schedule-time" data-en="3:00 PM WIB" data-id="15.00 WIB">15.00 WIB</time><h3 data-en="Wedding ceremony" data-id="Pemberkatan">Pemberkatan</h3><p data-en="A ceremony shared with our family and friends." data-id="Prosesi pemberkatan bersama keluarga dan sahabat.">Prosesi pemberkatan bersama keluarga dan sahabat.</p></div>
+          </article>
+          <article class="schedule-item reveal" style="--delay:100ms">
+            <span class="schedule-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 6h7l-1 10a4 4 0 0 1-8 0L5 9h3m13-3h7l-1 10a4 4 0 0 1-8 0l-1-7h3M11 20v7m0 0h5m3-7v7m0 0h5M11 6l7 7m-2-7 7 7"/></svg></span>
+            <span class="schedule-node" aria-hidden="true"></span>
+            <div class="schedule-copy"><time class="schedule-time" data-en="4:30 PM WIB" data-id="16.30 WIB">16.30 WIB</time><h3 data-en="Welcome &amp; mingle" data-id="Ramah tamah">Ramah Tamah</h3><p data-en="A relaxed time to say hello and take photos together." data-id="Waktu santai untuk menyapa dan berfoto bersama.">Waktu santai untuk menyapa dan berfoto bersama.</p></div>
+          </article>
+          <article class="schedule-item reveal" style="--delay:200ms">
+            <span class="schedule-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="17" r="10"/><circle cx="16" cy="17" r="6.5"/><path d="M4 7v9m-2-4h4m22-5v9m-2-4h4M4 25v3m24-3v3"/></svg></span>
+            <span class="schedule-node" aria-hidden="true"></span>
+            <div class="schedule-copy"><time class="schedule-time" data-en="6:30 PM WIB" data-id="18.30 WIB">18.30 WIB</time><h3 data-en="Reception begins" data-id="Resepsi dimulai">Resepsi Dimulai</h3><p data-en="Guests are invited to enter the celebration space." data-id="Para tamu dipersilakan memasuki area perayaan.">Para tamu dipersilakan memasuki area perayaan.</p></div>
+          </article>
+          <article class="schedule-item reveal" style="--delay:300ms">
+            <span class="schedule-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="17" r="10"/><circle cx="16" cy="17" r="7"/><path d="M4 6v9m-2-4h4m-2-5v9m26-9v9m-2-4h4m-2-5v9"/></svg></span>
+            <span class="schedule-node" aria-hidden="true"></span>
+            <div class="schedule-copy"><time class="schedule-time" data-en="7:00 PM WIB" data-id="19.00 WIB">19.00 WIB</time><h3 data-en="Dinner &amp; toasts" data-id="Makan malam &amp; toast">Makan Malam &amp; Toast</h3><p data-en="Dinner and heartfelt toasts for the newlyweds." data-id="Hidangan malam dan ucapan hangat untuk kedua mempelai.">Hidangan malam dan ucapan hangat untuk kedua mempelai.</p></div>
+          </article>
+          <article class="schedule-item reveal" style="--delay:400ms">
+            <span class="schedule-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M18 5v18.5a4.5 4.5 0 1 1-3-4.25V10l12-3v14.5a4.5 4.5 0 1 1-3-4.25V4z"/></svg></span>
+            <span class="schedule-node" aria-hidden="true"></span>
+            <div class="schedule-copy"><time class="schedule-time" data-en="8:00 PM WIB" data-id="20.00 WIB">20.00 WIB</time><h3 data-en="Music &amp; celebration" data-id="Musik &amp; perayaan">Musik &amp; Perayaan</h3><p data-en="Enjoy the music and celebrate this joyful day together." data-id="Menikmati musik dan merayakan hari bahagia bersama.">Menikmati musik dan merayakan hari bahagia bersama.</p></div>
+          </article>
+          <article class="schedule-item reveal" style="--delay:500ms">
+            <span class="schedule-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 3v5m0 16v5M3 16h5m16 0h5M6.8 6.8l3.6 3.6m11.2 11.2 3.6 3.6m0-18.4-3.6 3.6m-11.2 11.2-3.6 3.6"/><circle cx="16" cy="16" r="5"/><path d="m16 11 2 5-2 5-2-5z"/></svg></span>
+            <span class="schedule-node" aria-hidden="true"></span>
+            <div class="schedule-copy"><time class="schedule-time" data-en="8:30 PM WIB" data-id="20.30 WIB">20.30 WIB</time><h3 data-en="Farewell" data-id="Penutup">Penutup</h3><p data-en="Thank you for being part of our celebration." data-id="Terima kasih telah menjadi bagian dari perayaan ini.">Terima kasih telah menjadi bagian dari perayaan ini.</p></div>
+          </article>
+        </div>
+        <svg class="schedule-branch" viewBox="0 0 240 70" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5">
+            <path d="M18 52C72 47 130 35 220 14"/><path d="M53 45C43 32 31 25 16 24M83 40c-1-16 3-28 13-39M114 34c11-14 22-21 38-24M148 28c2 15 8 26 21 35M181 22c11-10 23-15 38-16"/>
+            <path d="M15 24c15-2 26 4 31 19-16 2-27-4-31-19ZM96 1c10 12 10 25 0 39C86 28 86 15 96 1ZM152 10c15 4 22 14 22 29-15-4-22-14-22-29ZM169 63c-1-16 6-27 21-33 1 16-6 27-21 33ZM219 6c-5 15-16 22-32 21 5-15 16-22 32-21Z" fill="currentColor" fill-opacity=".14"/>
+          </g>
+        </svg>
       </div>
-    </div>
-  </div>
-  <!-- Wave countdown → events (tan ke beige) -->
-  <div class="section-divider" aria-hidden="true">
-    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path d="M0,60 Q300,100 600,60 T1200,60 L1200,120 L0,120 Z" style="fill:#CEC4B6"/>
-    </svg>
-  </div>
-</div>
+    </section>
 
-<!-- EVENTS SECTION -->
-<div id="events" class="sec">
-  <div class="batik-block batik-ivory events-batik" aria-hidden="true"></div>
-  <div class="sec-inner">
-    <div class="reveal">
-      <p class="s-label">Rangkaian Acara</p>
-      <h2 class="s-title">Jadwal <em>Pernikahan</em></h2>
-      <div class="s-rule"></div>
-      <div class="event-cards">
-        <div class="event-card" id="card-akad">
-          <p class="e-type">Akad & Pemberkatan</p>
-          <h3 class="e-title">Prosesi Pernikahan</h3>
-          <div class="e-detail"><span class="icon">📅</span><div><strong>Hari &amp; Tanggal</strong>Sabtu, 2 Mei 2026</div></div>
-          <div class="e-detail"><span class="icon">🕑</span><div><strong>Waktu</strong>11:00 – 16:00 WIB</div></div>
-          <div class="e-detail"><span class="icon">📍</span><div><strong>Tempat</strong>Kampoeng Percik<br><span style="font-size:.8rem;opacity:.6">Kampung Percik Terusan, JL Patimura KM. 1, Salatiga, Sidorejo, Salatiga, Kec. Sidorejo, Kota Salatiga, Jawa Tengah</span></div></div>
-          <a class="map-btn" href="https://maps.google.com/?q=Kampoeng+Percik+Salatiga" target="_blank" rel="noopener">🗺 Buka Google Maps</a>
-        </div>
-        <div class="event-card">
-          <p class="e-type">Resepsi Pernikahan</p>
-          <h3 class="e-title">Resepsi Pernikahan</h3>
-          <div class="e-detail"><span class="icon">📅</span><div><strong>Hari &amp; Tanggal</strong>Sabtu, 2 Mei 2026</div></div>
-          <div class="e-detail"><span class="icon">🕓</span><div><strong>Waktu</strong>18:30 – 20:00 WIB</div></div>
-          <div class="e-detail"><span class="icon">📍</span><div><strong>Tempat</strong>Hotel Wahid Prime<br><span style="font-size:.8rem;opacity:.6">Jl. Jend. Sudirman No.95, Kutowinangun Kidul, Kec. Tingkir, Kota Salatiga, Jawa Tengah</span></div></div>
-          <a class="map-btn" href="https://maps.google.com/?q=Hotel+Wahid+Prime+Salatiga" target="_blank" rel="noopener">🗺 Buka Google Maps</a>
-        </div>
-      </div>      
-    </div>
-  </div>
-  <!-- Wave events → rsvp (beige ke tan) -->
-  <div class="section-divider" aria-hidden="true">
-    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path d="M0,60 Q300,100 600,60 T1200,60 L1200,120 L0,120 Z" style="fill:#B9A583"/>
-    </svg>
-  </div>
-</div>
+    <div class="watermark" id="watermark" aria-hidden="true"></div>
 
-<!-- RSVP SECTION -->
-<div id="rsvp" class="sec">
-  <div class="sec-inner">
-    <div class="reveal">
-      <p class="s-label">Konfirmasi Kehadiran</p>
-      <h2 class="s-title">RSVP</h2>
-      <div class="s-rule"></div>
-      <p class="s-body" id="rsvp-desc" style="margin-bottom:2rem">Kehadiran Anda adalah kehormatan bagi kami.<br>Mohon konfirmasi sebelum <strong> 01 Mei 2026</strong>.</p>
-      <div class="rsvp-form">
-        <div id="rsvp-body">
-          <div class="f-group">
-            <label class="f-label">Nama Anda</label>
-            <input type="text" id="rsvp-name" class="f-input" placeholder="Masukkan nama Anda" />
-          </div>
-          <div class="f-group">
-            <label class="f-label">No. WhatsApp (opsional)</label>
-            <input type="tel" id="rsvp-wa" class="f-input" placeholder="08xxxxxxxxxx" />
-          </div>
-          <div class="f-group">
-            <label class="f-label">Konfirmasi Kehadiran</label>
-            <select id="rsvp-opts" class="f-select" onchange="updateCountFields()">
-              <option value="">— Pilih konfirmasi kehadiran —</option>
-            </select>
-          </div>
-          <div class="f-group" id="rsvp-count-wrap">
-            <label class="f-label" id="rsvp-count-label">Jumlah Hadir</label>
-            <select id="rsvp-count" class="f-select">
-              <option value="">— Pilih jumlah —</option>
-              <option value="1">1 orang</option>
-              <option value="2">2 orang</option>
-              <option value="3">3 orang</option>
-              <option value="4">4 orang</option>
-              <option value="5">5 orang</option>
-              <option value="6">6 orang</option>
-              <option value="7">7 orang</option>
-              <option value="8">8 orang</option>
-              <option value="9">9 orang</option>
-              <option value="10">10 orang</option>
-            </select>
-          </div>
-          <div class="f-group">
-            <label class="f-label">Pesan &amp; Ucapan (opsional)</label>
-            <textarea id="rsvp-msg" class="f-textarea" placeholder="Tulis ucapan selamat untuk mempelai…"></textarea>
-          </div>
-          <button class="submit-btn" id="rsvp-btn" onclick="submitRsvp()">Kirim Konfirmasi</button>
+    <section id="countdown" class="section countdown">
+      <div class="section-inner reveal">
+        <p class="eyebrow" data-en="Until our special day" data-id="Menuju hari istimewa">Menuju hari istimewa</p>
+        <h2 class="section-title" data-en="Save the date" data-id="Catat tanggalnya">Save the date</h2>
+        <div class="countdown-grid" aria-label="Countdown to the wedding day" data-en-aria="Countdown to the wedding day" data-id-aria="Hitung mundur menuju hari pernikahan">
+          <div class="countdown-item"><span class="countdown-num" id="cd-d">00</span><span class="countdown-label" data-en="Days" data-id="Hari">Hari</span></div>
+          <div class="countdown-item"><span class="countdown-num" id="cd-h">00</span><span class="countdown-label" data-en="Hours" data-id="Jam">Jam</span></div>
+          <div class="countdown-item"><span class="countdown-num" id="cd-m">00</span><span class="countdown-label" data-en="Minutes" data-id="Menit">Menit</span></div>
+          <div class="countdown-item"><span class="countdown-num" id="cd-s">00</span><span class="countdown-label" data-en="Seconds" data-id="Detik">Detik</span></div>
         </div>
-        <div class="rsvp-success" id="rsvp-ok">
-          <div class="rsvp-success-icon" id="rsvp-ok-icon">💌</div>
-          <h3>Terima Kasih!</h3>
-          <p id="rsvp-ok-msg" style="color:var(--navy);font-size:.9rem;margin-top:.5rem;line-height:1.8;opacity:.85"></p>
+        <p class="countdown-note" id="countdown-note"></p>
+      </div>
+    </section>
+
+    <section id="rsvp" class="section rsvp">
+      <div class="section-inner">
+        <div class="rsvp-panel reveal">
+          <header class="rsvp-heading">
+            <p class="rsvp-script" data-en="kindly" data-id="mohon">kindly</p>
+            <h2 class="rsvp-title">RSVP</h2>
+            <div class="rsvp-heart" aria-hidden="true">♡</div>
+            <p class="rsvp-deadline" data-en="Kindly reply by March 19, 2027" data-id="Mohon konfirmasi sebelum 19 Maret 2027">Mohon konfirmasi sebelum 19 Maret 2027</p>
+          </header>
+          <div id="rsvp-access-note" class="rsvp-access-note is-hidden" data-en="Open your personal invitation link to save your RSVP. All event details remain available here." data-id="Untuk menyimpan konfirmasi kehadiran, silakan buka tautan undangan personal Anda. Seluruh informasi acara tetap dapat dilihat di halaman ini.">Untuk menyimpan konfirmasi kehadiran, silakan buka tautan undangan personal Anda. Seluruh informasi acara tetap dapat dilihat di halaman ini.</div>
+          <div id="rsvp-body" class="rsvp-body is-hidden">
+            <fieldset class="choice-group">
+              <legend class="choice-legend" data-en="Will you be joining us?" data-id="Apakah Anda akan hadir?">Apakah Anda akan hadir?</legend>
+              <label class="attendance-choice" for="rsvp-yes">
+                <input type="radio" name="rsvp-attendance" id="rsvp-yes" value="yes" onchange="toggleAttendanceDetails()">
+                <span data-en="Joyfully accepts" data-id="Dengan senang hati, saya akan hadir">Dengan senang hati, saya akan hadir</span>
+              </label>
+              <label class="attendance-choice" for="rsvp-no">
+                <input type="radio" name="rsvp-attendance" id="rsvp-no" value="no" onchange="toggleAttendanceDetails()">
+                <span data-en="Regretfully declines" data-id="Maaf, saya tidak dapat hadir">Maaf, saya tidak dapat hadir</span>
+              </label>
+            </fieldset>
+            <div id="attendee-details" class="attendee-details is-hidden">
+              <div class="form-group">
+                <label class="form-label" for="rsvp-name" data-en="Guest name" data-id="Nama undangan">Nama undangan</label>
+                <input class="form-input" type="text" id="rsvp-name" placeholder="Guest name" data-en-placeholder="Guest name" data-id-placeholder="Nama undangan">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="rsvp-count" data-en="Number of guests attending" data-id="Jumlah orang yang datang">Jumlah orang yang datang</label>
+                <select class="form-select" id="rsvp-count">
+                  <option value="" data-en="Choose a number" data-id="Pilih jumlah">Pilih jumlah</option>
+                  <option value="1" data-en="1 person" data-id="1 orang">1 orang</option><option value="2" data-en="2 people" data-id="2 orang">2 orang</option>
+                  <option value="3" data-en="3 people" data-id="3 orang">3 orang</option><option value="4" data-en="4 people" data-id="4 orang">4 orang</option>
+                  <option value="5" data-en="5 people" data-id="5 orang">5 orang</option><option value="6" data-en="6 people" data-id="6 orang">6 orang</option>
+                  <option value="7" data-en="7 people" data-id="7 orang">7 orang</option><option value="8" data-en="8 people" data-id="8 orang">8 orang</option>
+                  <option value="9" data-en="9 people" data-id="9 orang">9 orang</option><option value="10" data-en="10 people" data-id="10 orang">10 orang</option>
+                </select>
+              </div>
+            </div>
+            <button class="form-submit" id="rsvp-btn" type="button" onclick="submitRsvp()" data-en="Send RSVP" data-id="Kirim konfirmasi">Kirim konfirmasi</button>
+          </div>
+          <div class="rsvp-success" id="rsvp-ok">
+            <div class="rsvp-success-icon" id="rsvp-ok-icon">✿</div>
+            <h3 data-en="Thank you" data-id="Terima kasih">Terima kasih</h3>
+            <p id="rsvp-ok-msg"></p>
+          </div>
+        </div>
+        <div class="comments-panel reveal">
+          <header class="comments-heading">
+            <p class="eyebrow" data-en="Guestbook" data-id="Buku tamu">Buku Tamu</p>
+            <h3 data-en="Messages &amp; blessings" data-id="Ucapan &amp; doa">Ucapan &amp; Doa</h3>
+            <p data-en="Leave a heartfelt message for Widya &amp; Andi." data-id="Tinggalkan pesan hangat untuk Widya &amp; Andi.">Tinggalkan pesan hangat untuk Widya &amp; Andi.</p>
+          </header>
+          <form class="comment-form" id="comment-form" onsubmit="submitComment(event)">
+            <div class="comment-field">
+              <label for="comment-name" data-en="Your name" data-id="Nama">Nama</label>
+              <input id="comment-name" name="name" type="text" maxlength="80" autocomplete="name" placeholder="Your name" data-en-placeholder="Your name" data-id-placeholder="Nama Anda" required>
+            </div>
+            <div class="comment-field">
+              <label for="comment-message" data-en="Your message &amp; blessings" data-id="Ucapan dan doa">Ucapan dan doa</label>
+              <textarea id="comment-message" name="message" maxlength="500" placeholder="Write a message for the couple" data-en-placeholder="Write a message for the couple" data-id-placeholder="Tuliskan ucapan Anda untuk kedua mempelai" required></textarea>
+            </div>
+            <button class="comment-submit" id="comment-submit" type="submit" data-en="Send message" data-id="Kirim ucapan">Kirim ucapan</button>
+            <p class="comment-status" id="comment-status" role="status" aria-live="polite"></p>
+          </form>
+          <div class="comments-list-heading">
+            <h4 data-en="Messages for Widya &amp; Andi" data-id="Ucapan untuk Widya &amp; Andi">Ucapan untuk Widya &amp; Andi</h4>
+            <span class="comments-total" id="comments-total">0 ucapan</span>
+          </div>
+          <div class="comments-list" id="comments-list" aria-live="polite">
+            <p class="comments-empty" data-en="Loading messages..." data-id="Memuat ucapan...">Memuat ucapan...</p>
+          </div>
+          <nav class="comments-pagination" id="comments-pagination" aria-label="Comment page navigation" data-en-aria="Comment page navigation" data-id-aria="Navigasi halaman komentar"></nav>
         </div>
       </div>
-    </div>
-  </div>
-  <!-- Wave rsvp → closing photo (tan ke navy) -->
-  <div class="section-divider" aria-hidden="true">
-    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path d="M0,60 Q300,100 600,60 T1200,60 L1200,120 L0,120 Z" style="fill:#151d45"/>
-    </svg>
-  </div>
-</div>
+    </section>
 
-<!-- CLOSING PHOTO SECTION -->
-<div id="closing-photo">
-  <div class="closing-photo-wrap">
-    <img id="photo-closing" src="" alt="Foto Putri &amp; Dikdik" />
-    <div class="closing-batik-deco" aria-hidden="true"></div>
-  </div>
-</div>
+    <section id="gift" class="section gift">
+      <div class="section-inner">
+        <header class="gift-heading reveal">
+          <p class="gift-script" data-en="with gratitude" data-id="dengan penuh syukur">with gratitude</p>
+          <h2 class="gift-title" data-en="Wedding Gift" data-id="Hadiah Pernikahan">Wedding Gift</h2>
+          <p class="gift-description" data-en="Your presence and blessings are the greatest gifts. If you wish to share a gift, you’ll find the details below." data-id="Doa restu dan kehadiran Anda adalah hadiah yang sangat berarti bagi kami. Jika berkenan berbagi tanda kasih, informasinya tersedia di bawah ini.">Doa restu dan kehadiran Anda adalah hadiah yang sangat berarti bagi kami. Jika berkenan berbagi tanda kasih, informasinya tersedia di bawah ini.</p>
+        </header>
+        <div class="gift-grid">
+          <article class="gift-card reveal">
+            <div class="gift-icon" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h24L16 5 4 12Z"/><path d="M6.5 13v11M12.5 13v11M19.5 13v11M25.5 13v11M4 26h24M3 29h26"/></svg>
+            </div>
+            <h3 data-en="Bank transfer" data-id="Transfer bank">Transfer Bank</h3>
+            <div class="gift-placeholder"><span data-en="Bank details" data-id="Informasi rekening">Informasi rekening</span><strong data-en="Coming soon" data-id="Akan diinformasikan">Akan diinformasikan</strong></div>
+            <p class="gift-card-note" data-en="Bank name, account number, and account holder will be added here." data-id="Nama bank, nomor rekening, dan nama pemilik akan ditambahkan di sini.">Nama bank, nomor rekening, dan nama pemilik akan ditambahkan di sini.</p>
+          </article>
+          <article class="gift-card reveal">
+            <div class="gift-icon" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13h22v15H5zM3.5 9.5h25v5h-25zM16 9.5v18"/><path d="M16 9.5H9.8a3 3 0 1 1 3-3c0 1.7 3.2 3 3.2 3ZM16 9.5h6.2a3 3 0 1 0-3-3c0 1.7-3.2 3-3.2 3Z"/></svg>
+            </div>
+            <h3 data-en="Send a gift" data-id="Kirim hadiah">Kirim Hadiah</h3>
+            <div class="gift-placeholder"><span data-en="Gift delivery address" data-id="Alamat pengiriman">Alamat pengiriman</span><strong data-en="Coming soon" data-id="Akan diinformasikan">Akan diinformasikan</strong></div>
+            <p class="gift-card-note" data-en="The recipient’s address and contact number will be added here." data-id="Alamat penerima dan nomor kontak akan ditambahkan di sini.">Alamat penerima dan nomor kontak akan ditambahkan di sini.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-batik-decox" aria-hidden="true"></div>
-  <div class="f-names">Putri &amp; Dikdik</div>
-  <p>Sabtu, 2 Mei 2026</p>
-  <p style="margin-top:.4rem;font-size:.58rem">Made with <span style="text-decoration: line-through;">mecutin anak magang</span> ♡ for our special day</p>
-</footer>
+    <section id="closing" class="closing">
+      <div class="closing-card">
+        <header class="closing-message reveal">
+          <p class="closing-script" data-en="we can’t wait" data-id="tak sabar rasanya">we can’t wait</p>
+          <p class="closing-title" data-en-html="to celebrate<br>with you!" data-id-html="merayakan<br>bersama Anda!">to celebrate<br>with you!</p>
+          <p class="closing-heart" aria-hidden="true">♡</p>
+        </header>
+        <div class="closing-photo" role="img" aria-label="Illustrated photo placeholder for Widya and Andi" data-en-aria="Illustrated photo placeholder for Widya and Andi" data-id-aria="Ilustrasi placeholder untuk foto Widya dan Andi">
+          <svg class="closing-illustration" viewBox="0 0 1200 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="final-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e5e1d7"/><stop offset=".72" stop-color="#f2d8b8"/><stop offset="1" stop-color="#e7c8a5"/></linearGradient>
+              <linearGradient id="final-lake" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bdc5bb"/><stop offset="1" stop-color="#83918b"/></linearGradient>
+            </defs>
+            <rect width="1200" height="640" fill="url(#final-sky)"/>
+            <circle cx="864" cy="162" r="70" fill="#fff0cf" opacity=".88"/>
+            <g fill="#faf8f4" opacity=".66"><path d="M144 135c9-30 54-32 68-4 24-16 57 1 52 27H127c-10-11-1-24 17-23ZM941 93c8-24 43-26 55-3 19-14 45-1 42 20h-111c-8-9-1-18 14-17Z"/></g>
+            <path d="M0 360c120-99 232-90 360 8 113-91 203-122 335-42 121-114 271-107 505 18v180H0Z" fill="#9da58f" opacity=".72"/>
+            <path d="M0 401c155-65 278-61 418-4 170-67 313-73 463-12 119-49 215-45 319-6v261H0Z" fill="#7f8b7d" opacity=".82"/>
+            <path d="M0 458c203-36 365-24 548 18 221-51 440-40 652 3v161H0Z" fill="url(#final-lake)"/>
+            <g fill="none" stroke="#f4e8d7" stroke-linecap="round" opacity=".56"><path d="M115 501c158-22 252-8 374 17M731 496c126-20 228-13 345 8M333 552c190-21 363-14 525 7" stroke-width="4"/><path d="M75 582c106-13 170-8 259 4M854 557c107-13 191-9 280 5" stroke-width="3"/></g>
+            <g fill="#f5efe4" opacity=".82"><circle cx="125" cy="433" r="6"/><circle cx="142" cy="424" r="4"/><circle cx="110" cy="417" r="4"/><circle cx="1081" cy="448" r="6"/><circle cx="1098" cy="436" r="4"/><circle cx="1064" cy="434" r="4"/></g>
+            <g fill="none" stroke="#606c56" stroke-linecap="round" opacity=".6"><path d="M145 640c20-72 47-111 91-142M1072 640c-16-67-42-105-85-140" stroke-width="3"/><path d="M192 541c-30-4-47-18-53-43 29 3 47 17 53 43ZM211 517c3-28 17-46 43-55-2 30-16 48-43 55ZM1014 548c27-5 47-19 55-45-31 4-49 18-55 45ZM994 518c-4-28-19-45-45-53 3 30 18 47 45 53Z" stroke-width="2"/></g>
+            <g fill="#faf8f4" opacity=".9"><path d="M180 604c0-7 9-10 13-3 4-7 13-4 13 3s-13 15-13 15-13-8-13-15ZM988 591c0-6 8-9 12-3 4-6 12-3 12 3s-12 14-12 14-12-8-12-14Z"/></g>
+            <g fill="#606c56" opacity=".55"><path d="m318 119 4 11 11 4-11 4-4 11-4-11-11-4 11-4ZM1050 270l3 8 8 3-8 3-3 8-3-8-8-3 8-3Z"/></g>
+          </svg>
+          <div class="photo-placeholder-label"><span data-en="Our memories" data-id="Kenangan kami">Kenangan kami</span><strong data-en="A favorite photo will go here" data-id="Foto manis akan hadir di sini">Foto manis akan hadir di sini</strong><small data-en="For now, send us your warmest wishes ♡" data-id="Untuk sekarang, kirimkan doa terbaik dari sini ♡">Untuk sekarang, kirimkan doa terbaik dari sini ♡</small></div>
+        </div>
+        <div class="closing-bottom">
+          <div class="closing-copy">
+            <p class="closing-with-love" data-en="with love" data-id="dengan cinta">with love</p>
+            <p class="closing-names">ANDI &amp; WIDYA</p>
+          </div>
+          <svg class="couple-logo closing-logo" viewBox="0 0 620 430" role="img" aria-label="Andi and Widya monogram logo" data-en-aria="Andi and Widya monogram logo" data-id-aria="Logo monogram Andi dan Widya"><use href="#andi-widya-logo"></use></svg>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<div class="toast" id="toast"></div>
-<div id="watermark"></div>
+  <footer class="site-footer">
+    <p class="footer-names">Widya &amp; Andi</p>
+    <p class="footer-date" data-en="Saturday, March 20, 2027 · Yogyakarta" data-id="Sabtu, 20 Maret 2027 · Yogyakarta">Sabtu, 20 Maret 2027 · Yogyakarta</p>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-// Selalu mulai dari paling atas saat halaman dimuat / di-refresh
-if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-window.scrollTo(0, 0);
+const params = new URLSearchParams(window.location.search);
+const TOKEN = params.get('token');
+const eventDate = new Date('2027-03-20T15:00:00+07:00').getTime();
+let guestHasAkad = false;
+let currentLanguage = 'en';
+let currentGuestName = '';
+let lastRsvpResponse = null;
+let currentCommentTotal = 0;
+let currentComments = [];
+let currentCommentPage = 1;
+let currentCommentPages = 0;
+let commentStatusKey = '';
 
-
-const FONT_CONFIG = {
-  script: { file: "font/regina.otf", family: 'Regina-script' },
-  serif:  { file: "font/poppins.semibold.ttf", family: 'poppins-semibold-serif' },
-  sans:   { file: "font/poppins.regular.ttf", family: 'poppins.regular' },
+const UI_COPY = {
+  en: {
+    pageTitle: 'Widya & Andi — Wedding Invitation',
+    pageDescription: 'Wedding invitation of Widya and Andi.',
+    invitationFor: 'Invitation for',
+    guestDefault: 'Guest of Honor',
+    eventPassed: 'Our special day has arrived.',
+    rsvpTokenNeeded: 'RSVP submissions will be available once personal invitation tokens are set up.',
+    rsvpChoose: 'Please choose whether you will attend.',
+    rsvpNameMissing: 'Please enter the guest name.',
+    rsvpCountMissing: 'Please choose the number of guests attending.',
+    rsvpSending: 'Sending…',
+    rsvpSend: 'Send RSVP',
+    rsvpAbsentSuccess: 'Thank you for letting us know. Your wishes mean so much to us.',
+    rsvpAttendPrefix: 'Thank you for confirming: ',
+    rsvpAttendSuffix: '. We look forward to celebrating with you.',
+    rsvpSubmitFailed: 'Could not submit your RSVP. Please try again.',
+    rsvpResponses: {
+      hadir: 'Attending the reception at Taman Arunika',
+      'hadir-kampoeng': 'Attending the ceremony at Taman Arunika',
+      'hadir-hotel': 'Attending the reception at Taman Arunika',
+      'hadir-keduanya': 'Attending both celebrations at Taman Arunika',
+      'tidak-hadir': 'Regretfully unable to attend'
+    },
+    commentsLoading: 'Loading messages…',
+    commentsLoadError: 'Messages could not be loaded. Please try again.',
+    commentsTotal: count => count + (count === 1 ? ' message' : ' messages'),
+    commentsEmpty: 'No messages yet. Be the first to send your wishes.',
+    commentsPrevious: '‹ Previous',
+    commentsNext: 'Next ›',
+    commentsPage: (page, total) => 'Page ' + page + ' of ' + total,
+    commentRequired: 'Please enter your name and message.',
+    commentSending: 'Sending…',
+    commentSent: 'Thank you. Your message has been added.',
+    commentFailed: 'Your message could not be sent. Please try again.',
+  },
+  id: {
+    pageTitle: 'Widya & Andi — Undangan Pernikahan',
+    pageDescription: 'Undangan pernikahan Widya dan Andi.',
+    invitationFor: 'Undangan untuk',
+    guestDefault: 'Tamu Undangan',
+    eventPassed: 'Hari istimewa kami telah tiba.',
+    rsvpTokenNeeded: 'Pengiriman RSVP akan tersedia setelah token undangan personal disiapkan.',
+    rsvpChoose: 'Mohon pilih konfirmasi kehadiran.',
+    rsvpNameMissing: 'Mohon isi nama undangan.',
+    rsvpCountMissing: 'Mohon pilih jumlah orang yang hadir.',
+    rsvpSending: 'Mengirim…',
+    rsvpSend: 'Kirim konfirmasi',
+    rsvpAbsentSuccess: 'Terima kasih telah memberi kabar. Doa dan restu Anda sangat berarti bagi kami.',
+    rsvpAttendPrefix: 'Terima kasih telah mengonfirmasi kehadiran: ',
+    rsvpAttendSuffix: '. Kami menantikan kebersamaan Anda.',
+    rsvpSubmitFailed: 'RSVP gagal dikirim. Silakan periksa koneksi dan coba lagi.',
+    rsvpResponses: {
+      hadir: 'Hadir di resepsi Taman Arunika',
+      'hadir-kampoeng': 'Hadir di prosesi Taman Arunika',
+      'hadir-hotel': 'Hadir di resepsi Taman Arunika',
+      'hadir-keduanya': 'Hadir di kedua acara Taman Arunika',
+      'tidak-hadir': 'Mohon maaf belum dapat hadir'
+    },
+    commentsLoading: 'Memuat ucapan…',
+    commentsLoadError: 'Ucapan belum dapat dimuat. Silakan coba lagi.',
+    commentsTotal: count => count + ' ucapan',
+    commentsEmpty: 'Belum ada ucapan. Jadilah yang pertama mengirim doa.',
+    commentsPrevious: '‹ Sebelumnya',
+    commentsNext: 'Berikutnya ›',
+    commentsPage: (page, total) => 'Halaman ' + page + ' dari ' + total,
+    commentRequired: 'Mohon isi nama dan ucapan.',
+    commentSending: 'Mengirim…',
+    commentSent: 'Terima kasih, ucapan Anda sudah ditambahkan.',
+    commentFailed: 'Ucapan gagal dikirim. Silakan coba lagi.'
+  }
 };
 
-const PHOTO_CONFIG = {
-  cover: "https://wedding-184208908848-ap-southeast-1-an.s3.ap-southeast-1.amazonaws.com/header.JPG",
-  main: "https://wedding-184208908848-ap-southeast-1-an.s3.ap-southeast-1.amazonaws.com/main_v2.webp",
-  gate: "https://wedding-184208908848-ap-southeast-1-an.s3.ap-southeast-1.amazonaws.com/optimized_auth.webp",
-  auth: "https://wedding-184208908848-ap-southeast-1-an.s3.ap-southeast-1.amazonaws.com/optimized_auth.webp",
-  closing: "https://wedding-184208908848-ap-southeast-1-an.s3.ap-southeast-1.amazonaws.com/footer.JPG",
-  batik: "/optimized_batik.webp", 
-  batik_kanan: "/batik-sisi-kanan.webp", 
-  batik_orange_kiri :"/batik-orange-kiri-cropped.webp", 
-  batik_putih_kanan : "/batik-putih-kanan-cropped.webp" 
-};
-
-(function applyPhotoConfig() {
-  const { cover, main, gate, auth, closing, batik } = PHOTO_CONFIG;
-
-  if (batik) {
-    document.documentElement.style.setProperty('--batik-url', `url('${batik}')`);
-  }
-
-  if (cover) {
-    document.documentElement.style.setProperty('--cover-photo', `url('${cover}')`);
-    document.getElementById('first-section').classList.add('has-photo');
-  }
-
-  if (gate) {
-    const el = document.getElementById('gate');
-    el.style.backgroundImage = `url('${gate}')`;
-    el.classList.add('has-photo');
-  }
-
-  if (auth) {
-    const el = document.getElementById('wa-auth');
-    el.style.backgroundImage = `url('${auth}')`;
-    el.classList.add('has-photo');
-  }
-
-  if (main) {
-    const photoEl = document.getElementById('photo-main');
-    if (photoEl) photoEl.src = main;
-  }
-
-  if (closing) {
-    const photoEl = document.getElementById('photo-closing');
-    if (photoEl) photoEl.src = closing;
-  }
-})();
-
-(function applyFontConfig() {
-  const root  = document.documentElement;
-  const rules = [];
-  const ROLE_VAR = { script: '--font-script', serif: '--font-serif', sans: '--font-sans' };
-  const GENERIC = { script: 'cursive', serif: 'serif', sans: 'sans-serif' };
-
-  function mimeOf(path) {
-    const ext = path.split('.').pop().toLowerCase();
-    return { otf: 'opentype', ttf: 'truetype', woff: 'woff', woff2: 'woff2' }[ext] || 'opentype';
-  }
-
-  for (const [role, cfg] of Object.entries(FONT_CONFIG)) {
-    if (cfg.file) {
-      rules.push(`@font-face { font-family: '${cfg.family}'; src: url('${cfg.file}') format('${mimeOf(cfg.file)}'); font-display: swap; }`);
-    }
-    root.style.setProperty(ROLE_VAR[role], `'${cfg.family}', ${GENERIC[role]}`);
-  }
-
-  if (rules.length) {
-    const style = document.createElement('style');
-    style.textContent = rules.join('\n');
-    document.head.appendChild(style);
-  }
-})();
-
-const P     = new URLSearchParams(location.search);
-const TOKEN = P.get('token');
-let guestName = '';
-let authPassed = false;
-
-document.addEventListener('DOMContentLoaded', async () => {
-  setLoading(true);
-
-  if (!TOKEN) { setLoading(false); showGate(); return; }
-
-  try {
-    const r = await fetch('/api/pre-validate?token=' + TOKEN);
-    const d = await r.json();
-    if (!d.valid) { setLoading(false); showGate(); return; }
-
-    document.getElementById('auth-guest-name').textContent = d.name;
-    setLoading(false);
-    showWaAuth();
-  } catch(e) { setLoading(false); showGate(); }
-});
-
-function showWaAuth() {
-  document.getElementById('wa-auth').classList.add('active');
-  setTimeout(() => document.getElementById('auth-wa-input').focus(), 300);
+function copy(key, ...args) {
+  const value = UI_COPY[currentLanguage][key];
+  return typeof value === 'function' ? value(...args) : value;
 }
 
-function showGate() {
-  document.getElementById('gate').classList.add('active');
+function setLanguage(language) {
+  currentLanguage = language === 'id' ? 'id' : 'en';
+  document.documentElement.lang = currentLanguage;
+
+  document.querySelectorAll('[data-en], [data-id]').forEach(function(element) {
+    const value = element.getAttribute('data-' + currentLanguage);
+    if (value !== null) element.textContent = value;
+  });
+  document.querySelectorAll('[data-en-html], [data-id-html]').forEach(function(element) {
+    const value = element.getAttribute('data-' + currentLanguage + '-html');
+    if (value !== null) element.innerHTML = value;
+  });
+  document.querySelectorAll('[data-en-aria], [data-id-aria]').forEach(function(element) {
+    const value = element.getAttribute('data-' + currentLanguage + '-aria');
+    if (value !== null) element.setAttribute('aria-label', value);
+  });
+  document.querySelectorAll('[data-en-placeholder], [data-id-placeholder]').forEach(function(element) {
+    const value = element.getAttribute('data-' + currentLanguage + '-placeholder');
+    if (value !== null) element.setAttribute('placeholder', value);
+  });
+
+  document.querySelectorAll('[data-language]').forEach(function(button) {
+    button.setAttribute('aria-pressed', String(button.dataset.language === currentLanguage));
+  });
+  document.title = currentGuestName
+    ? copy('invitationFor') + ' ' + currentGuestName + ' — ' + copy('pageTitle')
+    : copy('pageTitle');
+  const description = document.querySelector('meta[name="description"]');
+  if (description) description.setAttribute('content', copy('pageDescription'));
+  document.getElementById('cover-guest').textContent = currentGuestName || copy('guestDefault');
+  document.getElementById('comments-total').textContent = copy('commentsTotal', currentCommentTotal);
+  renderComments(currentComments);
+  renderCommentPagination(currentCommentPage, currentCommentPages);
+  if (commentStatusKey) document.getElementById('comment-status').textContent = copy(commentStatusKey);
+  if (document.getElementById('comment-submit').disabled) document.getElementById('comment-submit').textContent = copy('commentSending');
+  if (document.getElementById('rsvp-btn').disabled) document.getElementById('rsvp-btn').textContent = copy('rsvpSending');
+  if (eventDate <= Date.now()) document.getElementById('countdown-note').textContent = copy('eventPassed');
+  if (lastRsvpResponse) showSuccess(lastRsvpResponse);
+
+  try { localStorage.setItem('widya-andi-language', currentLanguage); } catch (error) { /* Language switching still works without storage. */ }
 }
 
-function setLoading(v) {
-  document.getElementById('loading').style.display = v ? 'flex' : 'none';
+try {
+  const savedLanguage = localStorage.getItem('widya-andi-language');
+  if (savedLanguage === 'id') currentLanguage = 'id';
+} catch (error) { /* English remains the default when storage is unavailable. */ }
+
+function setGuestName(name) {
+  currentGuestName = name || '';
+  document.getElementById('cover-guest').textContent = currentGuestName || copy('guestDefault');
+  const nameField = document.getElementById('rsvp-name');
+  nameField.value = name || '';
+  nameField.readOnly = Boolean(name);
+  nameField.setAttribute('aria-readonly', String(Boolean(name)));
+  document.getElementById('watermark').textContent = name || '';
+  document.title = name ? copy('invitationFor') + ' ' + name + ' — ' + copy('pageTitle') : copy('pageTitle');
 }
 
-async function submitAuth() {
-  const input = document.getElementById('auth-wa-input').value.replace(/\D/g, '');
-  if (input.length !== 5) { toast('Masukkan tepat 5 digit'); return; }
-
-  const btn = document.getElementById('auth-btn');
-  const errEl = document.getElementById('auth-error');
-  btn.disabled = true; btn.textContent = 'Memverifikasi…';
-  errEl.classList.remove('active');
-
-  try {
-    const r = await fetch('/api/validate', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: TOKEN, wa5: input }),
-    });
-    const d = await r.json();
-
-    if (d.valid) {
-      authPassed = true;
-      guestName  = d.name;
-      document.getElementById('wa-auth').classList.remove('active');
-      loadInvitation(d.name, d.akad);
-    } else {
-      errEl.classList.add('active');
-      btn.disabled = false; btn.textContent = 'Buka Undangan';
-      document.getElementById('auth-wa-input').value = '';
-      document.getElementById('auth-wa-input').focus();
-    }
-  } catch(e) {
-    toast('Gagal memverifikasi. Periksa koneksi.');
-    btn.disabled = false; btn.textContent = 'Buka Undangan';
-  }
-}
-
-function showSuccess(response) {
-  const tidakHadir = response === 'tidak-hadir';
-  const labelMap = {
-    'hadir':           '🏨 Hadir di Hotel Wahid Prime (Resepsi)',
-    'hadir-kampoeng':  '📍 Hadir di Kampoeng Percik (Prosesi)',
-    'hadir-hotel':     '🏨 Hadir di Hotel Wahid Prime (Resepsi)',
-    'hadir-keduanya':  '✨ Hadir di Kedua Acara',
-    'tidak-hadir':     '🙁 Tidak Dapat Hadir',
-  };
-  const label = labelMap[response] || response;
-
-  document.getElementById('rsvp-desc').style.display = 'none';
-  document.getElementById('rsvp-body').style.display = 'none';
-  document.getElementById('rsvp-ok-icon').textContent = tidakHadir ? '🙁' : '💌';
-  document.getElementById('rsvp-ok-msg').innerHTML = tidakHadir
-    ? 'Terima kasih telah melakukan konfirmasi.<br>Sayang sekali Anda tidak dapat hadir di hari spesial kami.<br>Doa dan restu Anda sangat berarti untuk kami.'
-    : `Terima kasih telah melakukan konfirmasi kehadiran.<br>Kami sangat menantikan Anda!
-       <br><span style="display:inline-block;margin-top:.75rem;padding:.4rem 1.1rem;background:var(--orange);color:#fff;border-radius:99px;font-size:.75rem;font-weight:500;letter-spacing:.05em">${label}</span>`;
-  document.getElementById('rsvp-ok').classList.add('active');
-}
-
-function applyWatermark(name) {
-  // Escape XML special chars agar SVG tetap valid (misal: "Bapak & Ibu" → "Bapak &amp; Ibu")
-  const safeName = name.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180">
-    <text x="160" y="90" text-anchor="middle" dominant-baseline="middle" transform="rotate(-35 160 90)"
-      font-family="Cormorant Garamond, serif" font-size="22" font-weight="600" letter-spacing="3" fill="#ffffff"
-    >${safeName}</text></svg>`;
-  const el = document.getElementById('watermark');
-  el.style.backgroundImage = `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
-  el.style.backgroundSize  = '320px 180px';
-  el.style.display         = 'block';
-}
-
-async function loadInvitation(name, akad) {
-  document.getElementById('cover-guest').textContent = name;
-  document.title = 'Undangan — ' + name;
-  if (!akad) document.getElementById('card-akad').style.display = 'none';
-  buildRsvpOpts(akad);
-  document.getElementById('rsvp-name').value = name;
-  applyWatermark(name);
-
-  try {
-    const r = await fetch('/api/rsvp-status?token=' + TOKEN);
-    const d = await r.json();
-    if (d.submitted) showSuccess(d.response);
-  } catch(e) { }
-
+function showPublicOnly() {
+  setGuestName('');
+  document.getElementById('rsvp-access-note').classList.add('is-hidden');
+  document.getElementById('rsvp-body').classList.remove('is-hidden');
   startCountdown();
   initReveal();
 }
 
-function startCountdown() {
-  const T   = new Date('2026-05-02T14:00:00+07:00').getTime();
-  const pad = n => String(n).padStart(2,'0');
-  function tick() {
-    const diff = T - Date.now();
-    if (diff <= 0) { ['cd-d','cd-h','cd-m','cd-s'].forEach(i => document.getElementById(i).textContent='00'); return; }
-    document.getElementById('cd-d').textContent = pad(Math.floor(diff/86400000));
-    document.getElementById('cd-h').textContent = pad(Math.floor(diff%86400000/3600000));
-    document.getElementById('cd-m').textContent = pad(Math.floor(diff%3600000/60000));
-    document.getElementById('cd-s').textContent = pad(Math.floor(diff%60000/1000));
+async function loadInvitation() {
+  if (!TOKEN) { showPublicOnly(); return; }
+  try {
+    const response = await fetch('/api/pre-validate?token=' + encodeURIComponent(TOKEN));
+    const data = await response.json();
+    if (!response.ok || !data.valid) { showPublicOnly(); return; }
+
+    setGuestName(data.name);
+    guestHasAkad = Boolean(data.akad);
+    document.getElementById('rsvp-access-note').classList.add('is-hidden');
+    document.getElementById('rsvp-body').classList.remove('is-hidden');
+
+    try {
+      const statusResponse = await fetch('/api/rsvp-status?token=' + encodeURIComponent(TOKEN));
+      const status = await statusResponse.json();
+      if (status.submitted) showSuccess(status.response);
+    } catch (error) { /* RSVP form remains usable if status lookup is temporarily unavailable. */ }
+  } catch (error) {
+    showPublicOnly();
   }
-  tick(); setInterval(tick, 1000);
+  startCountdown();
+  initReveal();
 }
 
-function buildRsvpOpts(akad) {
-  const opts = akad ? [
-    {v:'hadir-kampoeng', l:'📍 Hadir di Kampoeng Percik (Prosesi)'},
-    {v:'hadir-hotel',    l:'🏨 Hadir di Hotel Wahid Prime (Resepsi)'},
-    {v:'hadir-keduanya', l:'✨ Hadir di Kedua Acara'},
-    {v:'tidak-hadir',   l:'🙁 Tidak Dapat Hadir'},
-  ] : [
-    {v:'hadir',        l:'🏨 Hadir di Hotel Wahid Prime (Resepsi)'},
-    {v:'tidak-hadir', l:'🙁 Tidak Dapat Hadir'},
-  ];
-  const sel = document.getElementById('rsvp-opts');
-  sel.innerHTML = '<option value="">— Pilih konfirmasi kehadiran —</option>';
-  opts.forEach(o => {
-    const opt = document.createElement('option');
-    opt.value = o.v; opt.textContent = o.l;
-    sel.appendChild(opt);
+function toggleAttendanceDetails() {
+  const attending = document.getElementById('rsvp-yes').checked;
+  const details = document.getElementById('attendee-details');
+  details.classList.toggle('is-hidden', !attending);
+  if (!attending) document.getElementById('rsvp-count').value = '';
+}
+
+async function loadComments(page) {
+  const list = document.getElementById('comments-list');
+  list.replaceChildren();
+  const loading = document.createElement('p');
+  loading.className = 'comments-empty';
+  loading.textContent = copy('commentsLoading');
+  list.appendChild(loading);
+
+  try {
+    const response = await fetch('/api/comments?page=' + encodeURIComponent(page || 1));
+    const data = await response.json();
+    if (!response.ok) throw new Error(copy('commentsLoadError'));
+    currentCommentTotal = Number(data.total) || 0;
+    document.getElementById('comments-total').textContent = copy('commentsTotal', currentCommentTotal);
+    currentComments = data.comments || [];
+    currentCommentPage = data.page || 1;
+    currentCommentPages = data.totalPages || 0;
+    renderComments(currentComments);
+    renderCommentPagination(currentCommentPage, currentCommentPages);
+  } catch (error) {
+    currentComments = [];
+    currentCommentPage = 1;
+    currentCommentPages = 0;
+    list.replaceChildren();
+    document.getElementById('comments-pagination').replaceChildren();
+    const notice = document.createElement('p');
+    notice.className = 'comments-empty';
+    notice.textContent = copy('commentsLoadError');
+    list.appendChild(notice);
+  }
+}
+
+function renderComments(comments) {
+  const list = document.getElementById('comments-list');
+  list.replaceChildren();
+  if (!comments.length) {
+    const empty = document.createElement('p');
+    empty.className = 'comments-empty';
+    empty.textContent = copy('commentsEmpty');
+    list.appendChild(empty);
+    return;
+  }
+
+  comments.forEach(function(comment) {
+    const article = document.createElement('article');
+    article.className = 'comment-item';
+    const meta = document.createElement('div');
+    meta.className = 'comment-meta';
+    const name = document.createElement('strong');
+    name.className = 'comment-name';
+    name.textContent = comment.name || copy('guestDefault');
+    const date = document.createElement('time');
+    date.className = 'comment-date';
+    date.dateTime = comment.createdAt || '';
+    const parsedDate = new Date(comment.createdAt);
+    date.textContent = Number.isNaN(parsedDate.getTime()) ? '' : new Intl.DateTimeFormat(currentLanguage === 'id' ? 'id-ID' : 'en-GB', {
+      day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta'
+    }).format(parsedDate);
+    const message = document.createElement('p');
+    message.className = 'comment-message';
+    message.textContent = comment.message || '';
+    meta.append(name, date);
+    article.append(meta, message);
+    list.appendChild(article);
   });
 }
 
-// Atur field count berdasarkan pilihan kehadiran
-function updateCountFields() {
-  const selVal  = document.getElementById('rsvp-opts').value;
-  const countEl = document.getElementById('rsvp-count');
+function renderCommentPagination(page, totalPages) {
+  const nav = document.getElementById('comments-pagination');
+  nav.replaceChildren();
+  if (totalPages <= 1) return;
 
-  if (selVal === 'tidak-hadir') {
-    countEl.value    = '';
-    countEl.disabled = true;
-  } else {
-    countEl.disabled = false;
+  const previous = document.createElement('button');
+  previous.type = 'button';
+  previous.className = 'page-button';
+  previous.textContent = copy('commentsPrevious');
+  previous.setAttribute('aria-label', copy('commentsPrevious'));
+  previous.disabled = page <= 1;
+  previous.addEventListener('click', function() { loadComments(page - 1); });
+
+  const indicator = document.createElement('span');
+  indicator.className = 'page-indicator';
+  indicator.textContent = copy('commentsPage', page, totalPages);
+  indicator.setAttribute('aria-live', 'polite');
+
+  const next = document.createElement('button');
+  next.type = 'button';
+  next.className = 'page-button';
+  next.textContent = copy('commentsNext');
+  next.setAttribute('aria-label', copy('commentsNext'));
+  next.disabled = page >= totalPages;
+  next.addEventListener('click', function() { loadComments(page + 1); });
+
+  nav.append(previous, indicator, next);
+}
+
+async function submitComment(event) {
+  event.preventDefault();
+  const form = document.getElementById('comment-form');
+  const button = document.getElementById('comment-submit');
+  const status = document.getElementById('comment-status');
+  const name = document.getElementById('comment-name').value.trim();
+  const message = document.getElementById('comment-message').value.trim();
+  if (!name || !message) {
+    commentStatusKey = 'commentRequired';
+    status.textContent = copy(commentStatusKey);
+    return;
   }
+
+  button.disabled = true;
+  button.textContent = copy('commentSending');
+  commentStatusKey = '';
+  status.textContent = '';
+  try {
+    const response = await fetch('/api/comments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, message: message })
+    });
+    const data = await response.json();
+    if (!response.ok || !data.success) throw new Error(copy('commentFailed'));
+    form.reset();
+    commentStatusKey = 'commentSent';
+    status.textContent = copy(commentStatusKey);
+    await loadComments(1);
+  } catch (error) {
+    commentStatusKey = 'commentFailed';
+    status.textContent = copy(commentStatusKey);
+  } finally {
+    button.disabled = false;
+    button.textContent = button.getAttribute('data-' + currentLanguage);
+  }
+}
+
+function showSuccess(response) {
+  lastRsvpResponse = response;
+  const isAbsent = response === 'tidak-hadir';
+  document.getElementById('rsvp-body').classList.add('is-hidden');
+  document.getElementById('rsvp-access-note').classList.add('is-hidden');
+  document.getElementById('rsvp-ok-icon').textContent = isAbsent ? '♡' : '✿';
+  document.getElementById('rsvp-ok-msg').textContent = isAbsent
+    ? copy('rsvpAbsentSuccess')
+    : copy('rsvpAttendPrefix') + (UI_COPY[currentLanguage].rsvpResponses[response] || response) + copy('rsvpAttendSuffix');
+  document.getElementById('rsvp-ok').classList.add('active');
 }
 
 async function submitRsvp() {
-  const name    = document.getElementById('rsvp-name').value.trim();
-  const wa      = document.getElementById('rsvp-wa').value.trim();
-  const msg     = document.getElementById('rsvp-msg').value.trim();
-  const selVal  = document.getElementById('rsvp-opts').value;
-  const count   = parseInt(document.getElementById('rsvp-count').value) || 0;
+  if (!TOKEN) { toast(copy('rsvpTokenNeeded')); return; }
+  const name = document.getElementById('rsvp-name').value.trim();
+  const attending = document.getElementById('rsvp-yes').checked;
+  const declining = document.getElementById('rsvp-no').checked;
+  const count = parseInt(document.getElementById('rsvp-count').value, 10) || 0;
+  if (!attending && !declining) { toast(copy('rsvpChoose')); return; }
+  if (attending && !name) { toast(copy('rsvpNameMissing')); return; }
+  if (attending && count === 0) { toast(copy('rsvpCountMissing')); return; }
 
-  if (!name)   { toast('Mohon isi nama Anda'); return; }
-  if (!selVal) { toast('Mohon pilih konfirmasi kehadiran'); return; }
-  if (selVal !== 'tidak-hadir' && count === 0) { toast('Mohon pilih jumlah orang yang hadir'); return; }
+  const response = attending ? (guestHasAkad ? 'hadir-keduanya' : 'hadir') : 'tidak-hadir';
+  const countAkad = attending && guestHasAkad ? count : 0;
+  const countResepsi = attending ? count : 0;
 
-  // Split count ke akad/resepsi sesuai pilihan kehadiran
-  let countAkad = 0, countResepsi = 0;
-  if (selVal === 'hadir-kampoeng') { countAkad = count; }
-  else if (selVal === 'hadir-hotel') { countResepsi = count; }
-  else if (selVal === 'hadir-keduanya') { countAkad = count; countResepsi = count; }
-  else if (selVal === 'hadir') { countResepsi = count; } // non-akad: resepsi only
-  // tidak-hadir: tetap 0
-
-  const btn = document.getElementById('rsvp-btn');
-  btn.disabled = true; btn.textContent = 'Mengirim…';
-
+  const button = document.getElementById('rsvp-btn');
+  button.disabled = true;
+  button.textContent = copy('rsvpSending');
   try {
-    const r = await fetch('/api/rsvp', {
-      method:'POST', headers:{'Content-Type':'application/json'},
+    const result = await fetch('/api/rsvp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        token: TOKEN, response: selVal, message: msg, whatsapp: wa,
-        count_akad: countAkad, count_resepsi: countResepsi, count: count
+        token: TOKEN, response: response, message: '', whatsapp: '',
+        count_akad: countAkad, count_resepsi: countResepsi, count: attending ? count : 0
       })
     });
-    const d = await r.json();
-    if (d.success) {
-      showSuccess(selVal);
-    } else {
-      toast(d.message||'Terjadi kesalahan.');
-      btn.disabled=false;
-      btn.textContent='Kirim Konfirmasi';
-    }
-  } catch(e) {
-    toast('Gagal mengirim. Periksa koneksi.');
-    btn.disabled=false;
-    btn.textContent='Kirim Konfirmasi';
+    const data = await result.json();
+    if (!result.ok || !data.success) throw new Error(data.message || 'Terjadi kesalahan.');
+    showSuccess(response);
+  } catch (error) {
+    toast(copy('rsvpSubmitFailed'));
+    button.disabled = false;
+    button.textContent = copy('rsvpSend');
   }
 }
 
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+function startCountdown() {
+  const keys = ['cd-d', 'cd-h', 'cd-m', 'cd-s'];
+  function tick() {
+    let diff = eventDate - Date.now();
+    if (diff <= 0) {
+      keys.forEach(function(key) { document.getElementById(key).textContent = '00'; });
+      document.getElementById('countdown-note').textContent = copy('eventPassed');
+      return;
+    }
+    const values = [
+      Math.floor(diff / 86400000),
+      Math.floor(diff % 86400000 / 3600000),
+      Math.floor(diff % 3600000 / 60000),
+      Math.floor(diff % 60000 / 1000)
+    ];
+    values.forEach(function(value, index) {
+      document.getElementById(keys[index]).textContent = String(value).padStart(2, '0');
+    });
+  }
+  tick();
+  window.setInterval(tick, 1000);
 }
 
 function initReveal() {
-  const els = document.querySelectorAll('.reveal');
-  const io  = new IntersectionObserver(e => {
-    e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('visible'); io.unobserve(x.target); } });
-  }, {threshold:.12});
-  els.forEach(el => io.observe(el));
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function(element) { element.classList.add('visible'); });
+    return;
+  }
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(function(element) { observer.observe(element); });
 }
+
+function toast(message) {
+  const element = document.getElementById('toast');
+  element.textContent = message;
+  element.classList.add('show');
+  window.setTimeout(function() { element.classList.remove('show'); }, 3200);
+}
+
+setLanguage(currentLanguage);
+document.addEventListener('DOMContentLoaded', function() {
+  loadInvitation();
+  loadComments(1);
+});
 </script>
 </body>
 </html>
