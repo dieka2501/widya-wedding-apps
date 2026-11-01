@@ -719,6 +719,7 @@ const UI_COPY = {
     rsvpSend: 'Send RSVP',
     rsvpAbsentSuccess: 'Thank you for letting us know. Your wishes mean so much to us.',
     rsvpAttendPrefix: 'Thank you for confirming: ',
+    rsvpAttendanceCount: count => ' Guests confirmed: ' + count + '.',
     rsvpAttendSuffix: '. We look forward to celebrating with you.',
     rsvpSubmitFailed: 'Could not submit your RSVP. Please try again.',
     rsvpResponses: {
@@ -754,6 +755,7 @@ const UI_COPY = {
     rsvpSend: 'Kirim konfirmasi',
     rsvpAbsentSuccess: 'Terima kasih telah memberi kabar. Doa dan restu Anda sangat berarti bagi kami.',
     rsvpAttendPrefix: 'Terima kasih telah mengonfirmasi kehadiran: ',
+    rsvpAttendanceCount: count => ' Jumlah tamu: ' + count + '.',
     rsvpAttendSuffix: '. Kami menantikan kebersamaan Anda.',
     rsvpSubmitFailed: 'RSVP gagal dikirim. Silakan periksa koneksi dan coba lagi.',
     rsvpResponses: {
@@ -886,7 +888,7 @@ async function loadInvitation() {
     try {
       const statusResponse = await fetch('/api/rsvp-status?token=' + encodeURIComponent(TOKEN));
       const status = await statusResponse.json();
-      if (status.submitted) showSuccess(status.response);
+      if (status.submitted) showSuccess(status);
     } catch (error) { /* RSVP form remains usable if status lookup is temporarily unavailable. */ }
   } catch (error) {
     showPublicOnly();
@@ -1039,15 +1041,18 @@ async function submitComment(event) {
   }
 }
 
-function showSuccess(response) {
-  lastRsvpResponse = response;
+function showSuccess(rsvpState) {
+  const response = typeof rsvpState === 'string' ? rsvpState : rsvpState.response;
+  const count = typeof rsvpState === 'object' ? Number(rsvpState.count) || 0 : 0;
+  lastRsvpResponse = { response: response, count: count };
   const isAbsent = response === 'tidak-hadir';
   document.getElementById('rsvp-body').classList.add('is-hidden');
   document.getElementById('rsvp-access-note').classList.add('is-hidden');
   document.getElementById('rsvp-ok-icon').textContent = isAbsent ? '♡' : '✿';
   document.getElementById('rsvp-ok-msg').textContent = isAbsent
     ? copy('rsvpAbsentSuccess')
-    : copy('rsvpAttendPrefix') + (UI_COPY[currentLanguage].rsvpResponses[response] || response) + copy('rsvpAttendSuffix');
+    : copy('rsvpAttendPrefix') + (UI_COPY[currentLanguage].rsvpResponses[response] || response)
+      + (count > 0 ? copy('rsvpAttendanceCount', count) : '') + copy('rsvpAttendSuffix');
   document.getElementById('rsvp-ok').classList.add('active');
 }
 
@@ -1077,7 +1082,7 @@ async function submitRsvp() {
     });
     const data = await result.json();
     if (!result.ok || !data.success) throw new Error(data.message || 'Terjadi kesalahan.');
-    showSuccess(response);
+    showSuccess({ response: response, count: attending ? count : 0 });
   } catch (error) {
     toast(copy('rsvpSubmitFailed'));
     button.disabled = false;

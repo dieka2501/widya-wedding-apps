@@ -117,6 +117,61 @@ function parseAllowedGuestCount(value) {
   return Number.isSafeInteger(count) && count > 0 ? count : null;
 }
 
+function normalizeRsvpResponse(value) {
+  const response = String(value || '').trim().toLocaleLowerCase('id-ID');
+  if (response === 'hadir' || response.startsWith('hadir ')) return 'hadir';
+  if (response.includes('tidak') || response.includes('declin') || response.includes('unable')) return 'tidak-hadir';
+  return null;
+}
+
+function normalizeSheetDateTime(value) {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    const timestamp = Math.round((value - 25569) * 86400000);
+    return new Date(timestamp).toISOString();
+  }
+
+  const text = String(value || '').trim();
+  if (!text) return '';
+  // Legacy rows were written as Indonesian local time, e.g. 1/11/2026, 16.50.32.
+  const localMatch = text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4}),?\s+(\d{1,2})[.:](\d{2})[.:](\d{2})$/);
+  if (localMatch) {
+    const [, day, month, year, hour, minute, second] = localMatch;
+    return new Date(Date.UTC(Number(year), Number(month) - 1, Number(day), Number(hour) - 7, Number(minute), Number(second))).toISOString();
+  }
+  const parsed = new Date(text);
+  if (!Number.isNaN(parsed.getTime())) return parsed.toISOString();
+  return text;
+}
+
+function mapSheetRsvpRow(row) {
+  const response = normalizeRsvpResponse(row[2]);
+  if (!response) return null;
+  const count = Number(row[3]);
+  return {
+    name: row[1] || '',
+    response,
+    count: Number.isSafeInteger(count) && count > 0 ? count : 0,
+    whatsapp: row[4] || '',
+    message: row[5] || '',
+    submittedAt: normalizeSheetDateTime(row[6]),
+  };
+}
+
+async function readRsvpsFromSheets() {
+  const sheets = await getSheetsClient();
+  const result = await sheets.spreadsheets.values.get({
+    spreadsheetId: SPREADSHEET_ID,
+    range: `${SHEET_RSVP}!A2:G`,
+  });
+  const entries = {};
+  for (const row of result.data.values || []) {
+    const token = String(row[0] || '').trim();
+    const entry = mapSheetRsvpRow(row);
+    if (token && entry) entries[token] = entry;
+  }
+  return entries;
+}
+
 // ─── Sync RSVP → sheet RSVP ──────────────────────────────────────────────────
 async function syncRsvpToSheets(data) {
   if (!canSync()) return;
@@ -145,7 +200,7 @@ async function syncRsvpToSheets(data) {
     const row = [
       data.token, data.name, fmtResp(data.response), String(data.count || 0),
       data.whatsapp || '', data.message || '',
-      new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' }),
+      new Date().toISOString(),
     ];
     if (rowIdx > 0) {
       await sheets.spreadsheets.values.update({
@@ -607,14 +662,23 @@ app.post('/api/comments', async (req, res) => {
 });
 
 // ── Cek status RSVP tamu (sudah submit atau belum) ───────────────────────────
-app.get('/api/rsvp-status', (req, res) => {
+app.get('/api/rsvp-status', async (req, res) => {
   const { token } = req.query;
   const result = verifyToken(token);
   if (!result.valid) return res.status(403).json({ valid: false });
-  const rsvp = load(rsvpFile);
-  const entry = rsvp[token];
+  const localRsvp = load(rsvpFile);
+  let entry = localRsvp[token] || null;
+  if (canSync()) {
+    try {
+      const sheetRsvps = await readRsvpsFromSheets();
+      entry = sheetRsvps[token] || null;
+    } catch (error) {
+      console.error('[RSVP] Gagal membaca status dari Sheets:', error.message);
+      if (!entry) return res.status(502).json({ submitted: false, error: 'RSVP status unavailable' });
+    }
+  }
   if (entry) {
-    res.json({ submitted: true, response: entry.response });
+    res.json({ submitted: true, response: entry.response, count: Number(entry.count) || 0 });
   } else {
     res.json({ submitted: false });
   }
@@ -800,9 +864,16 @@ app.post('/api/admin/import-tamu', adminAuth, async (req, res) => {
 });
 
 // ── Daftar tamu ───────────────────────────────────────────────────────────────
-app.get('/api/admin/guests', adminAuth, (req, res) => {
+app.get('/api/admin/guests', adminAuth, async (req, res) => {
   const guests = load(guestsFile);
-  const rsvp   = load(rsvpFile);
+  let rsvp = load(rsvpFile);
+  if (canSync()) {
+    try {
+      rsvp = await readRsvpsFromSheets();
+    } catch (error) {
+      console.error('[Admin] Gagal membaca status RSVP dari Sheets:', error.message);
+    }
+  }
   res.json(Object.entries(guests).map(([token, guest]) => ({
     token,
     name: guest.name,

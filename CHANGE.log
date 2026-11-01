@@ -32,3 +32,4 @@
 - Memindahkan penyimpanan guestbook ke tab `comment` Google Sheets, mempertahankan pagination, dan menghapus batas 500 karakter pada ucapan.
 - Menambahkan moderasi kontekstual ucapan melalui Gemini; hanya teks ucapan yang dikirim ke API, ucapan menyerang ditolak, dan pengiriman ditahan jika moderasi gagal. Penyimpanan lokal hanya dipakai jika `ALLOW_LOCAL_COMMENT_STORE=true`.
 - Menggunakan konfigurasi `GEMINI_MODEL` dengan default `gemini-3.1-flash-lite` untuk moderasi, dengan dukungan nama variable model sebelumnya.
+- Membaca status, jumlah tamu hadir, dan waktu RSVP dari tab `rsvp` agar status tetap tampil lintas deployment dan di panel admin.
