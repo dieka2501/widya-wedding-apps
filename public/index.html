@@ -244,6 +244,13 @@
     .footer-date { margin: .3rem 0 0; font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; }
     .toast { position: fixed; z-index: 20; right: 1rem; bottom: 1rem; max-width: calc(100vw - 2rem); padding: .8rem 1rem; background: var(--ink); color: #fff; font-size: .78rem; opacity: 0; pointer-events: none; transform: translateY(1rem); transition: opacity .2s, transform .2s; }
     .toast.show { opacity: 1; transform: translateY(0); }
+    .comment-warning-dialog { width: min(440px, calc(100vw - 2rem)); max-width: none; margin: auto; padding: 0; border: 1px solid var(--line); background: var(--paper); color: var(--ink); box-shadow: 0 22px 70px rgba(36,37,32,.24); }
+    .comment-warning-dialog::backdrop { background: rgba(42,43,37,.58); backdrop-filter: blur(2px); }
+    .comment-warning-content { display: grid; justify-items: center; gap: 1rem; padding: clamp(1.8rem, 6vw, 2.7rem); text-align: center; }
+    .comment-warning-heart { margin: 0; color: var(--taupe); font: 400 1.8rem/1 var(--serif); }
+    .comment-warning-message { max-width: 30ch; margin: 0; color: var(--ink); font: 400 clamp(1.55rem, 5vw, 2.1rem)/1.16 var(--serif); }
+    .comment-warning-button { min-width: 130px; margin-top: .35rem; padding: .8rem 1.2rem; border: 0; background: var(--sage-deep); color: var(--ivory); cursor: pointer; font-size: .62rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; }
+    .comment-warning-button:hover { background: #4b5543; }
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity .75s ease, transform .75s ease; }
     .reveal.visible { opacity: 1; transform: none; }
     @media (max-width: 760px) {
@@ -687,6 +694,13 @@
     <p class="footer-date" data-en="Saturday, March 20, 2027 · Yogyakarta" data-id="Sabtu, 20 Maret 2027 · Yogyakarta">Sabtu, 20 Maret 2027 · Yogyakarta</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog class="comment-warning-dialog" id="comment-warning-dialog" aria-labelledby="comment-warning-message">
+    <div class="comment-warning-content">
+      <p class="comment-warning-heart" aria-hidden="true">♡</p>
+      <p class="comment-warning-message" id="comment-warning-message"></p>
+      <button class="comment-warning-button" type="button" onclick="closeCommentWarning()" data-en="Got it" data-id="Mengerti">Got it</button>
+    </div>
+  </dialog>
 
 <script>
 const params = new URLSearchParams(window.location.search);
@@ -736,7 +750,7 @@ const UI_COPY = {
     commentRequired: 'Please enter your name and message.',
     commentSending: 'Sending…',
     commentSent: 'Thank you. Your message has been added.',
-    commentRejected: 'Please revise your message to keep it kind and respectful.',
+    commentRejectedPopup: 'Your comment is too harsh, this is weeding invitation, not a fight club!',
     commentModerationUnavailable: 'Message review is temporarily unavailable. Please try again later.',
     commentFailed: 'Your message could not be sent. Please try again.',
   },
@@ -772,7 +786,7 @@ const UI_COPY = {
     commentRequired: 'Mohon isi nama dan ucapan.',
     commentSending: 'Mengirim…',
     commentSent: 'Terima kasih, ucapan Anda sudah ditambahkan.',
-    commentRejected: 'Mohon ubah ucapan agar tetap sopan dan tidak menyerang.',
+    commentRejectedPopup: 'Komentarmu terlalu kasar. Ini undangan pernikahan, bukan klub pertarungan!',
     commentModerationUnavailable: 'Pemeriksaan ucapan sedang tidak tersedia. Silakan coba lagi nanti.',
     commentFailed: 'Ucapan gagal dikirim. Silakan coba lagi.'
   }
@@ -1025,7 +1039,7 @@ async function submitComment(event) {
       body: JSON.stringify({ name: name, message: message })
     });
     const data = await response.json();
-    if (data.code === 'COMMENT_MODERATION_REJECTED') failureKey = 'commentRejected';
+    if (data.code === 'COMMENT_MODERATION_REJECTED') failureKey = 'commentRejectedPopup';
     if (data.code === 'COMMENT_MODERATION_UNAVAILABLE') failureKey = 'commentModerationUnavailable';
     if (!response.ok || !data.success) throw new Error('Comment submission failed');
     form.reset();
@@ -1033,8 +1047,14 @@ async function submitComment(event) {
     status.textContent = copy(commentStatusKey);
     await loadComments(1);
   } catch (error) {
-    commentStatusKey = failureKey;
-    status.textContent = copy(commentStatusKey);
+    if (failureKey === 'commentRejectedPopup') {
+      commentStatusKey = '';
+      status.textContent = '';
+      openCommentWarning();
+    } else {
+      commentStatusKey = failureKey;
+      status.textContent = copy(commentStatusKey);
+    }
   } finally {
     button.disabled = false;
     button.textContent = button.getAttribute('data-' + currentLanguage);
@@ -1135,6 +1155,27 @@ function toast(message) {
   element.classList.add('show');
   window.setTimeout(function() { element.classList.remove('show'); }, 3200);
 }
+
+function openCommentWarning() {
+  const dialog = document.getElementById('comment-warning-dialog');
+  document.getElementById('comment-warning-message').textContent = copy('commentRejectedPopup');
+  if (typeof dialog.showModal === 'function') {
+    dialog.showModal();
+    dialog.querySelector('button').focus();
+  } else {
+    window.alert(copy('commentRejectedPopup'));
+  }
+}
+
+function closeCommentWarning() {
+  const dialog = document.getElementById('comment-warning-dialog');
+  if (dialog.open) dialog.close();
+  document.getElementById('comment-message').focus();
+}
+
+document.getElementById('comment-warning-dialog').addEventListener('click', function(event) {
+  if (event.target === this) closeCommentWarning();
+});
 
 setLanguage(currentLanguage);
 document.addEventListener('DOMContentLoaded', function() {
