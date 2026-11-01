@@ -599,7 +599,7 @@
             </div>
             <div class="comment-field">
               <label for="comment-message" data-en="Your message &amp; blessings" data-id="Ucapan dan doa">Ucapan dan doa</label>
-              <textarea id="comment-message" name="message" maxlength="500" placeholder="Write a message for the couple" data-en-placeholder="Write a message for the couple" data-id-placeholder="Tuliskan ucapan Anda untuk kedua mempelai" required></textarea>
+              <textarea id="comment-message" name="message" placeholder="Write a message for the couple" data-en-placeholder="Write a message for the couple" data-id-placeholder="Tuliskan ucapan Anda untuk kedua mempelai" required></textarea>
             </div>
             <button class="comment-submit" id="comment-submit" type="submit" data-en="Send message" data-id="Kirim ucapan">Kirim ucapan</button>
             <p class="comment-status" id="comment-status" role="status" aria-live="polite"></p>
@@ -735,6 +735,8 @@ const UI_COPY = {
     commentRequired: 'Please enter your name and message.',
     commentSending: 'Sending…',
     commentSent: 'Thank you. Your message has been added.',
+    commentRejected: 'Please revise your message to keep it kind and respectful.',
+    commentModerationUnavailable: 'Message review is temporarily unavailable. Please try again later.',
     commentFailed: 'Your message could not be sent. Please try again.',
   },
   id: {
@@ -768,6 +770,8 @@ const UI_COPY = {
     commentRequired: 'Mohon isi nama dan ucapan.',
     commentSending: 'Mengirim…',
     commentSent: 'Terima kasih, ucapan Anda sudah ditambahkan.',
+    commentRejected: 'Mohon ubah ucapan agar tetap sopan dan tidak menyerang.',
+    commentModerationUnavailable: 'Pemeriksaan ucapan sedang tidak tersedia. Silakan coba lagi nanti.',
     commentFailed: 'Ucapan gagal dikirim. Silakan coba lagi.'
   }
 };
@@ -1011,6 +1015,7 @@ async function submitComment(event) {
   button.textContent = copy('commentSending');
   commentStatusKey = '';
   status.textContent = '';
+  let failureKey = 'commentFailed';
   try {
     const response = await fetch('/api/comments', {
       method: 'POST',
@@ -1018,13 +1023,15 @@ async function submitComment(event) {
       body: JSON.stringify({ name: name, message: message })
     });
     const data = await response.json();
-    if (!response.ok || !data.success) throw new Error(copy('commentFailed'));
+    if (data.code === 'COMMENT_MODERATION_REJECTED') failureKey = 'commentRejected';
+    if (data.code === 'COMMENT_MODERATION_UNAVAILABLE') failureKey = 'commentModerationUnavailable';
+    if (!response.ok || !data.success) throw new Error('Comment submission failed');
     form.reset();
     commentStatusKey = 'commentSent';
     status.textContent = copy(commentStatusKey);
     await loadComments(1);
   } catch (error) {
-    commentStatusKey = 'commentFailed';
+    commentStatusKey = failureKey;
     status.textContent = copy(commentStatusKey);
   } finally {
     button.disabled = false;

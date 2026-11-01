@@ -29,3 +29,5 @@
 - Mengaitkan token dengan nama dan kuota tamu, menampilkan pilihan jumlah hadir sesuai kuota, dan memvalidasi batas tersebut di server.
 - Menyederhanakan pencatatan RSVP di tab `rsvp` menjadi token, nama, respons, jumlah hadir, WhatsApp, pesan, dan waktu submit.
 - Menambahkan hapus per tamu dan reset semua yang menyinkronkan penghapusan ke JSON serta tab `tamu`/`rsvp` di Google Sheets bila terhubung; header sheet dipertahankan dan kegagalan sinkronisasi membatalkan penghapusan lokal.
+- Memindahkan penyimpanan guestbook ke tab `comment` Google Sheets, mempertahankan pagination, dan menghapus batas 500 karakter pada ucapan.
+- Menambahkan moderasi kontekstual ucapan melalui Gemini; hanya teks ucapan yang dikirim ke API, ucapan menyerang ditolak, dan pengiriman ditahan jika moderasi gagal. Penyimpanan lokal hanya dipakai jika `ALLOW_LOCAL_COMMENT_STORE=true`.
