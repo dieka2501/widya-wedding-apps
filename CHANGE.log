@@ -34,3 +34,5 @@
 - Menggunakan konfigurasi `GEMINI_MODEL` dengan default `gemini-3.1-flash-lite` untuk moderasi, dengan dukungan nama variable model sebelumnya.
 - Membaca status, jumlah tamu hadir, dan waktu RSVP dari tab `rsvp` agar status tetap tampil lintas deployment dan di panel admin.
 - Menampilkan pop-up bilingual dengan pesan jenaka saat moderasi menolak ucapan yang kasar atau menyerang.
+- Mengunci akses halaman undangan dengan token HMAC yang juga harus terdaftar sebagai tamu di JSON atau Google Sheets; token kosong/tidak valid mendapat halaman penuh “Oopss it seem you don't have access here!”.
+- Mewajibkan token tamu valid pada API komentar dan RSVP, menghapus bypass penyajian file statis, serta menambahkan fallback layar akses ditolak di browser. Halaman/API admin tetap menggunakan autentikasi admin.

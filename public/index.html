@@ -29,6 +29,10 @@
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
     body { margin: 0; background: var(--ivory); color: var(--ink); font-family: var(--sans); font-weight: 300; }
+    #access-denied-client { min-height: 100vh; display: grid; place-items: center; padding: 2rem; background: var(--ivory); text-align: center; }
+    #access-denied-client[hidden] { display: none !important; }
+    .access-denied-card { width: min(100%, 760px); min-height: min(76vh, 720px); display: grid; place-content: center; padding: clamp(2rem, 8vw, 6rem); border: 1px solid var(--line); background: var(--paper); }
+    .access-denied-card p { margin: 0; color: var(--ink); font: 400 clamp(2.2rem, 7vw, 5.2rem)/1.08 var(--serif); }
     a { color: inherit; }
     button, input, select, textarea { font: inherit; }
     .language-switch { position: fixed; z-index: 30; top: 1rem; right: 1rem; display: flex; align-items: center; gap: .15rem; padding: .24rem; border: 1px solid var(--line); background: rgba(250,248,244,.94); box-shadow: 0 5px 18px rgba(63,64,56,.08); backdrop-filter: blur(8px); }
@@ -693,6 +697,9 @@
     <p class="footer-names">Widya &amp; Andi</p>
     <p class="footer-date" data-en="Saturday, March 20, 2027 · Yogyakarta" data-id="Sabtu, 20 Maret 2027 · Yogyakarta">Sabtu, 20 Maret 2027 · Yogyakarta</p>
   </footer>
+  <section id="access-denied-client" hidden aria-live="assertive">
+    <div class="access-denied-card"><p>Oopss it seem you don't have access here!</p></div>
+  </section>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <dialog class="comment-warning-dialog" id="comment-warning-dialog" aria-labelledby="comment-warning-message">
     <div class="comment-warning-content">
@@ -880,20 +887,21 @@ function setGuestName(name, allowedGuests) {
   document.title = name ? copy('invitationFor') + ' ' + name + ' — ' + copy('pageTitle') : copy('pageTitle');
 }
 
-function showPublicOnly() {
-  setGuestName('');
-  document.getElementById('rsvp-access-note').classList.add('is-hidden');
-  document.getElementById('rsvp-body').classList.remove('is-hidden');
-  startCountdown();
-  initReveal();
+function showAccessDenied() {
+  document.getElementById('top').hidden = true;
+  document.querySelector('.site-footer').hidden = true;
+  document.querySelector('.language-switch').hidden = true;
+  document.getElementById('access-denied-client').hidden = false;
+  document.title = 'Access unavailable';
+  window.scrollTo(0, 0);
 }
 
 async function loadInvitation() {
-  if (!TOKEN) { showPublicOnly(); return; }
+  if (!TOKEN) { showAccessDenied(); return; }
   try {
     const response = await fetch('/api/pre-validate?token=' + encodeURIComponent(TOKEN));
     const data = await response.json();
-    if (!response.ok || !data.valid) { showPublicOnly(); return; }
+    if (!response.ok || !data.valid) { showAccessDenied(); return; }
 
     setGuestName(data.name, data.allowedGuests);
     document.getElementById('rsvp-access-note').classList.add('is-hidden');
@@ -901,14 +909,17 @@ async function loadInvitation() {
 
     try {
       const statusResponse = await fetch('/api/rsvp-status?token=' + encodeURIComponent(TOKEN));
+      if (statusResponse.status === 403) { showAccessDenied(); return; }
       const status = await statusResponse.json();
       if (status.submitted) showSuccess(status);
     } catch (error) { /* RSVP form remains usable if status lookup is temporarily unavailable. */ }
   } catch (error) {
-    showPublicOnly();
+    showAccessDenied();
+    return;
   }
   startCountdown();
   initReveal();
+  loadComments(1);
 }
 
 function toggleAttendanceDetails() {
@@ -927,7 +938,7 @@ async function loadComments(page) {
   list.appendChild(loading);
 
   try {
-    const response = await fetch('/api/comments?page=' + encodeURIComponent(page || 1));
+    const response = await fetch('/api/comments?page=' + encodeURIComponent(page || 1) + '&token=' + encodeURIComponent(TOKEN || ''));
     const data = await response.json();
     if (!response.ok) throw new Error(copy('commentsLoadError'));
     currentCommentTotal = Number(data.total) || 0;
@@ -1036,7 +1047,7 @@ async function submitComment(event) {
     const response = await fetch('/api/comments', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name, message: message })
+      body: JSON.stringify({ token: TOKEN, name: name, message: message })
     });
     const data = await response.json();
     if (data.code === 'COMMENT_MODERATION_REJECTED') failureKey = 'commentRejectedPopup';
@@ -1180,7 +1191,6 @@ document.getElementById('comment-warning-dialog').addEventListener('click', func
 setLanguage(currentLanguage);
 document.addEventListener('DOMContentLoaded', function() {
   loadInvitation();
-  loadComments(1);
 });
 </script>
 </body>

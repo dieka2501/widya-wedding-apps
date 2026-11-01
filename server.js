@@ -16,7 +16,6 @@ const app  = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json({ limit: '512kb' }));
-app.use(express.static(path.join(__dirname, 'public')));
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 const CREDENTIAL_PATH = path.join(__dirname, 'credential.json');
@@ -115,6 +114,68 @@ function parseAllowedGuestCount(value) {
   if (value == null || (typeof value === 'string' && !value.trim())) return null;
   const count = Number(value);
   return Number.isSafeInteger(count) && count > 0 ? count : null;
+}
+
+async function findGuestByToken(token) {
+  if (!verifyToken(token).valid) return null;
+
+  let guest = load(guestsFile)[token];
+  const cachedGuestCount = parseAllowedGuestCount(guest?.allowedGuests);
+  if (typeof guest?.name === 'string' && guest.name.trim() && cachedGuestCount) {
+    return { ...guest, name: guest.name.trim(), allowedGuests: cachedGuestCount };
+  }
+
+  if (!canSync()) return null;
+  try {
+    const sheets = await getSheetsClient();
+    const result = await sheets.spreadsheets.values.get({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${SHEET_TAMU}!A:D`,
+    });
+    const rows = result.data.values || [];
+    for (let i = 1; i < rows.length; i++) {
+      if (String(rows[i][3] || '').trim() !== token) continue;
+
+      const name = String(rows[i][0] || '').trim();
+      const allowedGuests = parseAllowedGuestCount(rows[i][1]);
+      const wa = String(rows[i][2] || '').trim();
+      if (!name || !allowedGuests) return null;
+
+      guest = { name, allowedGuests, wa };
+      const guests = load(guestsFile);
+      guests[token] = guest;
+      save(guestsFile, guests);
+      return guest;
+    }
+  } catch (error) {
+    console.error('[GuestAuth] Sheets lookup gagal:', error.message);
+  }
+  return null;
+}
+
+const ACCESS_DENIED_HTML = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f0e8">
+  <title>Access unavailable</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; margin: 0; }
+    body { min-height: 100vh; display: grid; place-items: center; padding: 2rem; background: #f5f0e8; color: #41423a; font-family: Georgia, 'Times New Roman', serif; text-align: center; }
+    main { width: min(100%, 760px); min-height: min(76vh, 720px); display: grid; place-content: center; padding: clamp(2rem, 8vw, 6rem); border: 1px solid #ded8cd; background: #faf8f4; }
+    p { margin: 0; font-size: clamp(2.2rem, 7vw, 5.2rem); font-weight: 400; line-height: 1.08; }
+  </style>
+</head>
+<body><main><p>Oopss it seem you don't have access here!</p></main></body>
+</html>`;
+
+function sendAccessDenied(res) {
+  return res.status(403)
+    .set('Cache-Control', 'no-store')
+    .type('html')
+    .send(ACCESS_DENIED_HTML);
 }
 
 function normalizeRsvpResponse(value) {
@@ -421,49 +482,11 @@ async function clearGuestDataFromSheets(sheets) {
 // ── Ambil data undangan personal berdasarkan token ────────────────────────────
 app.get('/api/pre-validate', async (req, res) => {
   const { token } = req.query;
-
-  // 1. Cek HMAC
-  const result = verifyToken(token);
-  if (!result.valid) return res.status(403).json({ valid: false });
-
-  // 2. Cari di guests.json
-  let guest = load(guestsFile)[token];
-
-  // 3. Fallback ke Sheets jika tidak ada di cache
-  if (!parseAllowedGuestCount(guest?.allowedGuests) && canSync()) {
-    try {
-      const sheets = await getSheetsClient();
-      const col    = await sheets.spreadsheets.values.get({
-        spreadsheetId: SPREADSHEET_ID,
-        range: `${SHEET_TAMU}!A:D`,
-      });
-      const rows = col.data.values || [];
-      for (let i = 1; i < rows.length; i++) {
-        if ((rows[i][3] || '').trim() === token) {
-          const name          = (rows[i][0] || '').trim();
-          const allowedGuests = parseAllowedGuestCount(rows[i][1]);
-          const wa            = (rows[i][2] || '').trim();
-          if (name && allowedGuests !== null) {
-            // Cache meskipun WA kosong — agar tidak selalu hit Sheets
-            const guests  = load(guestsFile);
-            guests[token] = { name, allowedGuests, wa };
-            save(guestsFile, guests);
-            guest = guests[token];
-          }
-          break;
-        }
-      }
-    } catch(e) {
-      console.error('[PreValidate] Sheets fallback gagal:', e.message);
-    }
-  }
-
+  const guest = await findGuestByToken(token);
   if (!guest) return res.status(403).json({ valid: false });
 
-  // Token pada URL menjadi identitas personal; kode WhatsApp tidak lagi diminta.
-  const allowedGuests = parseAllowedGuestCount(guest.allowedGuests);
-  if (!allowedGuests) return res.status(403).json({ valid: false });
-  res.json({ valid: true, name: guest.name, allowedGuests });
+  res.set('Cache-Control', 'no-store');
+  res.json({ valid: true, name: guest.name, allowedGuests: guest.allowedGuests });
 });
 
 // ── Public guestbook comments ────────────────────────────────────────────────
@@ -564,6 +587,10 @@ async function isGuestbookMessageAllowed(message) {
 }
 
 app.get('/api/comments', async (req, res) => {
+  if (!await findGuestByToken(req.query.token)) {
+    return res.status(403).json({ error: 'Invalid invitation token.' });
+  }
+
   let comments;
   if (ALLOW_LOCAL_COMMENT_STORE) {
     const localComments = load(commentsFile);
@@ -588,7 +615,7 @@ app.get('/api/comments', async (req, res) => {
   const page = totalPages ? Math.min(requestedPage, totalPages) : 1;
   const start = (page - 1) * COMMENT_PAGE_SIZE;
 
-  res.json({
+  res.set('Cache-Control', 'no-store').json({
     comments: sorted.slice(start, start + COMMENT_PAGE_SIZE),
     page,
     pageSize: COMMENT_PAGE_SIZE,
@@ -599,6 +626,10 @@ app.get('/api/comments', async (req, res) => {
 
 app.post('/api/comments', async (req, res) => {
   const body = req.body || {};
+  if (!await findGuestByToken(body.token)) {
+    return res.status(403).json({ success: false, message: 'Invalid invitation token.' });
+  }
+
   const name = typeof body.name === 'string' ? body.name.trim() : '';
   const message = typeof body.message === 'string' ? body.message.trim() : '';
   if (!name || !message) {
@@ -664,8 +695,8 @@ app.post('/api/comments', async (req, res) => {
 // ── Cek status RSVP tamu (sudah submit atau belum) ───────────────────────────
 app.get('/api/rsvp-status', async (req, res) => {
   const { token } = req.query;
-  const result = verifyToken(token);
-  if (!result.valid) return res.status(403).json({ valid: false });
+  const guest = await findGuestByToken(token);
+  if (!guest) return res.status(403).json({ valid: false });
   const localRsvp = load(rsvpFile);
   let entry = localRsvp[token] || null;
   if (canSync()) {
@@ -678,22 +709,18 @@ app.get('/api/rsvp-status', async (req, res) => {
     }
   }
   if (entry) {
-    res.json({ submitted: true, response: entry.response, count: Number(entry.count) || 0 });
+    res.set('Cache-Control', 'no-store').json({ submitted: true, response: entry.response, count: Number(entry.count) || 0 });
   } else {
-    res.json({ submitted: false });
+    res.set('Cache-Control', 'no-store').json({ submitted: false });
   }
 });
 
 // ── Submit RSVP ───────────────────────────────────────────────────────────────
 app.post('/api/rsvp', async (req, res) => {
-  const { token, response, message, whatsapp, count } = req.body;
+  const { token, response, message, whatsapp, count } = req.body || {};
   if (!token || !response) return res.status(400).json({ success: false, message: 'Missing fields' });
 
-  const result = verifyToken(token);
-  if (!result.valid) return res.status(403).json({ success: false, message: 'Invalid token' });
-
-  const guests = load(guestsFile);
-  const guest = guests[token];
+  const guest = await findGuestByToken(token);
   if (!guest) return res.status(403).json({ success: false, message: 'Guest token not found' });
 
   const allowedGuests = parseAllowedGuestCount(guest.allowedGuests);
@@ -925,7 +952,27 @@ app.post('/api/admin/reset', adminAuth, async (req, res) => {
   });
 });
 
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+async function serveInvitation(req, res) {
+  const guest = await findGuestByToken(req.query.token);
+  if (!guest) return sendAccessDenied(res);
+
+  return res.set('Cache-Control', 'no-store')
+    .sendFile(path.join(__dirname, 'public', 'index.html'));
+}
+
+app.get('/', serveInvitation);
+app.get('/index.html', serveInvitation);
+
+// Halaman admin memiliki autentikasi admin sendiri; semua API admin tetap memakai adminAuth.
+app.get('/admin.html', (req, res) => {
+  res.set('Cache-Control', 'no-store')
+    .sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api/')) return res.status(404).json({ error: 'Not found' });
+  return sendAccessDenied(res);
+});
 
 app.listen(PORT, () => {
   console.log(`\n🌸  http://localhost:${PORT}`);
