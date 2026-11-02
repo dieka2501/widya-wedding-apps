@@ -1,5 +1,9 @@
 #changelog
 
+## 2026-11-02
+- Memperbaiki edit tamu agar token yang tersimpan di Google Sheets dapat ditemukan meski belum ada di `guests.json`, lalu menyinkronkan perubahan ke Sheets sebelum memperbarui cache JSON lokal.
+- Mengembalikan error saat sinkronisasi Google Sheets gagal agar admin tidak mendapat status berhasil palsu.
+
 ## 2026-11-01
 - Merombak tampilan undangan dan panel admin dengan palet sage, taupe, sand, cream, dan ivory dari referensi.
 - Menghapus verifikasi 5 digit WhatsApp pada halaman tamu; token personal tetap dipakai untuk personalisasi dan RSVP. Halaman undangan tetap dapat dibaca tanpa token.

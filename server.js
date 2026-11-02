@@ -791,55 +791,61 @@ app.put('/api/admin/guest/:token', adminAuth, async (req, res) => {
   if (!result.valid) return res.status(400).json({ error: 'Token tidak valid' });
 
   const guests = load(guestsFile);
-  if (!guests[token]) return res.status(404).json({ error: 'Token tidak ditemukan di guests.json' });
+  const currentGuest = await findGuestByToken(token);
+  if (!currentGuest) {
+    return res.status(404).json({ error: 'Token tidak ditemukan di guests.json atau tab tamu Google Sheets' });
+  }
   const allowedGuests = parseAllowedGuestCount(allowedGuestsInput);
   if (!name || !allowedGuests) {
     return res.status(400).json({ error: 'Nama dan kuota tamu positif wajib diisi' });
   }
 
-  guests[token] = {
+  const updatedGuest = {
     name: name.trim(),
     allowedGuests,
-    wa: wa === undefined ? (guests[token].wa || '') : wa,
+    wa: wa === undefined ? (currentGuest.wa || '') : wa,
   };
+  const url = makeUrl(token);
 
-  save(guestsFile, guests);
-
-  // Sync ke Sheets — baca D+E sekaligus untuk tahu apakah link perlu ditulis
+  // Simpan ke Sheets lebih dulu agar kegagalan sinkronisasi tidak terlihat sukses.
   if (canSync()) {
     try {
       const sheets = await getSheetsClient();
       const col    = await sheets.spreadsheets.values.get({
-        spreadsheetId: SPREADSHEET_ID, range: `${SHEET_TAMU}!D:E`,
+        spreadsheetId: SPREADSHEET_ID, range: `${SHEET_TAMU}!D:D`,
       });
       const rows   = col.data.values || [];
       let rowIdx   = -1;
       for (let i = 1; i < rows.length; i++) {
-        if ((rows[i]?.[0] || '') === token) {
+        if (String(rows[i]?.[0] || '').trim() === token) {
           rowIdx = i + 1;
           break;
         }
       }
       if (rowIdx > 0) {
-        const g = guests[token];
-        const url = makeUrl(token);
-
         await sheets.spreadsheets.values.update({
           spreadsheetId: SPREADSHEET_ID, range: `${SHEET_TAMU}!A${rowIdx}:E${rowIdx}`,
           valueInputOption: 'USER_ENTERED',
-          requestBody: { values: [[g.name, g.allowedGuests, g.wa, token, url]] },
+          requestBody: { values: [[updatedGuest.name, updatedGuest.allowedGuests, updatedGuest.wa, token, url]] },
         });
-        console.log(`[Update] Baris ${rowIdx}: ${g.name} (${g.allowedGuests} tamu)`);
-        return res.json({ success: true, token, url, ...g });
+        console.log(`[Update] Baris ${rowIdx}: ${updatedGuest.name} (${updatedGuest.allowedGuests} tamu)`);
+      } else {
+        await sheets.spreadsheets.values.append({
+          spreadsheetId: SPREADSHEET_ID, range: `${SHEET_TAMU}!A1`,
+          valueInputOption: 'USER_ENTERED', insertDataOption: 'INSERT_ROWS',
+          requestBody: { values: [[updatedGuest.name, updatedGuest.allowedGuests, updatedGuest.wa, token, url]] },
+        });
+        console.log(`[Update] Token ${token} belum ada di tab tamu; baris ${updatedGuest.name} ditambahkan.`);
       }
     } catch(e) {
       console.error('[Update] Sync ke Sheets gagal:', e.message);
+      return res.status(502).json({ error: `Perubahan belum disimpan karena sinkronisasi Google Sheets gagal: ${e.message}` });
     }
   }
 
-  const finalUrl = makeUrl(token);
-  await syncTamuToSheets(token, guests[token].name, guests[token].allowedGuests, guests[token].wa, finalUrl);
-  res.json({ success: true, token, url: finalUrl, ...guests[token] });
+  guests[token] = updatedGuest;
+  save(guestsFile, guests);
+  res.json({ success: true, token, url, ...updatedGuest });
 });
 
 app.delete('/api/admin/guest/:token', adminAuth, async (req, res) => {
