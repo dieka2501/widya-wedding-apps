@@ -1222,7 +1222,8 @@ function hideDeveloperSignature() {
 }
 
 window.addEventListener('wheel', function(event) {
-  if (event.deltaY > 0 && pageIsAtBottom()) revealDeveloperSignature();
+  if (event.deltaY < 0) hideDeveloperSignature();
+  else if (event.deltaY > 0 && pageIsAtBottom()) revealDeveloperSignature();
 }, { passive: true });
 
 let lastTouchY = 0;
@@ -1231,14 +1232,23 @@ window.addEventListener('touchstart', function(event) {
 }, { passive: true });
 window.addEventListener('touchmove', function(event) {
   const touchY = event.touches[0]?.clientY || lastTouchY;
-  if (lastTouchY - touchY > 8 && pageIsAtBottom()) revealDeveloperSignature();
+  if (touchY - lastTouchY > 8) hideDeveloperSignature();
+  else if (lastTouchY - touchY > 8 && pageIsAtBottom()) revealDeveloperSignature();
   lastTouchY = touchY;
+}, { passive: true });
+
+let lastSignatureScrollY = window.scrollY;
+window.addEventListener('scroll', function() {
+  const currentScrollY = window.scrollY;
+  if (currentScrollY < lastSignatureScrollY - 1) hideDeveloperSignature();
+  lastSignatureScrollY = currentScrollY;
 }, { passive: true });
 
 window.addEventListener('keydown', function(event) {
   const targetTag = event.target?.tagName;
   if (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(targetTag) || event.target?.isContentEditable) return;
-  if (['ArrowDown', 'PageDown', ' '].includes(event.key) && pageIsAtBottom()) revealDeveloperSignature();
+  if (['ArrowUp', 'PageUp', 'Home'].includes(event.key)) hideDeveloperSignature();
+  else if (['ArrowDown', 'PageDown', ' '].includes(event.key) && pageIsAtBottom()) revealDeveloperSignature();
 });
 
 document.getElementById('comment-warning-dialog').addEventListener('click', function(event) {

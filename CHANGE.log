@@ -38,3 +38,4 @@
 - Mewajibkan token tamu valid pada API komentar dan RSVP, menghapus bypass penyajian file statis, serta menambahkan fallback layar akses ditolak di browser. Halaman/API admin tetap menggunakan autentikasi admin.
 - Menambahkan easter egg signature developer yang muncul setelah scroll tambahan di ujung undangan, dengan transisi ringan, copy bilingual, dan nama Dikdik Kusdinar.
 - Mengganti sisa identitas template lama pada README dan metadata npm menjadi Widya & Andi, tanpa mengubah halaman undangan atau fitur yang sudah dibuat.
+- Menyembunyikan signature developer saat pengunjung mulai menggulir ke atas, termasuk dengan mouse/trackpad, swipe, keyboard, atau scrollbar.
