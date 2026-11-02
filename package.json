@@ -1,7 +1,7 @@
 {
-  "name": "wedding-invitation-putri-dikdik",
+  "name": "widya-wedding-apps",
   "version": "1.0.0",
-  "description": "Wedding Invitation Web App - Putri & Dikdik",
+  "description": "Wedding Invitation Web App - Widya & Andi",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

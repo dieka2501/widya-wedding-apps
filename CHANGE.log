@@ -36,3 +36,5 @@
 - Menampilkan pop-up bilingual dengan pesan jenaka saat moderasi menolak ucapan yang kasar atau menyerang.
 - Mengunci akses halaman undangan dengan token HMAC yang juga harus terdaftar sebagai tamu di JSON atau Google Sheets; token kosong/tidak valid mendapat halaman penuh “Oopss it seem you don't have access here!”.
 - Mewajibkan token tamu valid pada API komentar dan RSVP, menghapus bypass penyajian file statis, serta menambahkan fallback layar akses ditolak di browser. Halaman/API admin tetap menggunakan autentikasi admin.
+- Menambahkan easter egg signature developer yang muncul setelah scroll tambahan di ujung undangan, dengan transisi ringan, copy bilingual, dan nama Dikdik Kusdinar.
+- Mengganti sisa identitas template lama pada README dan metadata npm menjadi Widya & Andi, tanpa mengubah halaman undangan atau fitur yang sudah dibuat.

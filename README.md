@@ -1,4 +1,4 @@
-# Undangan Pernikahan Putri & Dikdik
+# Undangan Pernikahan Widya & Andi
 ## Wedding Invitation Web App
 
 ### Teknologi
