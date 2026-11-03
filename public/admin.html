@@ -54,6 +54,12 @@
     .topbrand small { display: block; color: var(--muted); font-size: .55rem; letter-spacing: .18em; text-transform: uppercase; }
     .topbrand strong { display: block; font: 500 1.65rem/1 var(--serif); }
     .topbar-note { color: var(--muted); font-size: .65rem; letter-spacing: .12em; text-align: right; text-transform: uppercase; }
+    .admin-nav { display: flex; gap: .45rem; margin: -1rem 0 2rem; padding-bottom: .8rem; border-bottom: 1px solid var(--line); }
+    .admin-nav button { min-height: 40px; padding: .55rem .95rem; border: 1px solid transparent; background: transparent; color: var(--muted); font-size: .65rem; font-weight: 500; letter-spacing: .08em; }
+    .admin-nav button:hover, .admin-nav button:focus-visible { border-color: var(--line); color: var(--sage-deep); outline: none; }
+    .admin-nav button[aria-pressed="true"] { border-color: var(--sage-deep); background: var(--sage-deep); color: #fff; }
+    .admin-view { display: none; }
+    .admin-view.active { display: block; }
     .page-intro { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; margin-bottom: 1.5rem; }
     .eyebrow { margin: 0 0 .5rem; color: var(--sage-deep); font-size: .6rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; }
     .page-intro h1 { margin: 0; font: 500 clamp(2.5rem, 5vw, 4rem)/.9 var(--serif); }
@@ -95,6 +101,17 @@
     .pagination button.active { border-color: var(--sage-deep); background: var(--sage-deep); color: #fff; }
     .pagination button:disabled { cursor: default; opacity: .45; }
     .pagination span { margin-left: .5rem; color: var(--muted); font-size: .66rem; }
+    .admin-comments-list { display: grid; }
+    .admin-comment-item { padding: 1.1rem 0; border-bottom: 1px solid #ebe7df; }
+    .admin-comment-head { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem 1rem; }
+    .admin-comment-name { color: var(--sage-deep); font: 500 1.2rem/1.1 var(--serif); }
+    .admin-comment-date { color: var(--muted); font-size: .63rem; }
+    .admin-comment-message { margin: .45rem 0 .8rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .admin-comment-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .6rem; }
+    .admin-comment-reply-preview { margin: .75rem 0 0 .7rem; padding: .65rem .8rem; border-left: 2px solid var(--sage); background: var(--cream); }
+    .admin-comment-reply-label { display: block; margin-bottom: .2rem; color: var(--sage-deep); font-size: .56rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+    .admin-comment-reply-text { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .admin-comment-status { min-height: 1rem; margin: .5rem 0 0; color: var(--red); font-size: .7rem; }
     .danger-card { border-color: #e3cbc5; }
     .danger-card h2 { color: var(--red); }
     .overlay { position: fixed; z-index: 30; inset: 0; display: none; align-items: center; justify-content: center; padding: 1rem; background: rgba(41,43,37,.52); }
@@ -103,6 +120,9 @@
     .modal-title { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.1rem; padding-bottom: .75rem; border-bottom: 1px solid var(--line); font: 500 1.9rem/1 var(--serif); }
     .modal-close { border: 0; background: none; color: var(--muted); font-size: 1.5rem; }
     .modal-note { color: var(--muted); font-size: .78rem; line-height: 1.7; }
+    .reply-quote { margin: .75rem 0 1rem; padding: .8rem .9rem; border-left: 2px solid var(--sage); background: var(--cream); }
+    .reply-quote strong { display: block; margin-bottom: .25rem; color: var(--sage-deep); font: 500 1.15rem/1.1 var(--serif); }
+    .reply-quote p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
     .import-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; margin: 1rem 0; }
     .imp-stat { padding: .7rem .35rem; background: var(--cream); text-align: center; }
     .imp-stat .n { color: var(--sage-deep); font: 500 1.8rem var(--serif); }
@@ -124,6 +144,8 @@
       .search { width: 100%; }
       .table-wrap { margin-right: -1.15rem; margin-left: -1.15rem; padding: 0 1.15rem; }
       .topbar-note { font-size: .53rem; }
+      .admin-nav { margin-top: -.3rem; }
+      .admin-nav button { flex: 1; padding-right: .45rem; padding-left: .45rem; }
     }
     @media (max-width: 460px) {
       .form-row { grid-template-columns: 1fr; gap: 0; }
@@ -157,6 +179,12 @@
       <div class="topbar-note">Yogyakarta · 20 Maret 2027</div>
     </header>
 
+    <nav class="admin-nav" aria-label="Bagian panel admin">
+      <button type="button" data-admin-view="guests" aria-pressed="true" onclick="showAdminView('guests')">Daftar tamu</button>
+      <button type="button" data-admin-view="comments" aria-pressed="false" onclick="showAdminView('comments')">Buku tamu</button>
+    </nav>
+
+    <div class="admin-view active" id="guest-view">
     <section class="page-intro">
       <div><p class="eyebrow">Ruang pengelola</p><h1>Daftar tamu</h1><p>Kelola undangan dan pantau konfirmasi kehadiran.</p></div>
       <button class="btn btn-outline" type="button" onclick="loadGuests()">Segarkan data</button>
@@ -214,7 +242,33 @@
       <p class="card-intro">Menghapus daftar tamu dan RSVP dari JSON lokal. Jika Google Sheets terhubung, data tamu dan RSVP di tab <strong>tamu</strong> dan <strong>rsvp</strong> ikut dihapus.</p>
       <div class="btn-row"><button class="btn btn-danger" type="button" onclick="showResetConfirm()">Reset semua data</button><span class="status-text" id="reset-status"></span></div>
     </section>
+    </div>
+
+    <section class="admin-view" id="guestbook-admin" aria-labelledby="guestbook-title">
+      <section class="card">
+        <div class="card-head">
+          <div><p class="eyebrow">Buku tamu</p><h2 id="guestbook-title" tabindex="-1">Ucapan dari para tamu</h2></div>
+          <button class="btn btn-outline btn-sm" type="button" onclick="loadAdminComments(adminCommentPage)">Segarkan</button>
+        </div>
+        <p class="card-intro">Pilih komentar untuk membalasnya. Setiap komentar hanya dapat dibalas satu kali, dan balasan akan tampil di halaman undangan.</p>
+        <div class="admin-comments-list" id="admin-comments-list" aria-live="polite"><p class="loading">Masuk untuk memuat ucapan.</p></div>
+        <div class="pagination" id="admin-comments-pagination"></div>
+        <p class="status-text" id="admin-comments-status" role="status" aria-live="polite"></p>
+      </section>
+    </section>
   </main>
+
+  <div class="overlay" id="reply-modal" role="presentation" onclick="if(event.target===this)closeReplyModal()">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="reply-modal-title" aria-describedby="reply-original-message">
+      <div class="modal-title"><span id="reply-modal-title">Balas komentar</span><button class="modal-close" type="button" aria-label="Tutup" onclick="closeReplyModal()">&times;</button></div>
+      <div class="reply-quote"><strong id="reply-original-name"></strong><p id="reply-original-message"></p></div>
+      <form id="reply-form">
+        <div class="field"><label for="reply-input">Balasan Widya &amp; Andi</label><textarea id="reply-input" rows="4" style="width:100%;min-height:110px;padding:.7rem .8rem;border:1px solid var(--line);background:var(--ivory);color:var(--ink);resize:vertical" required></textarea></div>
+        <p class="admin-comment-status" id="reply-status" role="status" aria-live="polite"></p>
+        <div class="btn-row" style="justify-content:flex-end"><button class="btn btn-outline btn-sm" type="button" onclick="closeReplyModal()">Batal</button><button class="btn btn-sm" id="reply-submit" type="submit">Kirim balasan</button></div>
+      </form>
+    </section>
+  </div>
 
   <div class="overlay" id="reset-modal" onclick="if(event.target===this)this.classList.remove('show')">
     <div class="modal" style="max-width:430px">
@@ -251,6 +305,12 @@ let allGuestsData = [];
 let filteredData = [];
 let currentPage = 1;
 let authError = '';
+let adminCommentsData = [];
+let adminCommentPage = 1;
+let adminCommentPages = 0;
+let adminCommentTotal = 0;
+let activeReplyCommentId = null;
+let replyReturnFocus = null;
 const PAGE_SIZE = 10;
 const BASE = location.origin;
 
@@ -348,6 +408,214 @@ async function loadGuests() {
   } catch (error) {
     authError = 'Tidak dapat terhubung ke server.';
     return false;
+  }
+}
+
+async function loadAdminComments(page) {
+  const list = document.getElementById('admin-comments-list');
+  const status = document.getElementById('admin-comments-status');
+  list.replaceChildren();
+  const loading = document.createElement('p');
+  loading.className = 'loading';
+  loading.textContent = 'Memuat ucapan…';
+  list.appendChild(loading);
+  status.textContent = '';
+
+  try {
+    const response = await fetch('/api/admin/comments?page=' + encodeURIComponent(page || 1), {
+      headers: { 'x-admin-key': KEY }
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Ucapan belum dapat dimuat.');
+    adminCommentsData = data.comments || [];
+    adminCommentPage = data.page || 1;
+    adminCommentPages = data.totalPages || 0;
+    adminCommentTotal = Number(data.total) || 0;
+    renderAdminComments(adminCommentsData);
+    renderAdminCommentPagination();
+  } catch (error) {
+    list.replaceChildren();
+    const notice = document.createElement('p');
+    notice.className = 'modal-note';
+    notice.textContent = error.message;
+    list.appendChild(notice);
+    document.getElementById('admin-comments-pagination').replaceChildren();
+  }
+}
+
+function renderAdminComments(comments) {
+  const list = document.getElementById('admin-comments-list');
+  list.replaceChildren();
+  if (!comments.length) {
+    const empty = document.createElement('p');
+    empty.className = 'loading';
+    empty.textContent = 'Belum ada ucapan.';
+    list.appendChild(empty);
+    return;
+  }
+
+  comments.forEach(function(comment) {
+    const item = document.createElement('article');
+    item.className = 'admin-comment-item';
+    const head = document.createElement('div');
+    head.className = 'admin-comment-head';
+    const name = document.createElement('strong');
+    name.className = 'admin-comment-name';
+    name.textContent = comment.name || 'Tamu undangan';
+    const date = document.createElement('time');
+    date.className = 'admin-comment-date';
+    date.dateTime = comment.createdAt || '';
+    const parsedDate = new Date(comment.createdAt);
+    date.textContent = Number.isNaN(parsedDate.getTime()) ? '' : new Intl.DateTimeFormat('id-ID', {
+      day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta'
+    }).format(parsedDate);
+    head.append(name, date);
+
+    const message = document.createElement('p');
+    message.className = 'admin-comment-message';
+    message.textContent = comment.message || '';
+
+    item.append(head, message);
+    if (comment.reply) {
+      const reply = document.createElement('div');
+      reply.className = 'admin-comment-reply-preview';
+      const label = document.createElement('strong');
+      label.className = 'admin-comment-reply-label';
+      label.textContent = 'Balasan Widya & Andi';
+      const replyText = document.createElement('p');
+      replyText.className = 'admin-comment-reply-text';
+      replyText.textContent = comment.reply;
+      reply.append(label, replyText);
+      const status = document.createElement('p');
+      status.className = 'status-text';
+      status.textContent = 'Sudah dibalas';
+      item.append(reply, status);
+    } else {
+      const actions = document.createElement('div');
+      actions.className = 'admin-comment-actions';
+      const replyButton = document.createElement('button');
+      replyButton.type = 'button';
+      replyButton.className = 'btn btn-outline btn-sm';
+      replyButton.textContent = 'Balas komentar';
+      replyButton.addEventListener('click', function() { openReplyModal(comment.id, replyButton); });
+      actions.appendChild(replyButton);
+      item.appendChild(actions);
+    }
+    list.appendChild(item);
+  });
+}
+
+function renderAdminCommentPagination() {
+  const element = document.getElementById('admin-comments-pagination');
+  element.replaceChildren();
+  if (adminCommentPages <= 1) return;
+
+  const previous = document.createElement('button');
+  previous.type = 'button';
+  previous.textContent = '‹';
+  previous.setAttribute('aria-label', 'Halaman sebelumnya');
+  previous.disabled = adminCommentPage <= 1;
+  previous.addEventListener('click', function() { loadAdminComments(adminCommentPage - 1); });
+  const next = document.createElement('button');
+  next.type = 'button';
+  next.textContent = '›';
+  next.setAttribute('aria-label', 'Halaman berikutnya');
+  next.disabled = adminCommentPage >= adminCommentPages;
+  next.addEventListener('click', function() { loadAdminComments(adminCommentPage + 1); });
+  const summary = document.createElement('span');
+  summary.textContent = adminCommentTotal + ' ucapan · halaman ' + adminCommentPage + '/' + adminCommentPages;
+  element.append(previous, next, summary);
+}
+
+function showAdminView(view) {
+  const commentsSelected = view === 'comments';
+  document.getElementById('guest-view').classList.toggle('active', !commentsSelected);
+  document.getElementById('guestbook-admin').classList.toggle('active', commentsSelected);
+  document.querySelectorAll('.admin-nav [data-admin-view]').forEach(function(button) {
+    button.setAttribute('aria-pressed', String(button.dataset.adminView === (commentsSelected ? 'comments' : 'guests')));
+  });
+  if (commentsSelected) loadAdminComments(adminCommentPage || 1);
+}
+
+function openReplyModal(id, trigger) {
+  const comment = adminCommentsData.find(function(item) { return String(item.id) === String(id); });
+  if (!comment || comment.reply) return;
+  activeReplyCommentId = comment.id;
+  replyReturnFocus = trigger || document.activeElement;
+  document.getElementById('reply-original-name').textContent = comment.name || 'Tamu undangan';
+  document.getElementById('reply-original-message').textContent = comment.message || '';
+  document.getElementById('reply-input').value = '';
+  document.getElementById('reply-status').textContent = '';
+  document.getElementById('reply-submit').disabled = false;
+  document.getElementById('reply-modal').classList.add('show');
+  document.getElementById('reply-input').focus();
+}
+
+function closeReplyModal() {
+  document.getElementById('reply-modal').classList.remove('show');
+  activeReplyCommentId = null;
+  if (replyReturnFocus && replyReturnFocus.isConnected) replyReturnFocus.focus();
+  replyReturnFocus = null;
+}
+
+document.getElementById('reply-form').addEventListener('submit', saveCommentReply);
+document.addEventListener('keydown', function(event) {
+  const modal = document.getElementById('reply-modal');
+  if (!modal.classList.contains('show')) return;
+  if (event.key === 'Escape') {
+    closeReplyModal();
+    return;
+  }
+  if (event.key !== 'Tab') return;
+  const focusable = Array.from(modal.querySelectorAll('button:not(:disabled), textarea:not(:disabled)'));
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+});
+
+async function saveCommentReply(event) {
+  event.preventDefault();
+  const id = activeReplyCommentId;
+  const textarea = document.getElementById('reply-input');
+  const button = document.getElementById('reply-submit');
+  const status = document.getElementById('reply-status');
+  const reply = textarea.value.trim();
+  if (!id || !reply) {
+    status.textContent = 'Balasan wajib diisi.';
+    return;
+  }
+  button.disabled = true;
+  status.textContent = 'Menyimpan…';
+  try {
+    const response = await fetch('/api/admin/comments/' + encodeURIComponent(id) + '/reply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-key': KEY },
+      body: JSON.stringify({ reply: reply })
+    });
+    const data = await response.json();
+    if (response.status === 409) {
+      replyReturnFocus = null;
+      closeReplyModal();
+      await loadAdminComments(adminCommentPage);
+      document.getElementById('guestbook-title').focus();
+      return;
+    }
+    if (!response.ok || !data.success) throw new Error(data.error || 'Balasan belum tersimpan.');
+    replyReturnFocus = null;
+    closeReplyModal();
+    await loadAdminComments(adminCommentPage);
+    document.getElementById('guestbook-title').focus();
+  } catch (error) {
+    status.textContent = error.message;
+    button.disabled = false;
+  } finally {
+    if (document.getElementById('reply-modal').classList.contains('show')) button.disabled = false;
   }
 }
 

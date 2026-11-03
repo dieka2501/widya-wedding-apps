@@ -1,5 +1,11 @@
 #changelog
 
+## 2026-11-03
+- Mengunci nama pada form buku tamu ke nama undangan dari token; server mengabaikan nama kiriman browser dan selalu menyimpan nama dari data tamu yang tervalidasi.
+- Memisahkan Buku Tamu dari daftar undangan di panel admin, menambahkan form balasan dalam pop-up, membatasi setiap komentar agar hanya dapat dibalas satu kali, menampilkan balasan di bawah komentar pada halaman undangan, dan menyiapkan header kolom D:E Google Sheets otomatis bila belum tersedia.
+
+- Menambahkan panel admin untuk membaca ucapan berhalaman dan menulis balasan pengantin lewat endpoint berautentikasi; balasan disimpan di kolom D:E tab `comment` atau penyimpanan lokal dan ditampilkan di buku tamu publik.
+
 ## 2026-11-02
 - Memperbaiki edit tamu agar token yang tersimpan di Google Sheets dapat ditemukan meski belum ada di `guests.json`, lalu menyinkronkan perubahan ke Sheets sebelum memperbarui cache JSON lokal.
 - Mengembalikan error saat sinkronisasi Google Sheets gagal agar admin tidak mendapat status berhasil palsu.

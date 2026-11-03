@@ -496,23 +496,43 @@ async function readCommentsFromSheets() {
   const sheets = await getSheetsClient();
   const result = await sheets.spreadsheets.values.get({
     spreadsheetId: SPREADSHEET_ID,
-    range: `${SHEET_COMMENT}!A2:C`,
+    range: `${SHEET_COMMENT}!A2:E`,
   });
   return (result.data.values || [])
-    .filter(row => row[0] || row[1])
     .map((row, index) => ({
-      id: `sheet-${index}`,
+      id: `sheet-${index + 2}`,
       name: row[0] || '',
       message: row[1] || '',
       createdAt: row[2] || '',
-    }));
+      reply: row[3] || '',
+      replyCreatedAt: row[4] || '',
+    }))
+    .filter(comment => comment.name || comment.message);
+}
+
+async function readAdminCommentsFromSheets() {
+  const sheets = await getSheetsClient();
+  const result = await sheets.spreadsheets.values.get({
+    spreadsheetId: SPREADSHEET_ID,
+    range: `${SHEET_COMMENT}!A2:E`,
+  });
+  return (result.data.values || [])
+    .map((row, index) => ({
+      id: `sheet-${index + 2}`,
+      name: row[0] || '',
+      message: row[1] || '',
+      createdAt: row[2] || '',
+      reply: row[3] || '',
+      replyCreatedAt: row[4] || '',
+    }))
+    .filter(comment => comment.name || comment.message);
 }
 
 async function appendCommentToSheets(comment) {
   const sheets = await getSheetsClient();
   const header = await sheets.spreadsheets.values.get({
     spreadsheetId: SPREADSHEET_ID,
-    range: `${SHEET_COMMENT}!A1:C1`,
+    range: `${SHEET_COMMENT}!A1:E1`,
   });
   const columns = header.data.values?.[0] || [];
   if (columns[0] !== 'Nama' || columns[1] !== 'Komentar' || columns[2] !== 'Created At') {
@@ -523,6 +543,14 @@ async function appendCommentToSheets(comment) {
       requestBody: { values: [['Nama', 'Komentar', 'Created At']] },
     });
   }
+  if (columns[3] !== 'Balasan Pengantin' || columns[4] !== 'Waktu Balasan') {
+    await sheets.spreadsheets.values.update({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${SHEET_COMMENT}!D1:E1`,
+      valueInputOption: 'RAW',
+      requestBody: { values: [['Balasan Pengantin', 'Waktu Balasan']] },
+    });
+  }
   await sheets.spreadsheets.values.append({
     spreadsheetId: SPREADSHEET_ID,
     range: `${SHEET_COMMENT}!A:C`,
@@ -530,6 +558,43 @@ async function appendCommentToSheets(comment) {
     insertDataOption: 'INSERT_ROWS',
     requestBody: { values: [[comment.name, comment.message, comment.createdAt]] },
   });
+}
+
+async function updateCommentReplyInSheets(id, reply, replyCreatedAt = new Date().toISOString()) {
+  const match = /^sheet-(\d+)$/.exec(String(id || ''));
+  const rowNumber = match ? Number(match[1]) : 0;
+  if (!Number.isSafeInteger(rowNumber) || rowNumber < 2) throw new Error('ID komentar tidak valid.');
+
+  const sheets = await getSheetsClient();
+  const existing = await sheets.spreadsheets.values.get({
+    spreadsheetId: SPREADSHEET_ID,
+    range: `${SHEET_COMMENT}!A${rowNumber}:E${rowNumber}`,
+  });
+  const row = existing.data.values?.[0] || [];
+  if (!row[0] && !row[1]) return null;
+  if (String(row[3] || '').trim()) return { alreadyReplied: true };
+
+  const header = await sheets.spreadsheets.values.get({
+    spreadsheetId: SPREADSHEET_ID,
+    range: `${SHEET_COMMENT}!D1:E1`,
+  });
+  const columns = header.data.values?.[0] || [];
+  if (columns[0] !== 'Balasan Pengantin' || columns[1] !== 'Waktu Balasan') {
+    await sheets.spreadsheets.values.update({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${SHEET_COMMENT}!D1:E1`,
+      valueInputOption: 'RAW',
+      requestBody: { values: [['Balasan Pengantin', 'Waktu Balasan']] },
+    });
+  }
+
+  await sheets.spreadsheets.values.update({
+    spreadsheetId: SPREADSHEET_ID,
+    range: `${SHEET_COMMENT}!D${rowNumber}:E${rowNumber}`,
+    valueInputOption: 'RAW',
+    requestBody: { values: [[reply, replyCreatedAt]] },
+  });
+  return { id, reply, replyCreatedAt };
 }
 
 async function isGuestbookMessageAllowed(message) {
@@ -616,7 +681,14 @@ app.get('/api/comments', async (req, res) => {
   const start = (page - 1) * COMMENT_PAGE_SIZE;
 
   res.set('Cache-Control', 'no-store').json({
-    comments: sorted.slice(start, start + COMMENT_PAGE_SIZE),
+    comments: sorted.slice(start, start + COMMENT_PAGE_SIZE).map(comment => ({
+      id: comment.id,
+      name: comment.name,
+      message: comment.message,
+      createdAt: comment.createdAt,
+      reply: comment.reply || '',
+      replyCreatedAt: comment.replyCreatedAt || '',
+    })),
     page,
     pageSize: COMMENT_PAGE_SIZE,
     total,
@@ -626,17 +698,15 @@ app.get('/api/comments', async (req, res) => {
 
 app.post('/api/comments', async (req, res) => {
   const body = req.body || {};
-  if (!await findGuestByToken(body.token)) {
+  const guest = await findGuestByToken(body.token);
+  if (!guest) {
     return res.status(403).json({ success: false, message: 'Invalid invitation token.' });
   }
 
-  const name = typeof body.name === 'string' ? body.name.trim() : '';
+  const name = guest.name;
   const message = typeof body.message === 'string' ? body.message.trim() : '';
-  if (!name || !message) {
-    return res.status(400).json({ success: false, message: 'Nama dan ucapan wajib diisi.' });
-  }
-  if (name.length > 80) {
-    return res.status(400).json({ success: false, message: 'Nama maksimal 80 karakter.' });
+  if (!message) {
+    return res.status(400).json({ success: false, message: 'Ucapan wajib diisi.' });
   }
 
   if (!GEMINI_API_KEY) {
@@ -690,6 +760,78 @@ app.post('/api/comments', async (req, res) => {
   }
 
   res.status(201).json({ success: true, comment: entry });
+});
+
+// ── Admin guestbook: comment list and couple replies ─────────────────────────
+const ADMIN_COMMENT_PAGE_SIZE = 8;
+const commentReplyLocks = new Set();
+
+app.get('/api/admin/comments', adminAuth, async (req, res) => {
+  let comments;
+  if (ALLOW_LOCAL_COMMENT_STORE) {
+    const localComments = load(commentsFile);
+    comments = Array.isArray(localComments) ? localComments : [];
+  } else if (canSync()) {
+    try {
+      comments = await readAdminCommentsFromSheets();
+    } catch (error) {
+      console.error('[AdminComments] Gagal membaca Google Sheets:', error.message);
+      return res.status(502).json({ error: 'Ucapan belum dapat dimuat. Silakan coba lagi.' });
+    }
+  } else {
+    return res.status(503).json({ error: 'Penyimpanan ucapan belum dikonfigurasi.' });
+  }
+
+  const sorted = comments.slice().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  const total = sorted.length;
+  const totalPages = Math.ceil(total / ADMIN_COMMENT_PAGE_SIZE);
+  const requestedPage = Math.max(1, parseInt(req.query.page, 10) || 1);
+  const page = totalPages ? Math.min(requestedPage, totalPages) : 1;
+  const start = (page - 1) * ADMIN_COMMENT_PAGE_SIZE;
+  res.set('Cache-Control', 'no-store').json({
+    comments: sorted.slice(start, start + ADMIN_COMMENT_PAGE_SIZE),
+    page,
+    pageSize: ADMIN_COMMENT_PAGE_SIZE,
+    total,
+    totalPages,
+  });
+});
+
+app.post('/api/admin/comments/:id/reply', adminAuth, async (req, res) => {
+  const reply = typeof req.body?.reply === 'string' ? req.body.reply.trim() : '';
+  if (!reply) return res.status(400).json({ error: 'Balasan wajib diisi.' });
+  const id = String(req.params.id || '');
+  if (commentReplyLocks.has(id)) return res.status(409).json({ error: 'Balasan untuk ucapan ini sedang disimpan.' });
+  commentReplyLocks.add(id);
+  const replyCreatedAt = new Date().toISOString();
+
+  try {
+    if (ALLOW_LOCAL_COMMENT_STORE) {
+      const stored = load(commentsFile);
+      const comments = Array.isArray(stored) ? stored : [];
+      const comment = comments.find(entry => String(entry.id) === id);
+      if (!comment) return res.status(404).json({ error: 'Ucapan tidak ditemukan.' });
+      if (String(comment.reply || '').trim()) return res.status(409).json({ error: 'Ucapan ini sudah dibalas.' });
+      comment.reply = reply;
+      comment.replyCreatedAt = replyCreatedAt;
+      save(commentsFile, comments);
+    } else if (canSync()) {
+      try {
+        const updated = await updateCommentReplyInSheets(id, reply, replyCreatedAt);
+        if (!updated) return res.status(404).json({ error: 'Ucapan tidak ditemukan di Google Sheets.' });
+        if (updated.alreadyReplied) return res.status(409).json({ error: 'Ucapan ini sudah dibalas.' });
+      } catch (error) {
+        console.error('[AdminComments] Gagal menyimpan balasan:', error.message);
+        return res.status(502).json({ error: `Balasan belum tersimpan: ${error.message}` });
+      }
+    } else {
+      return res.status(503).json({ error: 'Penyimpanan ucapan belum dikonfigurasi.' });
+    }
+  } finally {
+    commentReplyLocks.delete(id);
+  }
+
+  res.json({ success: true, id: req.params.id, reply, replyCreatedAt });
 });
 
 // ── Cek status RSVP tamu (sudah submit atau belum) ───────────────────────────

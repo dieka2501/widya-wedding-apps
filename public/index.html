@@ -190,6 +190,7 @@
     .comment-field { display: grid; gap: .35rem; }
     .comment-field label { color: var(--sage-deep); font-size: .58rem; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
     .comment-field input, .comment-field textarea { width: 100%; padding: .75rem; border: 1px solid var(--line); border-radius: 0; outline: none; background: var(--ivory); color: var(--ink); font: 400 .96rem/1.6 var(--sans); }
+    .comment-field input[readonly] { border-color: transparent; border-bottom-color: var(--taupe); background: transparent; cursor: default; }
     .comment-field textarea { min-height: 110px; resize: vertical; }
     .comment-field input:focus, .comment-field textarea:focus { border-color: var(--sage-deep); box-shadow: 0 0 0 2px rgba(96,108,86,.1); }
     .comment-submit { justify-self: end; min-width: 190px; margin-top: .2rem; padding: .9rem 1.1rem; border: 0; background: var(--sage-deep); color: #fff; cursor: pointer; font-size: .61rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; }
@@ -205,6 +206,11 @@
     .comment-name { color: var(--sage-deep); font: 500 1.2rem/1.1 var(--serif); }
     .comment-date { color: var(--muted); font-size: .6rem; letter-spacing: .04em; }
     .comment-message { margin: 0; color: var(--ink); font-size: .82rem; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .comment-reply { display: grid; gap: .2rem; margin: .55rem 0 0 .9rem; padding: .65rem .8rem; border-left: 2px solid var(--sage); background: var(--cream); }
+    .comment-reply-meta { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .2rem .7rem; }
+    .comment-reply-label { color: var(--sage-deep); font-size: .57rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+    .comment-reply-date { color: var(--muted); font-size: .56rem; }
+    .comment-reply-message { margin: 0; color: var(--ink); font-size: .79rem; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
     .comments-empty { margin: 0; padding: 1.2rem 0; color: var(--muted); font: italic 400 1rem/1.6 var(--serif); text-align: center; }
     .comments-pagination { display: flex; align-items: center; justify-content: center; gap: .6rem; margin-top: 1.3rem; }
     .comments-pagination:empty { display: none; }
@@ -614,8 +620,8 @@
           </header>
           <form class="comment-form" id="comment-form" onsubmit="submitComment(event)">
             <div class="comment-field">
-              <label for="comment-name" data-en="Your name" data-id="Nama">Nama</label>
-              <input id="comment-name" name="name" type="text" maxlength="80" autocomplete="name" placeholder="Your name" data-en-placeholder="Your name" data-id-placeholder="Nama Anda" required>
+              <label for="comment-name" data-en="Name on invitation" data-id="Nama di undangan">Nama di undangan</label>
+              <input id="comment-name" name="name" type="text" maxlength="80" autocomplete="off" placeholder="Nama undangan" data-en-placeholder="Invitation name" data-id-placeholder="Nama undangan" readonly aria-readonly="true" required>
             </div>
             <div class="comment-field">
               <label for="comment-message" data-en="Your message &amp; blessings" data-id="Ucapan dan doa">Ucapan dan doa</label>
@@ -769,11 +775,12 @@ const UI_COPY = {
     commentsLoading: 'Loading messages…',
     commentsLoadError: 'Messages could not be loaded. Please try again.',
     commentsTotal: count => count + (count === 1 ? ' message' : ' messages'),
+    commentReplyLabel: 'Reply from Widya & Andi',
     commentsEmpty: 'No messages yet. Be the first to send your wishes.',
     commentsPrevious: '‹ Previous',
     commentsNext: 'Next ›',
     commentsPage: (page, total) => 'Page ' + page + ' of ' + total,
-    commentRequired: 'Please enter your name and message.',
+    commentRequired: 'Please write your message.',
     commentSending: 'Sending…',
     commentSent: 'Thank you. Your message has been added.',
     commentRejectedPopup: 'Your comment is too harsh, this is weeding invitation, not a fight club!',
@@ -805,11 +812,12 @@ const UI_COPY = {
     commentsLoading: 'Memuat ucapan…',
     commentsLoadError: 'Ucapan belum dapat dimuat. Silakan coba lagi.',
     commentsTotal: count => count + ' ucapan',
+    commentReplyLabel: 'Balasan dari Widya & Andi',
     commentsEmpty: 'Belum ada ucapan. Jadilah yang pertama mengirim doa.',
     commentsPrevious: '‹ Sebelumnya',
     commentsNext: 'Berikutnya ›',
     commentsPage: (page, total) => 'Halaman ' + page + ' dari ' + total,
-    commentRequired: 'Mohon isi nama dan ucapan.',
+    commentRequired: 'Mohon tuliskan ucapan Anda.',
     commentSending: 'Mengirim…',
     commentSent: 'Terima kasih, ucapan Anda sudah ditambahkan.',
     commentRejectedPopup: 'Komentarmu terlalu kasar. Ini undangan pernikahan, bukan klub pertarungan!',
@@ -898,6 +906,10 @@ function setGuestName(name, allowedGuests) {
   currentGuestName = name || '';
   populateGuestCountOptions(allowedGuests);
   document.getElementById('cover-guest').textContent = currentGuestName || copy('guestDefault');
+  const commentNameField = document.getElementById('comment-name');
+  commentNameField.value = currentGuestName;
+  commentNameField.readOnly = true;
+  commentNameField.setAttribute('aria-readonly', 'true');
   const nameField = document.getElementById('rsvp-name');
   nameField.value = name || '';
   nameField.readOnly = Boolean(name);
@@ -1011,6 +1023,31 @@ function renderComments(comments) {
     message.textContent = comment.message || '';
     meta.append(name, date);
     article.append(meta, message);
+    if (comment.reply) {
+      const reply = document.createElement('div');
+      reply.className = 'comment-reply';
+      const replyMeta = document.createElement('div');
+      replyMeta.className = 'comment-reply-meta';
+      const replyLabel = document.createElement('strong');
+      replyLabel.className = 'comment-reply-label';
+      replyLabel.textContent = copy('commentReplyLabel');
+      replyMeta.appendChild(replyLabel);
+      if (comment.replyCreatedAt) {
+        const replyDate = document.createElement('time');
+        replyDate.className = 'comment-reply-date';
+        replyDate.dateTime = comment.replyCreatedAt;
+        const parsedReplyDate = new Date(comment.replyCreatedAt);
+        replyDate.textContent = Number.isNaN(parsedReplyDate.getTime()) ? '' : new Intl.DateTimeFormat(currentLanguage === 'id' ? 'id-ID' : 'en-GB', {
+          day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta'
+        }).format(parsedReplyDate);
+        replyMeta.appendChild(replyDate);
+      }
+      const replyMessage = document.createElement('p');
+      replyMessage.className = 'comment-reply-message';
+      replyMessage.textContent = comment.reply;
+      reply.append(replyMeta, replyMessage);
+      article.appendChild(reply);
+    }
     list.appendChild(article);
   });
 }
@@ -1049,9 +1086,8 @@ async function submitComment(event) {
   const form = document.getElementById('comment-form');
   const button = document.getElementById('comment-submit');
   const status = document.getElementById('comment-status');
-  const name = document.getElementById('comment-name').value.trim();
   const message = document.getElementById('comment-message').value.trim();
-  if (!name || !message) {
+  if (!currentGuestName || !message) {
     commentStatusKey = 'commentRequired';
     status.textContent = copy(commentStatusKey);
     return;
@@ -1066,7 +1102,7 @@ async function submitComment(event) {
     const response = await fetch('/api/comments', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: TOKEN, name: name, message: message })
+      body: JSON.stringify({ token: TOKEN, message: message })
     });
     const data = await response.json();
     if (data.code === 'COMMENT_MODERATION_REJECTED') failureKey = 'commentRejectedPopup';
