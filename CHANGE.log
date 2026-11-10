@@ -1,6 +1,8 @@
 #changelog
 
 ## 2026-11-10
+- Menyesuaikan ulang tata letak Our Story: memperjelas daun sulur, menempatkan beberapa parasut di sekitar ayunan, memindahkan alat tulis ke ikon bab 2017, dan menampilkan tiga bola disko dengan ukuran tengah lebih besar.
+- Merombak section Our Story mengikuti referensi H2 dengan tiga bab bergambar, sulur dan doodle, tata letak responsif, serta teks EN/ID; menambahkan akses statis terbatas ke folder `_assets` untuk memuat ilustrasi.
 - Merapikan responsivitas cover untuk ponsel, tablet, dan desktop; menyesuaikan ukuran logo/ilustrasi serta membatasi ornamen bunga agar tidak bertumpuk dengan teks.
 
 ## 2026-11-09

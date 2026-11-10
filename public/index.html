@@ -73,32 +73,35 @@
     .section-title em { color: var(--sage-deep); font-weight: 400; }
     .fine-rule { width: 3.2rem; height: 1px; margin: 1.45rem auto; background: var(--taupe); }
     .our-story { position: relative; overflow: hidden; background: var(--cream); }
-    .story-inner { width: min(920px, 100%); margin: 0 auto; }
-    .story-heading { margin-bottom: 3.5rem; text-align: center; }
+    .story-inner { position: relative; z-index: 1; width: min(950px, 100%); margin: 0 auto; padding-left: clamp(4.1rem, 14vw, 7rem); }
+    .story-vine { position: absolute; z-index: 0; top: 29rem; left: max(1rem, calc((100% - 950px) / 2 + 1rem)); width: clamp(84px, 11vw, 160px); height: calc(100% - 33rem); min-height: 30rem; object-fit: fill; object-position: top center; pointer-events: none; }
+    .story-heading { margin-bottom: 3.2rem; text-align: center; }
     .story-script { margin: 0; color: var(--sage-deep); font: italic 400 clamp(3.4rem, 9vw, 6rem)/.9 var(--serif); }
-    .story-heart { display: flex; align-items: center; justify-content: center; gap: .8rem; margin: 1.2rem auto .8rem; color: var(--taupe); font-size: 1.1rem; }
-    .story-heart::before, .story-heart::after { width: 5.5rem; height: 1px; background: var(--taupe); content: ""; }
-    .story-intro { max-width: 400px; margin: 0 auto; color: var(--muted); font-size: .77rem; line-height: 1.8; }
-    .story-timeline { position: relative; display: grid; gap: 1.1rem; max-width: 780px; margin: 0 auto; }
-    .story-timeline::before { position: absolute; top: 1rem; bottom: 1rem; left: 50%; width: 1px; background: linear-gradient(180deg, transparent, var(--taupe) 7%, var(--taupe) 93%, transparent); content: ""; transform: translateX(-50%); }
-    .story-item { position: relative; display: grid; grid-template-columns: 1fr 3.5rem 1fr; align-items: center; min-height: 150px; transition-delay: var(--delay, 0ms); }
-    .story-copy { padding: 1.15rem 1.4rem; border-bottom: 1px solid rgba(188,176,159,.55); }
-    .story-item:nth-child(odd) .story-copy { grid-column: 1; grid-row: 1; text-align: right; }
-    .story-item:nth-child(even) .story-copy { grid-column: 3; grid-row: 1; text-align: left; }
-    .story-spacer { grid-row: 1; }
-    .story-item:nth-child(odd) .story-spacer { grid-column: 3; }
-    .story-item:nth-child(even) .story-spacer { grid-column: 1; }
-    .story-node { z-index: 1; grid-column: 2; grid-row: 1; justify-self: center; width: .72rem; aspect-ratio: 1; border: 2px solid var(--cream); border-radius: 50%; background: var(--sage-deep); box-shadow: 0 0 0 1px var(--taupe); }
-    .story-year { display: block; margin-bottom: .38rem; color: var(--sage-deep); font: 500 1.9rem/1 var(--serif); letter-spacing: .12em; }
-    .story-label { display: block; margin-bottom: .45rem; color: #8a806f; font-size: .55rem; font-weight: 500; letter-spacing: .19em; text-transform: uppercase; }
-    .story-copy h3 { margin: 0 0 .4rem; color: var(--ink); font: 500 1.55rem/1.05 var(--serif); }
-    .story-copy p { max-width: 300px; margin: 0; color: var(--muted); font-size: .75rem; line-height: 1.75; }
-    .story-item:nth-child(odd) .story-copy p { margin-left: auto; }
-    .story-placeholder { display: inline-block; margin-top: .65rem; padding: .24rem .48rem; border: 1px solid rgba(188,176,159,.7); color: #857c6c; font-size: .49rem; letter-spacing: .12em; text-transform: uppercase; }
-    .story-branch { display: block; width: min(220px, 55vw); height: auto; margin: 3rem auto 0; color: var(--sage-deep); opacity: .62; }
-    .story-next { display: table; margin: 1.8rem auto 0; color: var(--sage-deep); font-size: .57rem; font-weight: 500; letter-spacing: .16em; text-decoration: none; text-transform: uppercase; }
-    .story-next span { display: inline-block; margin-left: .45rem; transition: transform .2s; }
-    .story-next:hover span { transform: translateY(.2rem); }
+    .story-letter-art { display: block; width: min(17rem, 58vw); height: auto; margin: 1rem auto 2.1rem; }
+    .story-intro { max-width: 430px; margin: 0 auto; color: var(--muted); font-size: clamp(.86rem, 1.2vw, 1rem); line-height: 1.65; }
+    .story-journey { width: min(620px, 100%); margin: 0 auto; }
+    .story-chapter { margin: 0 auto; padding-bottom: 4rem; }
+    .story-chapter:last-child { padding-bottom: 0; }
+    .story-copy { max-width: 540px; margin: 0 auto; }
+    .story-chapter-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: .12rem .48rem; margin: 0; color: var(--sage-deep); font: italic 500 clamp(1.35rem, 3.1vw, 2rem)/1.2 var(--serif); }
+    .story-chapter-copy { max-width: 540px; margin: .12rem 0 0; color: var(--muted); font-size: clamp(.88rem, 1.2vw, 1rem); line-height: 1.52; }
+    .story-photo { display: block; width: min(100%, 34rem); height: auto; margin: 1rem auto 0; }
+    .story-childhood-doodles { position: relative; display: flex; align-items: flex-end; justify-content: center; width: min(440px, 100%); min-height: 260px; margin: .85rem auto 0; }
+    .story-childhood-swing { position: relative; z-index: 1; display: block; width: min(17rem, 46%); height: auto; }
+    .story-childhood-parachute { position: absolute; z-index: 2; display: block; width: clamp(1.55rem, 3.5vw, 2.2rem); height: auto; }
+    .story-parachute-one { top: 2%; left: 1%; transform: rotate(-12deg); }
+    .story-parachute-two { top: 2%; right: 7%; transform: rotate(8deg); }
+    .story-parachute-three { top: 45%; right: 0; transform: rotate(12deg); }
+    .story-parachute-four { right: 7%; bottom: 0; transform: rotate(-8deg); }
+    .story-parachute-five { bottom: 22%; left: 1%; transform: rotate(8deg); }
+    .story-icon-strip { display: flex; align-items: center; justify-content: space-between; gap: clamp(.6rem, 2vw, 1.25rem); width: min(440px, 100%); margin: .9rem auto .25rem; }
+    .story-icon-strip img { display: block; width: clamp(2.8rem, 8vw, 4.8rem); height: clamp(2.8rem, 8vw, 4.8rem); object-fit: contain; }
+    .story-finale-art { display: grid; justify-items: center; gap: .2rem; margin-top: .9rem; }
+    .story-disco-cluster { display: flex; align-items: center; justify-content: center; gap: .35rem; margin-top: .35rem; }
+    .story-disco { display: block; height: auto; }
+    .story-disco-small { width: clamp(3rem, 6vw, 4.8rem); }
+    .story-disco-large { width: clamp(3.8rem, 8vw, 6.2rem); }
+    .story-dance { display: block; width: min(21rem, 64vw); height: auto; }
     .event-details { background: var(--ivory); }
     .details-card { width: min(760px, 100%); margin: 0 auto; overflow: hidden; border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow); }
     .details-art { position: relative; display: grid; min-height: 190px; place-items: center; overflow: hidden; background: linear-gradient(135deg, var(--sage), #c2c7b2 52%, var(--taupe)); }
@@ -277,15 +280,15 @@
       .hero-content { padding: 3.5rem .8rem 4rem; }
       .botanical { width: 110px; opacity: .25; }
       .opening-date { width: min(340px, 100%); }
-      .story-timeline { gap: .25rem; max-width: 560px; }
-      .story-timeline::before { left: 1rem; }
-      .story-item { grid-template-columns: 2rem minmax(0, 1fr); min-height: 155px; gap: .7rem; }
-      .story-item .story-copy, .story-item:nth-child(odd) .story-copy, .story-item:nth-child(even) .story-copy { grid-column: 2; grid-row: 1; padding: 1rem .8rem; text-align: left; }
-      .story-item .story-copy p, .story-item:nth-child(odd) .story-copy p { margin-left: 0; }
-      .story-node { grid-column: 1; }
-      .story-spacer { display: none; }
-      .story-heading { margin-bottom: 2.6rem; }
-      .story-copy h3 { font-size: 1.4rem; }
+      .story-inner { padding-left: clamp(3.8rem, 12vw, 5.4rem); }
+      .story-vine { top: 26rem; left: -.85rem; width: clamp(76px, 19vw, 90px); height: calc(100% - 29rem); }
+      .story-heading { margin-bottom: 2.8rem; }
+      .story-chapter { padding-bottom: 3.35rem; }
+      .story-childhood-doodles { min-height: 170px; }
+      .story-childhood-swing { width: min(10.8rem, 46%); }
+      .story-childhood-parachute { width: clamp(1.45rem, 8vw, 2rem); }
+      .story-icon-strip { justify-content: center; gap: clamp(.55rem, 4vw, 1.5rem); }
+      .story-icon-strip img { width: clamp(2.55rem, 10vw, 4.1rem); height: clamp(2.55rem, 10vw, 4.1rem); }
       .details-art { min-height: 155px; }
       .details-row { grid-template-columns: 2.8rem minmax(0, 1fr); gap: .75rem; }
       .details-icon { width: 2.45rem; }
@@ -315,9 +318,21 @@
       .opening-date span { padding-right: .45rem; padding-left: .45rem; font-size: .7rem; }
       .opening-date .date-day { font-size: 2.3rem; }
       .hero-venue span { font-size: .61rem; }
-      .story-item { grid-template-columns: 1.6rem minmax(0, 1fr); gap: .5rem; }
-      .story-timeline::before { left: .8rem; }
-      .story-item .story-copy, .story-item:nth-child(odd) .story-copy, .story-item:nth-child(even) .story-copy { padding-right: 0; padding-left: .5rem; }
+      .story-inner { padding-left: 3.8rem; }
+      .story-vine { top: 24rem; left: -.85rem; width: 76px; height: calc(100% - 27rem); }
+      .story-heading { margin-bottom: 2.3rem; }
+      .story-chapter { padding-bottom: 2.8rem; }
+      .story-chapter-title { gap: .1rem .3rem; font-size: clamp(1.23rem, 6vw, 1.45rem); }
+      .story-chapter-copy { font-size: .84rem; }
+      .story-childhood-doodles { min-height: 155px; }
+      .story-childhood-swing { width: min(10.8rem, 46%); }
+      .story-childhood-parachute { width: 1.6rem; }
+      .story-parachute-three { top: 42%; }
+      .story-icon-strip { gap: .35rem; }
+      .story-icon-strip img { width: clamp(2.2rem, 11vw, 2.8rem); height: clamp(2.2rem, 11vw, 2.8rem); }
+      .story-disco-small { width: clamp(2.5rem, 13vw, 3.2rem); }
+      .story-disco-large { width: clamp(3.1rem, 16vw, 4.1rem); }
+      .story-dance { width: min(17rem, 68vw); }
       .section { padding-right: 1rem; padding-left: 1rem; }
       .schedule-list::before { left: 4.1rem; }
       .schedule-item { grid-template-columns: 2.8rem 1.3rem minmax(0, 1fr); gap: .4rem; min-height: 100px; }
@@ -554,64 +569,59 @@
     </section>
 
     <section id="our-story" class="section our-story">
+      <img class="story-vine" src="/_assets/sulur_our_story.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
       <div class="story-inner">
         <header class="story-heading reveal">
-          <p class="eyebrow" data-en="The journey of Widya &amp; Andi" data-id="Perjalanan Widya &amp; Andi">Perjalanan Widya &amp; Andi</p>
+          <p class="eyebrow" data-en="The journey of Andi &amp; Widya" data-id="Perjalanan Andi &amp; Widya">Perjalanan Andi &amp; Widya</p>
           <h2 class="story-script" data-en="Our Story" data-id="Kisah Kami">Our Story</h2>
-          <div class="story-heart" aria-hidden="true">♡</div>
+          <img class="story-letter-art" src="/_assets/surat_our_story.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
           <p class="story-intro" data-en="Every story has a beginning, grows with time, and brings two hearts to their special day." data-id="Setiap kisah punya awal, tumbuh melalui waktu, dan membawa dua hati menuju hari istimewa.">Setiap kisah punya awal, tumbuh melalui waktu, dan membawa dua hati menuju hari istimewa.</p>
         </header>
 
-        <div class="story-timeline" aria-label="Timeline of Widya and Andi’s journey" data-en-aria="Timeline of Widya and Andi’s journey" data-id-aria="Timeline perjalanan Widya dan Andi">
-          <article class="story-item reveal" style="--delay:0ms">
+        <div class="story-journey" role="group" aria-label="The story of Andi and Widya" data-en-aria="The story of Andi and Widya" data-id-aria="Kisah Andi dan Widya">
+          <article class="story-chapter story-chapter-childhood reveal" style="--delay:0ms">
             <div class="story-copy">
-              <span class="story-year">20XX</span>
-              <span class="story-label" data-en="The beginning" data-id="Bab pertama">Bab pertama</span>
-              <h3 data-en="Our first meeting" data-id="Pertemuan pertama">Pertemuan Pertama</h3>
-              <p data-en="Add the story of how Widya and Andi first met." data-id="Tuliskan bagaimana Widya dan Andi pertama kali bertemu.">Tuliskan bagaimana Widya dan Andi pertama kali bertemu.</p>
-              <span class="story-placeholder" data-en="Sample story" data-id="Contoh sementara">Contoh sementara</span>
+              <h3 class="story-chapter-title"><span>2002</span><span aria-hidden="true">-</span><span data-en="Our first meeting" data-id="Pertemuan pertama">Our first meeting</span></h3>
+              <p class="story-chapter-copy" data-en="We used to play together because our homes were nearby. We also went to the same kindergarten." data-id="Kami dulu sering bermain bersama karena rumah kami berdekatan. Kami juga bersekolah di taman kanak-kanak yang sama.">We used to play together because our homes were nearby. We also went to the same kindergarten.</p>
             </div>
-            <span class="story-node" aria-hidden="true"></span><span class="story-spacer" aria-hidden="true"></span>
+            <img class="story-photo" src="/_assets/masa_kecil.png" alt="" role="img" aria-label="Childhood photos of Andi and Widya" data-en-aria="Childhood photos of Andi and Widya" data-id-aria="Foto masa kecil Andi dan Widya" loading="lazy" decoding="async">
+            <div class="story-childhood-doodles" aria-hidden="true">
+              <img class="story-childhood-parachute story-parachute-one" src="/_assets/terjun_payung_our_story.png" alt="" loading="lazy" decoding="async">
+              <img class="story-childhood-parachute story-parachute-two" src="/_assets/terjun_payung_our_story.png" alt="" loading="lazy" decoding="async">
+              <img class="story-childhood-parachute story-parachute-three" src="/_assets/terjun_payung_our_story.png" alt="" loading="lazy" decoding="async">
+              <img class="story-childhood-parachute story-parachute-four" src="/_assets/terjun_payung_our_story.png" alt="" loading="lazy" decoding="async">
+              <img class="story-childhood-parachute story-parachute-five" src="/_assets/terjun_payung_our_story.png" alt="" loading="lazy" decoding="async">
+              <img class="story-childhood-swing" src="/_assets/ayunan_our_story.png" alt="" loading="lazy" decoding="async">
+            </div>
           </article>
-          <article class="story-item reveal" style="--delay:120ms">
+          <article class="story-chapter story-chapter-together reveal" style="--delay:120ms">
             <div class="story-copy">
-              <span class="story-year">20XX</span>
-              <span class="story-label" data-en="Growing closer" data-id="Semakin dekat">Semakin dekat</span>
-              <h3 data-en="Growing together" data-id="Tumbuh bersama">Tumbuh Bersama</h3>
-              <p data-en="Share the moment your life together began to bloom." data-id="Ceritakan momen ketika perjalanan bersama mulai bertumbuh.">Ceritakan momen ketika perjalanan bersama mulai bertumbuh.</p>
-              <span class="story-placeholder" data-en="Sample story" data-id="Contoh sementara">Contoh sementara</span>
+              <h3 class="story-chapter-title"><span>2017</span><span aria-hidden="true">-</span><span data-en="Growing together" data-id="Tumbuh bersama">Growing together</span></h3>
+              <p class="story-chapter-copy" data-en="In 2015, life took us on separate paths. Andi moved to Jayapura for work, while Widya remained in Yogyakarta to pursue her studies. Despite the distance, fate brought us together once again in 2017." data-id="Pada 2015, jalan hidup membawa kami ke arah berbeda. Andi pindah ke Jayapura untuk bekerja, sementara Widya tetap di Yogyakarta untuk melanjutkan studi. Meski terpisah jarak, takdir mempertemukan kami kembali pada 2017.">In 2015, life took us on separate paths. Andi moved to Jayapura for work, while Widya remained in Yogyakarta to pursue her studies. Despite the distance, fate brought us together once again in 2017.</p>
             </div>
-            <span class="story-node" aria-hidden="true"></span><span class="story-spacer" aria-hidden="true"></span>
+            <div class="story-icon-strip" aria-hidden="true">
+              <img src="/_assets/tabung_our_story.png" alt="" loading="lazy" decoding="async">
+              <img src="/_assets/baru_bara_our_story.png" alt="" loading="lazy" decoding="async">
+              <img src="/_assets/pltu_our_story.png" alt="" loading="lazy" decoding="async">
+              <img src="/_assets/alat_tulis_our_story.png" alt="" loading="lazy" decoding="async">
+            </div>
+            <img class="story-photo" src="/_assets/awal_pacaran.png" alt="" role="img" aria-label="Photos from Andi and Widya’s time together" data-en-aria="Photos from Andi and Widya’s time together" data-id-aria="Foto perjalanan Andi dan Widya bersama" loading="lazy" decoding="async">
           </article>
-          <article class="story-item reveal" style="--delay:240ms">
+          <article class="story-chapter story-chapter-wedding reveal" style="--delay:240ms">
             <div class="story-copy">
-              <span class="story-year">20XX</span>
-              <span class="story-label" data-en="One future" data-id="Satu tujuan">Satu tujuan</span>
-              <h3 data-en="The proposal" data-id="Hari lamaran">Hari Lamaran</h3>
-              <p data-en="Add the story behind your decision to take this step together." data-id="Tambahkan cerita di balik keputusan untuk melangkah bersama.">Tambahkan cerita di balik keputusan untuk melangkah bersama.</p>
-              <span class="story-placeholder" data-en="Sample story" data-id="Contoh sementara">Contoh sementara</span>
+              <h3 class="story-chapter-title"><span>2027</span><span aria-hidden="true">-</span><span data-en="Our Wedding Day" data-id="Hari pernikahan kami">Our Wedding Day</span></h3>
+              <p class="story-chapter-copy" data-en="A forever kind of beginning" data-id="Awal baru untuk selamanya">A forever kind of beginning</p>
             </div>
-            <span class="story-node" aria-hidden="true"></span><span class="story-spacer" aria-hidden="true"></span>
-          </article>
-          <article class="story-item reveal" style="--delay:360ms">
-            <div class="story-copy">
-              <span class="story-year">2027</span>
-              <span class="story-label" data-en="A new chapter" data-id="Babak baru">Babak baru</span>
-              <h3 data-en="Our wedding day" data-id="Hari bahagia">Hari Bahagia</h3>
-              <p data-en="On March 20, 2027, Widya and Andi’s story continues with a promise for life." data-id="Pada 20 Maret 2027, kisah Widya dan Andi berlanjut dalam janji pernikahan.">Pada 20 Maret 2027, kisah Widya dan Andi berlanjut dalam janji pernikahan.</p>
+            <div class="story-finale-art" aria-hidden="true">
+              <div class="story-disco-cluster">
+                <img class="story-disco story-disco-small" src="/_assets/bola_disko_our_story.png" alt="" loading="lazy" decoding="async">
+                <img class="story-disco story-disco-large" src="/_assets/bola_disko_our_story.png" alt="" loading="lazy" decoding="async">
+                <img class="story-disco story-disco-small" src="/_assets/bola_disko_our_story.png" alt="" loading="lazy" decoding="async">
+              </div>
+              <img class="story-dance" src="/_assets/dansa_our_story.png" alt="" loading="lazy" decoding="async">
             </div>
-            <span class="story-node" aria-hidden="true"></span><span class="story-spacer" aria-hidden="true"></span>
           </article>
         </div>
-
-        <svg class="story-branch" viewBox="0 0 240 70" aria-hidden="true">
-          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5">
-            <path d="M18 52C72 47 130 35 220 14"/>
-            <path d="M53 45C43 32 31 25 16 24M83 40c-1-16 3-28 13-39M114 34c11-14 22-21 38-24M148 28c2 15 8 26 21 35M181 22c11-10 23-15 38-16"/>
-            <path d="M15 24c15-2 26 4 31 19-16 2-27-4-31-19ZM96 1c10 12 10 25 0 39C86 28 86 15 96 1ZM152 10c15 4 22 14 22 29-15-4-22-14-22-29ZM169 63c-1-16 6-27 21-33 1 16-6 27-21 33ZM219 6c-5 15-16 22-32 21 5-15 16-22 32-21Z" fill="currentColor" fill-opacity=".14"/>
-          </g>
-        </svg>
-        <a class="story-next" href="#event-details"><span data-en="Wedding details" data-id="Informasi acara">Informasi acara</span> <span aria-hidden="true">↓</span></a>
       </div>
     </section>
 

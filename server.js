@@ -16,6 +16,11 @@ const app  = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json({ limit: '512kb' }));
+app.use('/_assets', express.static(path.join(__dirname, '_assets'), {
+  dotfiles: 'deny',
+  index: false,
+  maxAge: '1h',
+}));
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 const CREDENTIAL_PATH = path.join(__dirname, 'credential.json');
