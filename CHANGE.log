@@ -1,5 +1,12 @@
 #changelog
 
+## 2026-11-10
+- Merapikan responsivitas cover untuk ponsel, tablet, dan desktop; menyesuaikan ukuran logo/ilustrasi serta membatasi ornamen bunga agar tidak bertumpuk dengan teks.
+
+## 2026-11-09
+- Menyesuaikan layar pembuka agar mengikuti template H1: menyisakan logo, ilustrasi pasangan, nama tamu, teks undangan, dan bunga; pemilih bahasa tetap tersedia dalam tampilan ringkas.
+- Merombak cover halaman undangan di `public/index.html` dengan logo, ilustrasi pasangan, dan ornamen bunga; tata letak menyesuaikan desktop dan mobile tanpa mengubah alur token, RSVP, atau pemilih bahasa.
+
 ## 2026-11-03
 - Mengunci nama pada form buku tamu ke nama undangan dari token; server mengabaikan nama kiriman browser dan selalu menyimpan nama dari data tamu yang tervalidasi.
 - Memisahkan Buku Tamu dari daftar undangan di panel admin, menambahkan form balasan dalam pop-up, membatasi setiap komentar agar hanya dapat dibalas satu kali, menampilkan balasan di bawah komentar pada halaman undangan, dan menyiapkan header kolom D:E Google Sheets otomatis bila belum tersedia.
