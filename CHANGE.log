@@ -1,5 +1,11 @@
 #changelog
 
+## 2026-11-11
+- Memperbarui venue, tanggal, jam prosesi dan resepsi, alamat, serta tautan Maps di bagian Details sesuai detail acara terbaru dalam EN/ID.
+- Merombak halaman Details mengikuti referensi H3: banner skyline dan simbol BTS, ilustrasi sepeda, tiga baris lokasi/rute/dress code, serta doodle terkait; data acara, tautan Google Maps, dan EN/ID tetap tersedia.
+- Menghapus label sample, arahan rute placeholder, baris akomodasi, dan catatan contoh dari Details karena tidak ada pada komposisi H3.
+- Memperjelas pemilih bahasa EN/ID dengan label bilingual, tombol lebih besar, dan penanda bahasa aktif yang kontras tanpa mengubah fungsi pergantian bahasa.
+
 ## 2026-11-10
 - Menyesuaikan ulang tata letak Our Story: memperjelas daun sulur, menempatkan beberapa parasut di sekitar ayunan, memindahkan alat tulis ke ikon bab 2017, dan menampilkan tiga bola disko dengan ukuran tengah lebih besar.
 - Merombak section Our Story mengikuti referensi H2 dengan tiga bab bergambar, sulur dan doodle, tata letak responsif, serta teks EN/ID; menambahkan akses statis terbatas ke folder `_assets` untuk memuat ilustrasi.
