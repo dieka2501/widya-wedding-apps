@@ -141,42 +141,44 @@
     .details-dress-art img { display: block; height: auto; object-fit: contain; }
     .details-fish { width: 82%; justify-self: start; }
     .details-couple { width: min(11rem, 86%); margin-top: .8rem; justify-self: end; }
-    .event-timeline { background: var(--cream); }
-    .schedule-card { width: min(800px, 100%); margin: 0 auto; padding: clamp(1.5rem, 5vw, 3.4rem); border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow); }
-    .schedule-heading { margin-bottom: 2.4rem; text-align: center; }
-    .schedule-pretitle { margin: 0; color: var(--sage-deep); font: italic 400 2.4rem/1 var(--serif); }
-    .schedule-title { margin: -.1rem 0 .8rem; color: var(--ink); font: 400 clamp(2.5rem, 7vw, 4.4rem)/.95 var(--serif); letter-spacing: .13em; text-transform: uppercase; }
-    .schedule-heart { color: var(--taupe); font-size: 1.1rem; }
-    .schedule-note { display: inline-block; margin: .55rem 0 0; padding: .24rem .52rem; border: 1px solid var(--line); color: var(--muted); font-size: .49rem; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
-    .schedule-list { position: relative; display: grid; width: min(660px, 100%); margin: 0 auto; }
-    .schedule-list::before { position: absolute; top: 1.2rem; bottom: 1.2rem; left: 5.65rem; width: 1px; background: linear-gradient(180deg, transparent, var(--taupe) 6%, var(--taupe) 94%, transparent); content: ""; }
-    .schedule-item { position: relative; display: grid; grid-template-columns: 4rem 2rem minmax(0, 1fr); align-items: center; gap: .8rem; min-height: 116px; padding: .8rem 0; transition-delay: var(--delay, 0ms); }
-    .schedule-icon { display: grid; width: 3rem; aspect-ratio: 1; place-items: center; justify-self: center; color: var(--sage-deep); }
-    .schedule-icon svg { width: 2.15rem; height: 2.15rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.35; }
-    .schedule-node { z-index: 1; grid-column: 2; grid-row: 1; justify-self: center; width: .65rem; aspect-ratio: 1; border: 2px solid var(--paper); border-radius: 50%; background: var(--sage-deep); box-shadow: 0 0 0 1px var(--taupe); }
-    .schedule-copy { grid-column: 3; grid-row: 1; padding: .4rem 0 .65rem; border-bottom: 1px solid rgba(188,176,159,.45); }
-    .schedule-time { display: block; margin-bottom: .35rem; color: var(--sage-deep); font: 500 1.45rem/1 var(--serif); letter-spacing: .08em; }
-    .schedule-copy h3 { margin: 0 0 .25rem; color: var(--ink); font-size: .6rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; }
-    .schedule-copy p { margin: 0; color: var(--muted); font: 400 .88rem/1.6 var(--serif); }
-    .schedule-item:last-child .schedule-copy { border-bottom: 0; }
-    .schedule-branch { display: block; width: min(190px, 50vw); height: auto; margin: 1.5rem auto 0; color: var(--sage-deep); opacity: .58; }
     .watermark { position: fixed; z-index: 4; right: -2.5rem; bottom: 7rem; color: rgba(96,108,86,.08); font: 500 2.3rem var(--serif); letter-spacing: .12em; transform: rotate(-90deg); transform-origin: right center; pointer-events: none; }
-    .countdown { position: relative; overflow: hidden; background: var(--sage); color: #fff; text-align: center; }
-    .countdown::before, .countdown::after { position: absolute; width: 25rem; height: 25rem; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; content: ""; }
-    .countdown::before { top: -16rem; left: -10rem; }
-    .countdown::after { right: -11rem; bottom: -18rem; width: 33rem; height: 33rem; }
-    .countdown .eyebrow { color: #f3eddf; }
-    .countdown .section-title { position: relative; z-index: 1; }
-    .countdown-grid { display: grid; grid-template-columns: repeat(4, minmax(100px, 1fr)); gap: .8rem; width: min(680px, 100%); margin: 3rem auto 0; }
-    .countdown-item { padding: 1.4rem .8rem; border: 1px solid rgba(255,255,255,.4); background: rgba(255,255,255,.08); }
-    .countdown-num { display: block; font: 400 clamp(2.5rem, 6vw, 4.5rem)/1 var(--serif); }
-    .countdown-label { display: block; margin-top: .65rem; font-size: .57rem; letter-spacing: .2em; text-transform: uppercase; opacity: .82; }
-    .countdown-note { min-height: 1.4rem; margin: 1.2rem 0 0; font-size: .65rem; letter-spacing: .1em; opacity: .82; }
+    .countdown { padding: clamp(3rem, 18vw, 6rem) 0; background: var(--cream); color: var(--paper); text-align: center; }
+    .countdown-panel { position: relative; isolation: isolate; overflow: hidden; width: min(100%, 1400px); margin: 0 auto; padding: clamp(2.2rem, 9vw, 7rem) 0 clamp(4rem, 26vw, 10rem); background: var(--sage); }
+    .countdown-panel::before { position: absolute; z-index: -1; top: 61%; left: 24%; width: 110%; height: 38%; border-top: 1px solid rgba(255,255,255,.18); border-radius: 50%; content: ""; transform: rotate(-19deg); }
+    .countdown-calendar { display: block; width: clamp(8.5rem, 35vw, 24rem); margin: 0 auto clamp(1.8rem, 8vw, 4rem); }
+    .countdown-calendar img { display: block; width: 100%; height: auto; }
+    .countdown .eyebrow { margin: 0 0 .55rem; color: #f3eddf; font-size: clamp(.9rem, 3.7vw, 1.35rem); letter-spacing: .025em; }
+    .countdown .section-title { position: relative; z-index: 1; margin: 0; color: var(--paper); font: italic 500 clamp(2.5rem, 10vw, 7rem)/.9 var(--serif); letter-spacing: -.015em; }
+    .countdown-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(.65rem, 3vw, 2rem); width: min(86%, 58.75rem); margin: clamp(1.4rem, 6vw, 4rem) auto 0; }
+    .countdown-item { display: grid; align-content: center; justify-items: center; aspect-ratio: 1.67; padding: clamp(.65rem, 3vw, 2rem); border: 1px solid rgba(255,255,255,.52); background: transparent; }
+    .countdown-num { display: block; font: 400 clamp(2.1rem, 7.5vw, 6rem)/.95 var(--serif); }
+    .countdown-label { display: block; margin-top: clamp(.4rem, 1.5vw, .9rem); font-size: clamp(.55rem, 1vw, .8rem); letter-spacing: .2em; text-transform: uppercase; opacity: .92; }
+    .countdown-note { position: relative; z-index: 1; margin: 0; font-size: .65rem; letter-spacing: .1em; opacity: .92; }
+    .countdown-note:empty { display: none; }
+    .countdown-note:not(:empty) { margin-top: 1rem; }
+    .countdown-doodle-strip { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: clamp(.15rem, 1.2vw, .7rem); width: min(86%, 55rem); margin: clamp(1.5rem, 5.5vw, 3.5rem) auto 0; }
+    .countdown-doodle-strip img { display: block; flex: 0 1 auto; width: auto; max-width: 12%; height: clamp(2rem, 8vw, 6rem); object-fit: contain; }
+    .countdown-doodle-separator { flex: 0 0 auto; color: #292b26; font: 500 clamp(.68rem, 1.6vw, 1.15rem)/1 var(--serif); transform: rotate(-8deg); }
+    @media (min-width: 1024px) {
+      .countdown { padding: clamp(2rem, 3vw, 2.5rem) 0; }
+      .countdown-panel { width: min(100%, 820px); padding: clamp(1.8rem, 3vw, 2.5rem) 0 clamp(2rem, 3vw, 2.75rem); }
+      .countdown-calendar { width: clamp(11rem, 16vw, 14rem); margin-bottom: clamp(1.25rem, 2vw, 1.75rem); }
+      .countdown .eyebrow { font-size: clamp(.9rem, 1vw, 1rem); }
+      .countdown .section-title { font-size: clamp(2.6rem, 4.5vw, 3.8rem); }
+      .countdown-grid { width: min(86%, 40rem); gap: clamp(.65rem, 1.2vw, 1rem); margin-top: clamp(1.25rem, 2.5vw, 1.8rem); }
+      .countdown-item { padding: clamp(.65rem, 1.2vw, 1rem); }
+      .countdown-num { font-size: clamp(2.5rem, 3.2vw, 3.25rem); }
+      .countdown-label { margin-top: .45rem; font-size: clamp(.6rem, .8vw, .7rem); }
+      .countdown-doodle-strip { width: min(86%, 42rem); margin-top: clamp(1.25rem, 2.5vw, 1.8rem); }
+      .countdown-doodle-strip img { height: clamp(2.25rem, 3.5vw, 3.5rem); }
+      .countdown-doodle-separator { font-size: clamp(.72rem, 1vw, .85rem); }
+    }
     .rsvp { background: var(--sand); }
     .rsvp-panel { position: relative; width: min(680px, 100%); margin: 0 auto; padding: clamp(1.5rem, 5vw, 3.5rem); border: 1px solid var(--line); background: var(--ivory); box-shadow: var(--shadow); }
     .rsvp-heading { margin-bottom: 2rem; text-align: center; }
     .rsvp-script { margin: 0; color: var(--sage-deep); font: italic 400 clamp(2.5rem, 7vw, 3.8rem)/.95 var(--serif); }
     .rsvp-title { margin: .1rem 0 .45rem; color: var(--ink); font: 400 clamp(2.8rem, 8vw, 4.5rem)/.95 var(--serif); letter-spacing: .16em; }
+    .rsvp-envelope-art { display: block; width: clamp(8.5rem, 35vw, 23rem); height: auto; margin: clamp(1rem, 3vw, 1.65rem) auto clamp(1.4rem, 4vw, 2rem); object-fit: contain; }
     .rsvp-heart { display: flex; align-items: center; justify-content: center; gap: .75rem; color: var(--taupe); font-size: 1.1rem; }
     .rsvp-heart::before, .rsvp-heart::after { width: 4.5rem; height: 1px; background: var(--taupe); content: ""; }
     .rsvp-deadline { margin: 1.1rem 0 0; color: var(--muted); font-size: .59rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; }
@@ -326,14 +328,6 @@
       .details-dress-art { gap: .35rem; margin-top: .85rem; }
       .details-fish { width: 94%; }
       .details-couple { width: 90%; }
-      .schedule-card { padding: 1.3rem 1rem; }
-      .schedule-list { max-width: 540px; }
-      .schedule-list::before { left: 4.55rem; }
-      .schedule-item { grid-template-columns: 3.1rem 1.6rem minmax(0, 1fr); gap: .55rem; min-height: 108px; }
-      .schedule-icon { width: 2.5rem; }
-      .schedule-icon svg { width: 1.9rem; height: 1.9rem; }
-      .schedule-time { font-size: 1.3rem; }
-      .countdown-grid { grid-template-columns: repeat(2, 1fr); max-width: 440px; }
       .rsvp-panel { padding: 1.5rem 1.1rem; }
       .comments-panel { margin-top: 2rem; padding: 1.4rem 1rem; }
       .comment-submit { justify-self: stretch; }
@@ -368,11 +362,7 @@
       .story-disco-large { width: clamp(3.1rem, 16vw, 4.1rem); }
       .story-dance { width: min(17rem, 68vw); }
       .section { padding-right: 1rem; padding-left: 1rem; }
-      .schedule-list::before { left: 4.1rem; }
-      .schedule-item { grid-template-columns: 2.8rem 1.3rem minmax(0, 1fr); gap: .4rem; min-height: 100px; }
-      .schedule-icon { width: 2.3rem; }
-      .schedule-copy p { font-size: .82rem; }
-      .countdown-item { padding: 1.1rem .5rem; }
+      .countdown { padding-right: 0; padding-left: 0; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -698,59 +688,13 @@
       </div>
     </section>
 
-    <section id="event-timeline" class="section event-timeline">
-      <div class="schedule-card">
-        <header class="schedule-heading reveal">
-          <p class="schedule-pretitle" data-en="the" data-id="susunan">the</p>
-          <h2 class="schedule-title" data-en="Timeline" data-id="Susunan Acara">Timeline</h2>
-          <span class="schedule-heart" aria-hidden="true">♡</span><br>
-          <p class="schedule-note" data-en="Sample event schedule" data-id="Rundown acara contoh sementara">Rundown acara contoh sementara</p>
-        </header>
-        <div class="schedule-list" aria-label="Wedding ceremony and reception schedule" data-en-aria="Wedding ceremony and reception schedule" data-id-aria="Urutan acara pemberkatan dan resepsi">
-          <article class="schedule-item reveal" style="--delay:0ms">
-            <span class="schedule-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="12" cy="18" r="7"/><circle cx="20" cy="18" r="7"/><path d="M9 10V7m0 0h3m11 3V7m0 0h-3"/></svg></span>
-            <span class="schedule-node" aria-hidden="true"></span>
-            <div class="schedule-copy"><time class="schedule-time" data-en="3:00 PM WIB" data-id="15.00 WIB">15.00 WIB</time><h3 data-en="Wedding ceremony" data-id="Pemberkatan">Pemberkatan</h3><p data-en="A ceremony shared with our family and friends." data-id="Prosesi pemberkatan bersama keluarga dan sahabat.">Prosesi pemberkatan bersama keluarga dan sahabat.</p></div>
-          </article>
-          <article class="schedule-item reveal" style="--delay:100ms">
-            <span class="schedule-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 6h7l-1 10a4 4 0 0 1-8 0L5 9h3m13-3h7l-1 10a4 4 0 0 1-8 0l-1-7h3M11 20v7m0 0h5m3-7v7m0 0h5M11 6l7 7m-2-7 7 7"/></svg></span>
-            <span class="schedule-node" aria-hidden="true"></span>
-            <div class="schedule-copy"><time class="schedule-time" data-en="4:30 PM WIB" data-id="16.30 WIB">16.30 WIB</time><h3 data-en="Welcome &amp; mingle" data-id="Ramah tamah">Ramah Tamah</h3><p data-en="A relaxed time to say hello and take photos together." data-id="Waktu santai untuk menyapa dan berfoto bersama.">Waktu santai untuk menyapa dan berfoto bersama.</p></div>
-          </article>
-          <article class="schedule-item reveal" style="--delay:200ms">
-            <span class="schedule-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="17" r="10"/><circle cx="16" cy="17" r="6.5"/><path d="M4 7v9m-2-4h4m22-5v9m-2-4h4M4 25v3m24-3v3"/></svg></span>
-            <span class="schedule-node" aria-hidden="true"></span>
-            <div class="schedule-copy"><time class="schedule-time" data-en="6:30 PM WIB" data-id="18.30 WIB">18.30 WIB</time><h3 data-en="Reception begins" data-id="Resepsi dimulai">Resepsi Dimulai</h3><p data-en="Guests are invited to enter the celebration space." data-id="Para tamu dipersilakan memasuki area perayaan.">Para tamu dipersilakan memasuki area perayaan.</p></div>
-          </article>
-          <article class="schedule-item reveal" style="--delay:300ms">
-            <span class="schedule-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="17" r="10"/><circle cx="16" cy="17" r="7"/><path d="M4 6v9m-2-4h4m-2-5v9m26-9v9m-2-4h4m-2-5v9"/></svg></span>
-            <span class="schedule-node" aria-hidden="true"></span>
-            <div class="schedule-copy"><time class="schedule-time" data-en="7:00 PM WIB" data-id="19.00 WIB">19.00 WIB</time><h3 data-en="Dinner &amp; toasts" data-id="Makan malam &amp; toast">Makan Malam &amp; Toast</h3><p data-en="Dinner and heartfelt toasts for the newlyweds." data-id="Hidangan malam dan ucapan hangat untuk kedua mempelai.">Hidangan malam dan ucapan hangat untuk kedua mempelai.</p></div>
-          </article>
-          <article class="schedule-item reveal" style="--delay:400ms">
-            <span class="schedule-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M18 5v18.5a4.5 4.5 0 1 1-3-4.25V10l12-3v14.5a4.5 4.5 0 1 1-3-4.25V4z"/></svg></span>
-            <span class="schedule-node" aria-hidden="true"></span>
-            <div class="schedule-copy"><time class="schedule-time" data-en="8:00 PM WIB" data-id="20.00 WIB">20.00 WIB</time><h3 data-en="Music &amp; celebration" data-id="Musik &amp; perayaan">Musik &amp; Perayaan</h3><p data-en="Enjoy the music and celebrate this joyful day together." data-id="Menikmati musik dan merayakan hari bahagia bersama.">Menikmati musik dan merayakan hari bahagia bersama.</p></div>
-          </article>
-          <article class="schedule-item reveal" style="--delay:500ms">
-            <span class="schedule-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 3v5m0 16v5M3 16h5m16 0h5M6.8 6.8l3.6 3.6m11.2 11.2 3.6 3.6m0-18.4-3.6 3.6m-11.2 11.2-3.6 3.6"/><circle cx="16" cy="16" r="5"/><path d="m16 11 2 5-2 5-2-5z"/></svg></span>
-            <span class="schedule-node" aria-hidden="true"></span>
-            <div class="schedule-copy"><time class="schedule-time" data-en="8:30 PM WIB" data-id="20.30 WIB">20.30 WIB</time><h3 data-en="Farewell" data-id="Penutup">Penutup</h3><p data-en="Thank you for being part of our celebration." data-id="Terima kasih telah menjadi bagian dari perayaan ini.">Terima kasih telah menjadi bagian dari perayaan ini.</p></div>
-          </article>
-        </div>
-        <svg class="schedule-branch" viewBox="0 0 240 70" aria-hidden="true">
-          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5">
-            <path d="M18 52C72 47 130 35 220 14"/><path d="M53 45C43 32 31 25 16 24M83 40c-1-16 3-28 13-39M114 34c11-14 22-21 38-24M148 28c2 15 8 26 21 35M181 22c11-10 23-15 38-16"/>
-            <path d="M15 24c15-2 26 4 31 19-16 2-27-4-31-19ZM96 1c10 12 10 25 0 39C86 28 86 15 96 1ZM152 10c15 4 22 14 22 29-15-4-22-14-22-29ZM169 63c-1-16 6-27 21-33 1 16-6 27-21 33ZM219 6c-5 15-16 22-32 21 5-15 16-22 32-21Z" fill="currentColor" fill-opacity=".14"/>
-          </g>
-        </svg>
-      </div>
-    </section>
-
     <div class="watermark" id="watermark" aria-hidden="true"></div>
 
     <section id="countdown" class="section countdown">
-      <div class="section-inner reveal">
+      <div class="countdown-panel reveal">
+        <div class="countdown-calendar" role="img" aria-label="Calendar showing January 9, 2027" data-en-aria="Calendar showing January 9, 2027" data-id-aria="Kalender tanggal 9 Januari 2027">
+          <img src="/_assets/kalender_save_the_date.png" alt="" loading="lazy" decoding="async">
+        </div>
         <p class="eyebrow" data-en="Until our special day" data-id="Menuju hari istimewa">Menuju hari istimewa</p>
         <h2 class="section-title" data-en="Save the date" data-id="Catat tanggalnya">Save the date</h2>
         <div class="countdown-grid" aria-label="Countdown to the wedding day" data-en-aria="Countdown to the wedding day" data-id-aria="Hitung mundur menuju hari pernikahan">
@@ -760,6 +704,21 @@
           <div class="countdown-item"><span class="countdown-num" id="cd-s">00</span><span class="countdown-label" data-en="Seconds" data-id="Detik">Detik</span></div>
         </div>
         <p class="countdown-note" id="countdown-note"></p>
+        <div class="countdown-doodle-strip" aria-hidden="true">
+          <img src="/_assets/boyoken_save_the_date.png" alt="" loading="lazy" decoding="async">
+          <span class="countdown-doodle-separator">~</span>
+          <img src="/_assets/ice_cream_save_the_date.png" alt="" loading="lazy" decoding="async">
+          <span class="countdown-doodle-separator">~</span>
+          <img src="/_assets/pln_save_the_date.png" alt="" loading="lazy" decoding="async">
+          <span class="countdown-doodle-separator">~</span>
+          <img src="/_assets/army_bomb_save_the_date.png" alt="" loading="lazy" decoding="async">
+          <span class="countdown-doodle-separator">~</span>
+          <img src="/_assets/bgh_utama_save_the_date.png" alt="" loading="lazy" decoding="async">
+          <span class="countdown-doodle-separator">~</span>
+          <img src="/_assets/mancing_save_the_date.png" alt="" loading="lazy" decoding="async">
+          <span class="countdown-doodle-separator">~</span>
+          <img src="/_assets/pita_gold_save_the_date.png" alt="" loading="lazy" decoding="async">
+        </div>
       </div>
     </section>
 
@@ -769,6 +728,7 @@
           <header class="rsvp-heading">
             <p class="rsvp-script" data-en="kindly" data-id="mohon">kindly</p>
             <h2 class="rsvp-title">RSVP</h2>
+            <img class="rsvp-envelope-art" src="/_assets/surat_attend.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
             <div class="rsvp-heart" aria-hidden="true">♡</div>
             <p class="rsvp-deadline" data-en="Kindly reply by March 19, 2027" data-id="Mohon konfirmasi sebelum 19 Maret 2027">Mohon konfirmasi sebelum 19 Maret 2027</p>
           </header>
@@ -930,7 +890,7 @@
 <script>
 const params = new URLSearchParams(window.location.search);
 const TOKEN = params.get('token');
-const eventDate = new Date('2027-03-20T15:00:00+07:00').getTime();
+const eventDate = new Date('2027-01-09T13:00:00+07:00').getTime();
 const PUBLIC_GUEST_COUNT_CHOICES = 10;
 let guestAllowedCount = PUBLIC_GUEST_COUNT_CHOICES;
 let currentLanguage = 'en';

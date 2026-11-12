@@ -1,5 +1,11 @@
 #changelog
 
+## 2026-11-12
+- Merombak bagian Save the Date mengikuti referensi H4 dengan aset kalender dan doodle yang disediakan, grid hitung mundur 2×2, serta panel sage full-width; target hitung mundur diselaraskan ke 9 Januari 2027 pukul 13.00 WIB.
+- Menghapus section Timeline yang sudah tidak relevan beserta style khususnya; section lain tetap dipertahankan.
+- Memadatkan lebar panel dan skala elemen Save the Date pada desktop agar menyatu dengan section di sekitarnya; tablet dan ponsel tetap memakai tata letak H4.
+- Menambahkan ilustrasi surat pada bagian RSVP mengikuti referensi H5; struktur form dan fungsi EN/ID tetap dipertahankan.
+
 ## 2026-11-11
 - Memperbarui venue, tanggal, jam prosesi dan resepsi, alamat, serta tautan Maps di bagian Details sesuai detail acara terbaru dalam EN/ID.
 - Merombak halaman Details mengikuti referensi H3: banner skyline dan simbol BTS, ilustrasi sepeda, tiga baris lokasi/rute/dress code, serta doodle terkait; data acara, tautan Google Maps, dan EN/ID tetap tersedia.
