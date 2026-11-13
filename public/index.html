@@ -252,10 +252,31 @@
     .gift-icon { display: grid; width: 3.5rem; height: 3.5rem; margin: 0 auto 1.1rem; place-items: center; border: 1px solid var(--taupe); border-radius: 50%; color: var(--sage-deep); }
     .gift-icon svg { width: 1.7rem; height: 1.7rem; }
     .gift-card h3 { margin: 0 0 1.1rem; color: var(--ink); font: 400 1.8rem/1.15 var(--serif); }
-    .gift-placeholder { display: grid; gap: .35rem; padding: 1.1rem; border: 1px dashed var(--taupe); background: var(--cream); }
-    .gift-placeholder span { color: var(--muted); font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; }
-    .gift-placeholder strong { color: var(--sage-deep); font: italic 400 1.15rem/1.5 var(--serif); }
-    .gift-card-note { margin: 1rem 0 0; color: var(--muted); font-size: .76rem; line-height: 1.7; }
+    .gift-info-label { display: block; margin-bottom: .6rem; color: var(--muted); font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; }
+    .gift-bank-list { display: grid; gap: .7rem; }
+    .gift-bank-account { display: grid; width: 100%; gap: .65rem; margin: 0; padding: .9rem 1rem; border: 1px solid rgba(188,176,159,.72); appearance: none; background: var(--cream); color: var(--ink); cursor: pointer; font: inherit; text-align: left; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+    .gift-bank-account:hover { border-color: var(--sage-deep); box-shadow: 0 5px 14px rgba(63,64,56,.1); transform: translateY(-1px); }
+    .gift-bank-account:focus-visible { outline: 2px solid var(--sage-deep); outline-offset: 3px; }
+    .gift-bank-account-label, .gift-bank-details-label { display: block; color: var(--muted); font-size: .52rem; letter-spacing: .12em; text-transform: uppercase; }
+    .gift-bank-account-name { display: block; margin-top: .15rem; color: var(--ink); font: italic 400 1.08rem/1.4 var(--serif); }
+    .gift-bank-line { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem .7rem; margin-top: .15rem; color: var(--sage-deep); font: 500 .82rem/1.5 var(--sans); }
+    .gift-bank-number { font-variant-numeric: tabular-nums; letter-spacing: .045em; white-space: nowrap; }
+    .gift-bank-account-action { display: flex; align-items: center; gap: .38rem; margin-top: .1rem; padding-top: .55rem; border-top: 1px solid rgba(188,176,159,.5); color: var(--sage-deep); font-size: .53rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+    .gift-bank-account-action svg { width: .9rem; height: .9rem; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
+    .gift-address { margin: 0; padding: 1rem; border: 1px dashed var(--taupe); background: var(--cream); color: var(--ink); font-size: .8rem; font-style: normal; line-height: 1.8; text-align: left; overflow-wrap: anywhere; }
+    .gift-address strong { color: var(--ink); font-weight: 600; }
+    .qris-dialog { width: min(420px, calc(100vw - 2rem)); max-width: none; max-height: min(90vh, 760px); max-height: min(90dvh, 760px); margin: auto; padding: 0; overflow: auto; border: 1px solid var(--line); background: var(--paper); color: var(--ink); box-shadow: 0 22px 70px rgba(36,37,32,.24); }
+    .qris-dialog::backdrop { background: rgba(42,43,37,.58); backdrop-filter: blur(2px); }
+    .qris-dialog-content { position: relative; display: grid; justify-items: center; gap: .55rem; padding: clamp(1.5rem, 6vw, 2.2rem); text-align: center; }
+    .qris-dialog-close { position: absolute; top: .45rem; right: .5rem; display: grid; width: 2.5rem; height: 2.5rem; place-items: center; border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 1.5rem; }
+    .qris-dialog-close:focus-visible { outline: 2px solid var(--sage-deep); outline-offset: 1px; }
+    .qris-dialog-kicker { margin: .65rem 0 0; color: var(--sage-deep); font-size: .56rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+    .qris-dialog-title { margin: 0; color: var(--ink); font: 400 clamp(1.6rem, 6vw, 2.1rem)/1.2 var(--serif); }
+    .qris-dialog-account { margin: 0; color: var(--muted); font-size: .8rem; font-weight: 500; }
+    .qris-dialog-code { position: relative; width: min(100%, 280px); margin: .35rem auto; }
+    .qris-dialog-image { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+    .qris-dialog-dummy { position: absolute; top: 50%; left: 50%; padding: .45rem .9rem; border: 1px solid var(--taupe); background: var(--paper); color: var(--sage-deep); font-size: .73rem; font-weight: 700; letter-spacing: .22em; box-shadow: var(--shadow); transform: translate(-50%, -50%); }
+    .qris-dialog-note { max-width: 34ch; margin: 0; color: var(--muted); font-size: .74rem; line-height: 1.6; }
     .closing { overflow: hidden; padding: clamp(2rem, 7vw, 6rem) clamp(1rem, 5vw, 4rem); background: var(--sand); color: var(--ink); }
     .closing-card { width: min(820px, 100%); margin: 0 auto; overflow: hidden; border: 1px solid rgba(188,176,159,.55); background: var(--ivory); box-shadow: var(--shadow); }
     .closing-message { padding: clamp(2rem, 6vw, 3.8rem) 1.2rem 1.2rem; text-align: center; }
@@ -808,16 +829,45 @@
               <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h24L16 5 4 12Z"/><path d="M6.5 13v11M12.5 13v11M19.5 13v11M25.5 13v11M4 26h24M3 29h26"/></svg>
             </div>
             <h3 data-en="Bank transfer" data-id="Transfer bank">Transfer Bank</h3>
-            <div class="gift-placeholder"><span data-en="Bank details" data-id="Informasi rekening">Informasi rekening</span><strong data-en="Coming soon" data-id="Akan diinformasikan">Akan diinformasikan</strong></div>
-            <p class="gift-card-note" data-en="Bank name, account number, and account holder will be added here." data-id="Nama bank, nomor rekening, dan nama pemilik akan ditambahkan di sini.">Nama bank, nomor rekening, dan nama pemilik akan ditambahkan di sini.</p>
+            <span class="gift-info-label" data-en="Bank details" data-id="Informasi rekening">Informasi rekening</span>
+            <div class="gift-bank-list">
+              <button class="gift-bank-account" type="button" aria-haspopup="dialog" aria-controls="qris-dialog" data-account-holder="Andi Susilo" data-bank-name="BNI" data-en-aria="Show dummy QRIS for Andi Susilo at BNI" data-id-aria="Tampilkan QRIS dummy untuk Andi Susilo di BNI">
+                <span>
+                  <span class="gift-bank-account-label" data-en="Account holder" data-id="Nama pemilik">Nama pemilik</span>
+                  <strong class="gift-bank-account-name">Andi Susilo</strong>
+                </span>
+                <span>
+                  <span class="gift-bank-details-label" data-en="Bank &amp; account number" data-id="Bank &amp; nomor rekening">Bank &amp; nomor rekening</span>
+                  <span class="gift-bank-line"><span>BNI</span><span class="gift-bank-number">0389880311</span></span>
+                </span>
+                <span class="gift-bank-account-action">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v10m0 0 4-4m-4 4-4-4"/></svg>
+                  <span data-en="Tap to view QRIS" data-id="Ketuk untuk melihat QRIS">Ketuk untuk melihat QRIS</span>
+                </span>
+              </button>
+              <button class="gift-bank-account" type="button" aria-haspopup="dialog" aria-controls="qris-dialog" data-account-holder="Christine Widyaningsih" data-bank-name="BCA" data-en-aria="Show dummy QRIS for Christine Widyaningsih at BCA" data-id-aria="Tampilkan QRIS dummy untuk Christine Widyaningsih di BCA">
+                <span>
+                  <span class="gift-bank-account-label" data-en="Account holder" data-id="Nama pemilik">Nama pemilik</span>
+                  <strong class="gift-bank-account-name">Christine Widyaningsih</strong>
+                </span>
+                <span>
+                  <span class="gift-bank-details-label" data-en="Bank &amp; account number" data-id="Bank &amp; nomor rekening">Bank &amp; nomor rekening</span>
+                  <span class="gift-bank-line"><span>BCA</span><span class="gift-bank-number">6270404110</span></span>
+                </span>
+                <span class="gift-bank-account-action">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v10m0 0 4-4m-4 4-4-4"/></svg>
+                  <span data-en="Tap to view QRIS" data-id="Ketuk untuk melihat QRIS">Ketuk untuk melihat QRIS</span>
+                </span>
+              </button>
+            </div>
           </article>
           <article class="gift-card reveal">
             <div class="gift-icon" aria-hidden="true">
               <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13h22v15H5zM3.5 9.5h25v5h-25zM16 9.5v18"/><path d="M16 9.5H9.8a3 3 0 1 1 3-3c0 1.7 3.2 3 3.2 3ZM16 9.5h6.2a3 3 0 1 0-3-3c0 1.7-3.2 3-3.2 3Z"/></svg>
             </div>
             <h3 data-en="Send a gift" data-id="Kirim hadiah">Kirim Hadiah</h3>
-            <div class="gift-placeholder"><span data-en="Gift delivery address" data-id="Alamat pengiriman">Alamat pengiriman</span><strong data-en="Coming soon" data-id="Akan diinformasikan">Akan diinformasikan</strong></div>
-            <p class="gift-card-note" data-en="The recipient’s address and contact number will be added here." data-id="Alamat penerima dan nomor kontak akan ditambahkan di sini.">Alamat penerima dan nomor kontak akan ditambahkan di sini.</p>
+            <span class="gift-info-label" data-en="Gift delivery address" data-id="Alamat pengiriman hadiah">Alamat pengiriman hadiah</span>
+            <address class="gift-address"><strong>Apt. LRT City Jatibening Gateway Park, unit B-107</strong><br>Jl. Kapin Raya, RT.009/RW.004, Jatibening Baru, Kec. Pondok Gede, Kota Bekasi, Jawa Barat 17412</address>
           </article>
         </div>
       </div>
@@ -855,7 +905,7 @@
             <p class="closing-with-love" data-en="with love" data-id="dengan cinta">with love</p>
             <p class="closing-names">ANDI &amp; WIDYA</p>
           </div>
-          <svg class="couple-logo closing-logo" viewBox="0 0 620 430" role="img" aria-label="Andi and Widya monogram logo" data-en-aria="Andi and Widya monogram logo" data-id-aria="Logo monogram Andi dan Widya"><use href="#andi-widya-logo"></use></svg>
+          <img class="closing-logo" src="/_assets/main-logo-cover.webp" alt="Andi and Widya monogram logo" data-en-aria="Andi and Widya monogram logo" data-id-aria="Logo monogram Andi dan Widya" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
@@ -879,6 +929,19 @@
     <div class="access-denied-card"><p>Oopss it seem you don't have access here!</p></div>
   </section>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog class="qris-dialog" id="qris-dialog" aria-labelledby="qris-dialog-title" aria-describedby="qris-dialog-account qris-dialog-note">
+    <div class="qris-dialog-content">
+      <button class="qris-dialog-close" id="qris-dialog-close" type="button" aria-label="Close QRIS dialog" data-en-aria="Close QRIS dialog" data-id-aria="Tutup dialog QRIS">×</button>
+      <p class="qris-dialog-kicker" data-en="QRIS preview" data-id="Pratinjau QRIS">QRIS preview</p>
+      <h2 class="qris-dialog-title" id="qris-dialog-title">QRIS</h2>
+      <p class="qris-dialog-account" id="qris-dialog-account"></p>
+      <div class="qris-dialog-code">
+        <img class="qris-dialog-image" src="/_assets/dummy_qris.png" alt="Dummy QRIS">
+        <span class="qris-dialog-dummy" aria-hidden="true">DUMMY</span>
+      </div>
+      <p class="qris-dialog-note" id="qris-dialog-note" data-en="Dummy preview only. This QRIS image cannot receive payments." data-id="Pratinjau dummy saja. Gambar QRIS ini tidak dapat menerima pembayaran.">Dummy preview only. This QRIS image cannot receive payments.</p>
+    </div>
+  </dialog>
   <dialog class="comment-warning-dialog" id="comment-warning-dialog" aria-labelledby="comment-warning-message">
     <div class="comment-warning-content">
       <p class="comment-warning-heart" aria-hidden="true">♡</p>
@@ -1442,6 +1505,26 @@ window.addEventListener('keydown', function(event) {
 
 document.getElementById('comment-warning-dialog').addEventListener('click', function(event) {
   if (event.target === this) closeCommentWarning();
+});
+
+const qrisDialog = document.getElementById('qris-dialog');
+document.querySelectorAll('.gift-bank-account').forEach(function(accountButton) {
+  accountButton.addEventListener('click', function() {
+    document.getElementById('qris-dialog-account').textContent = this.dataset.accountHolder + ' · ' + this.dataset.bankName;
+    if (typeof qrisDialog.showModal === 'function') qrisDialog.showModal();
+    else qrisDialog.setAttribute('open', '');
+    document.getElementById('qris-dialog-close').focus();
+  });
+});
+document.getElementById('qris-dialog-close').addEventListener('click', function() {
+  if (qrisDialog.open && typeof qrisDialog.close === 'function') qrisDialog.close();
+  else qrisDialog.removeAttribute('open');
+});
+qrisDialog.addEventListener('click', function(event) {
+  if (event.target === this) {
+    if (typeof this.close === 'function') this.close();
+    else this.removeAttribute('open');
+  }
 });
 
 setLanguage(currentLanguage);

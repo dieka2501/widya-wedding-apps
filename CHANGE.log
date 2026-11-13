@@ -1,5 +1,11 @@
 #changelog
 
+## 2026-11-13
+- Menambahkan dua informasi rekening BNI dan BCA serta alamat pengiriman hadiah pada bagian Wedding Gift; label tersedia dalam EN/ID.
+- Menjadikan kartu rekening dapat ditekan untuk membuka dialog QRIS dummy dengan tombol tutup dan dukungan keyboard.
+- Menebalkan nama gedung dan unit pada alamat pengiriman hadiah agar tujuan lebih mudah dikenali.
+- Mengganti logo penutup dengan aset WebP yang sama dengan logo halaman pertama.
+
 ## 2026-11-12
 - Merombak bagian Save the Date mengikuti referensi H4 dengan aset kalender dan doodle yang disediakan, grid hitung mundur 2×2, serta panel sage full-width; target hitung mundur diselaraskan ke 9 Januari 2027 pukul 13.00 WIB.
 - Menghapus section Timeline yang sudah tidak relevan beserta style khususnya; section lain tetap dipertahankan.
