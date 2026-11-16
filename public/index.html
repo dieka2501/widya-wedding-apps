@@ -96,6 +96,8 @@
     .story-copy { max-width: 540px; margin: 0 auto; }
     .story-chapter-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: .12rem .48rem; margin: 0; color: var(--sage-deep); font: italic 500 clamp(1.35rem, 3.1vw, 2rem)/1.2 var(--serif); }
     .story-chapter-copy { max-width: 540px; margin: .12rem 0 0; color: var(--muted); font-size: clamp(.88rem, 1.2vw, 1rem); line-height: 1.52; }
+    .story-chapter-copy strong { color: var(--ink); font-weight: 600; }
+    .story-chapter-copy + .story-chapter-copy { margin-top: .55rem; }
     .story-photo { display: block; width: min(100%, 34rem); height: auto; margin: 1rem auto 0; }
     .story-childhood-doodles { position: relative; display: flex; align-items: flex-end; justify-content: center; width: min(440px, 100%); min-height: 260px; margin: .85rem auto 0; }
     .story-childhood-swing { position: relative; z-index: 1; display: block; width: min(17rem, 46%); height: auto; }
@@ -209,6 +211,9 @@
     .comments-heading .eyebrow { margin-bottom: .55rem; }
     .comments-heading h3 { margin: 0; color: var(--ink); font: 400 clamp(2rem, 5vw, 3rem)/1.05 var(--serif); }
     .comments-heading p:last-child { max-width: 520px; margin: .65rem auto 0; color: var(--muted); font: italic 400 1rem/1.7 var(--serif); }
+    .guestbook-verse { width: min(720px, 100%); margin: 1.45rem auto 1.4rem; padding: 1rem clamp(.7rem, 3vw, 1.6rem); border-block: 1px solid var(--line); text-align: center; }
+    .guestbook-verse blockquote { margin: 0; color: var(--sage-deep); font: italic 400 clamp(1rem, 2vw, 1.3rem)/1.6 var(--serif); }
+    .guestbook-verse figcaption { margin-top: .55rem; color: var(--muted); font-size: .62rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
     .comment-form { display: grid; gap: .85rem; width: min(620px, 100%); margin: 0 auto 2.3rem; }
     .comment-field { display: grid; gap: .35rem; }
     .comment-field label { color: var(--sage-deep); font-size: .58rem; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
@@ -613,7 +618,19 @@
         </header>
 
         <div class="story-journey" role="group" aria-label="The story of Andi and Widya" data-en-aria="The story of Andi and Widya" data-id-aria="Kisah Andi dan Widya">
-          <article class="story-chapter story-chapter-childhood reveal" style="--delay:0ms">
+          <article class="story-chapter story-chapter-birth reveal" style="--delay:0ms">
+            <div class="story-copy">
+              <h3 class="story-chapter-title"><time datetime="1997-08-31" data-en="August 31, 1997" data-id="31 Agustus 1997">31 Agustus 1997</time><span aria-hidden="true">-</span><span data-en="Widya’s birth" data-id="Kelahiran Widya">Widya’s birth</span></h3>
+              <p class="story-chapter-copy" data-en-html="A baby girl named <strong>Christine Widyaningsih</strong> was welcomed into the world by her loving parents, <strong>Bapak Basuki Budi Untoro</strong> and <strong>Ibu Kristiyatmi</strong>." data-id-html="Seorang bayi perempuan bernama <strong>Christine Widyaningsih</strong> lahir dan disambut penuh kasih oleh kedua orang tuanya, <strong>Bapak Basuki Budi Untoro</strong> dan <strong>Ibu Kristiyatmi</strong>.">A baby girl named <strong>Christine Widyaningsih</strong> was welcomed into the world by her loving parents, <strong>Bapak Basuki Budi Untoro</strong> and <strong>Ibu Kristiyatmi</strong>.</p>
+            </div>
+          </article>
+          <article class="story-chapter story-chapter-birth reveal" style="--delay:80ms">
+            <div class="story-copy">
+              <h3 class="story-chapter-title"><time datetime="1997-09-15" data-en="September 15, 1997" data-id="15 September 1997">15 September 1997</time><span aria-hidden="true">-</span><span data-en="Andi’s birth" data-id="Kelahiran Andi">Andi’s birth</span></h3>
+              <p class="story-chapter-copy" data-en-html="Fifteen days later, <strong>Bapak Hari Siswandi</strong> and <strong>Ibu Supriyanti</strong> welcomed their son, <strong>Andi Susilo</strong>." data-id-html="Lima belas hari setelah Christine lahir, <strong>Bapak Hari Siswandi</strong> dan <strong>Ibu Supriyanti</strong> menyambut putra mereka, <strong>Andi Susilo</strong>.">Fifteen days later, <strong>Bapak Hari Siswandi</strong> and <strong>Ibu Supriyanti</strong> welcomed their son, <strong>Andi Susilo</strong>.</p>
+            </div>
+          </article>
+          <article class="story-chapter story-chapter-childhood reveal" style="--delay:160ms">
             <div class="story-copy">
               <h3 class="story-chapter-title"><span>2002</span><span aria-hidden="true">-</span><span data-en="Our first meeting" data-id="Pertemuan pertama">Our first meeting</span></h3>
               <p class="story-chapter-copy" data-en="We used to play together because our homes were nearby. We also went to the same kindergarten." data-id="Kami dulu sering bermain bersama karena rumah kami berdekatan. Kami juga bersekolah di taman kanak-kanak yang sama.">We used to play together because our homes were nearby. We also went to the same kindergarten.</p>
@@ -628,7 +645,7 @@
               <img class="story-childhood-swing" src="/_assets/ayunan_our_story.png" alt="" loading="lazy" decoding="async">
             </div>
           </article>
-          <article class="story-chapter story-chapter-together reveal" style="--delay:120ms">
+          <article class="story-chapter story-chapter-together reveal" style="--delay:240ms">
             <div class="story-copy">
               <h3 class="story-chapter-title"><span>2017</span><span aria-hidden="true">-</span><span data-en="Growing together" data-id="Tumbuh bersama">Growing together</span></h3>
               <p class="story-chapter-copy" data-en="In 2015, life took us on separate paths. Andi moved to Jayapura for work, while Widya remained in Yogyakarta to pursue her studies. Despite the distance, fate brought us together once again in 2017." data-id="Pada 2015, jalan hidup membawa kami ke arah berbeda. Andi pindah ke Jayapura untuk bekerja, sementara Widya tetap di Yogyakarta untuk melanjutkan studi. Meski terpisah jarak, takdir mempertemukan kami kembali pada 2017.">In 2015, life took us on separate paths. Andi moved to Jayapura for work, while Widya remained in Yogyakarta to pursue her studies. Despite the distance, fate brought us together once again in 2017.</p>
@@ -641,9 +658,9 @@
             </div>
             <img class="story-photo" src="/_assets/awal_pacaran.png" alt="" role="img" aria-label="Photos from Andi and Widya’s time together" data-en-aria="Photos from Andi and Widya’s time together" data-id-aria="Foto perjalanan Andi dan Widya bersama" loading="lazy" decoding="async">
           </article>
-          <article class="story-chapter story-chapter-wedding reveal" style="--delay:240ms">
+          <article class="story-chapter story-chapter-wedding reveal" style="--delay:320ms">
             <div class="story-copy">
-              <h3 class="story-chapter-title"><span>2027</span><span aria-hidden="true">-</span><span data-en="Our Wedding Day" data-id="Hari pernikahan kami">Our Wedding Day</span></h3>
+              <h3 class="story-chapter-title"><span data-en="January 9, 2027" data-id="9 Januari 2027">9 Januari 2027</span><span aria-hidden="true">-</span><span data-en="Our Wedding Day" data-id="Hari pernikahan kami">Our Wedding Day</span></h3>
               <p class="story-chapter-copy" data-en="A forever kind of beginning" data-id="Awal baru untuk selamanya">A forever kind of beginning</p>
             </div>
             <div class="story-finale-art" aria-hidden="true">
@@ -792,6 +809,10 @@
             <h3 data-en="Messages &amp; blessings" data-id="Ucapan &amp; doa">Ucapan &amp; Doa</h3>
             <p data-en="Leave a heartfelt message for Widya &amp; Andi." data-id="Tinggalkan pesan hangat untuk Widya &amp; Andi.">Tinggalkan pesan hangat untuk Widya &amp; Andi.</p>
           </header>
+          <figure class="guestbook-verse">
+            <blockquote data-en="“So they are no longer two, but one. Therefore, what God has joined together, let no one separate.”" data-id="“Demikianlah mereka bukan lagi dua, melainkan satu. Karena itu, apa yang telah dipersatukan Allah, tidak boleh diceraikan manusia.”">“Demikianlah mereka bukan lagi dua, melainkan satu. Karena itu, apa yang telah dipersatukan Allah, tidak boleh diceraikan manusia.”</blockquote>
+            <figcaption data-en="Matthew 19:6" data-id="Matius 19:6">Matius 19:6</figcaption>
+          </figure>
           <form class="comment-form" id="comment-form" onsubmit="submitComment(event)">
             <div class="comment-field">
               <label for="comment-name" data-en="Name on invitation" data-id="Nama di undangan">Nama di undangan</label>

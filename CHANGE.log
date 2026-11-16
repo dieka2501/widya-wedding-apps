@@ -1,5 +1,15 @@
 #changelog
 
+## 2026-11-16
+- Menambahkan kisah kelahiran Christine Widyaningsih dan Andi Susilo beserta nama orang tua mereka sebelum bab pertemuan pertama; narasi tersedia dalam EN/ID.
+- Memisahkan kisah kelahiran menjadi dua bab dengan tanggal lengkap yang tampil jelas untuk masing-masing.
+- Memperluas narasi kelahiran agar lebih bercerita dan romantis dalam EN/ID, dengan tetap memperkenalkan orang tua masing-masing.
+- Menghapus kalimat penutup yang melompat ke masa depan dari kisah kelahiran Widya dan Andi.
+- Menebalkan nama kedua calon pengantin dan orang tua mereka dalam kisah kelahiran, dengan format tetap aktif saat bahasa diganti.
+- Mengganti tahun pada bab pernikahan di Our Story dengan tanggal lengkap 9 Januari 2027, termasuk format tanggal bahasa Inggris.
+- Menambahkan kutipan Matius 19:6 di bawah pengantar Guestbook, sebelum form ucapan.
+- Menambahkan terjemahan bahasa Inggris untuk kutipan dan referensi ayat yang ikut berganti sesuai pilihan EN/ID.
+
 ## 2026-11-13
 - Menambahkan dua informasi rekening BNI dan BCA serta alamat pengiriman hadiah pada bagian Wedding Gift; label tersedia dalam EN/ID.
 - Menjadikan kartu rekening dapat ditekan untuk membuka dialog QRIS dummy dengan tombol tutup dan dukungan keyboard.
