@@ -89,7 +89,6 @@
     .story-heading { margin-bottom: 3.2rem; text-align: center; }
     .story-script { margin: 0; color: var(--sage-deep); font: italic 400 clamp(3.4rem, 9vw, 6rem)/.9 var(--serif); }
     .story-letter-art { display: block; width: min(17rem, 58vw); height: auto; margin: 1rem auto 2.1rem; }
-    .story-intro { max-width: 430px; margin: 0 auto; color: var(--muted); font-size: clamp(.86rem, 1.2vw, 1rem); line-height: 1.65; }
     .story-journey { width: min(620px, 100%); margin: 0 auto; }
     .story-chapter { margin: 0 auto; padding-bottom: 4rem; }
     .story-chapter:last-child { padding-bottom: 0; }
@@ -133,6 +132,7 @@
     .details-row p { margin: 0; color: var(--muted); font: 400 .94rem/1.5 var(--sans); }
     .details-row strong { display: block; margin-bottom: .28rem; color: var(--sage-deep); font: italic 500 1.2rem/1.2 var(--serif); }
     .details-row .details-dress-lead { margin: 0 0 .35rem; color: var(--sage-deep); font: italic 500 1.2rem/1.2 var(--serif); }
+    .details-row .details-dress-copy + .details-dress-copy { margin-top: .55rem; }
     .details-link { display: inline-block; margin: .05rem 0 .35rem; color: var(--sage-deep); font: italic 500 1.18rem/1.2 var(--serif); text-decoration: none; }
     .details-link:hover, .details-link:focus-visible { text-decoration: underline; text-underline-offset: .16em; }
     .details-travel-art { display: flex; align-items: flex-end; justify-content: center; gap: clamp(.8rem, 4vw, 1.5rem); width: min(320px, 100%); margin: .9rem auto .1rem; }
@@ -163,7 +163,7 @@
     .countdown-doodle-separator { flex: 0 0 auto; color: #292b26; font: 500 clamp(.68rem, 1.6vw, 1.15rem)/1 var(--serif); transform: rotate(-8deg); }
     @media (min-width: 1024px) {
       .countdown { padding: clamp(2rem, 3vw, 2.5rem) 0; }
-      .countdown-panel { width: min(100%, 820px); padding: clamp(1.8rem, 3vw, 2.5rem) 0 clamp(2rem, 3vw, 2.75rem); }
+      .countdown-panel { width: min(100%, 644px); padding: clamp(1.8rem, 3vw, 2.5rem) 0 clamp(2rem, 3vw, 2.75rem); }
       .countdown-calendar { width: clamp(11rem, 16vw, 14rem); margin-bottom: clamp(1.25rem, 2vw, 1.75rem); }
       .countdown .eyebrow { font-size: clamp(.9rem, 1vw, 1rem); }
       .countdown .section-title { font-size: clamp(2.6rem, 4.5vw, 3.8rem); }
@@ -614,7 +614,6 @@
           <p class="eyebrow" data-en="The journey of Andi &amp; Widya" data-id="Perjalanan Andi &amp; Widya">Perjalanan Andi &amp; Widya</p>
           <h2 class="story-script" data-en="Our Story" data-id="Kisah Kami">Our Story</h2>
           <img class="story-letter-art" src="/_assets/surat_our_story.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
-          <p class="story-intro" data-en="Every story has a beginning, grows with time, and brings two hearts to their special day." data-id="Setiap kisah punya awal, tumbuh melalui waktu, dan membawa dua hati menuju hari istimewa.">Setiap kisah punya awal, tumbuh melalui waktu, dan membawa dua hati menuju hari istimewa.</p>
         </header>
 
         <div class="story-journey" role="group" aria-label="The story of Andi and Widya" data-en-aria="The story of Andi and Widya" data-id-aria="Kisah Andi dan Widya">
@@ -626,14 +625,14 @@
           </article>
           <article class="story-chapter story-chapter-birth reveal" style="--delay:80ms">
             <div class="story-copy">
-              <h3 class="story-chapter-title"><time datetime="1997-09-15" data-en="September 15, 1997" data-id="15 September 1997">15 September 1997</time><span aria-hidden="true">-</span><span data-en="Andi’s birth" data-id="Kelahiran Andi">Andi’s birth</span></h3>
-              <p class="story-chapter-copy" data-en-html="Fifteen days later, <strong>Bapak Hari Siswandi</strong> and <strong>Ibu Supriyanti</strong> welcomed their son, <strong>Andi Susilo</strong>." data-id-html="Lima belas hari setelah Christine lahir, <strong>Bapak Hari Siswandi</strong> dan <strong>Ibu Supriyanti</strong> menyambut putra mereka, <strong>Andi Susilo</strong>.">Fifteen days later, <strong>Bapak Hari Siswandi</strong> and <strong>Ibu Supriyanti</strong> welcomed their son, <strong>Andi Susilo</strong>.</p>
+              <h3 class="story-chapter-title"><time datetime="1997-09-19" data-en="September 19, 1997" data-id="19 September 1997">19 September 1997</time><span aria-hidden="true">-</span><span data-en="Andi’s birth" data-id="Kelahiran Andi">Andi’s birth</span></h3>
+              <p class="story-chapter-copy" data-en-html="Nineteen days later, <strong>Bapak Hari Siswandi</strong> and <strong>Ibu Supriyanti</strong> welcomed their son, <strong>Andi Susilo</strong>." data-id-html="Sembilan belas hari setelah Christine lahir, <strong>Bapak Hari Siswandi</strong> dan <strong>Ibu Supriyanti</strong> menyambut putra mereka, <strong>Andi Susilo</strong>.">Nineteen days later, <strong>Bapak Hari Siswandi</strong> and <strong>Ibu Supriyanti</strong> welcomed their son, <strong>Andi Susilo</strong>.</p>
             </div>
           </article>
           <article class="story-chapter story-chapter-childhood reveal" style="--delay:160ms">
             <div class="story-copy">
               <h3 class="story-chapter-title"><span>2002</span><span aria-hidden="true">-</span><span data-en="Our first meeting" data-id="Pertemuan pertama">Our first meeting</span></h3>
-              <p class="story-chapter-copy" data-en="We used to play together because our homes were nearby. We also went to the same kindergarten." data-id="Kami dulu sering bermain bersama karena rumah kami berdekatan. Kami juga bersekolah di taman kanak-kanak yang sama.">We used to play together because our homes were nearby. We also went to the same kindergarten.</p>
+              <p class="story-chapter-copy" data-en="Our story began in the simplest way. Growing up in the same neighborhood, we shared playgrounds, childhood memories, and the same kindergarten. We were just two little kids whose paths crossed every day, never knowing that those ordinary moments would become the beginning of something meaningful." data-id="Kisah kami bermula dari hal yang begitu sederhana. Tumbuh di lingkungan yang sama, kami berbagi tempat bermain, kenangan masa kecil, dan bahkan bangku taman kanak-kanak yang sama. Saat itu, kami hanyalah dua anak kecil yang kerap menghabiskan waktu bersama, tanpa pernah menyadari bahwa momen-momen sederhana itu kelak menjadi awal dari sebuah kisah yang begitu berarti.">Our story began in the simplest way. Growing up in the same neighborhood, we shared playgrounds, childhood memories, and the same kindergarten. We were just two little kids whose paths crossed every day, never knowing that those ordinary moments would become the beginning of something meaningful.</p>
             </div>
             <img class="story-photo" src="/_assets/masa_kecil.png" alt="" role="img" aria-label="Childhood photos of Andi and Widya" data-en-aria="Childhood photos of Andi and Widya" data-id-aria="Foto masa kecil Andi dan Widya" loading="lazy" decoding="async">
             <div class="story-childhood-doodles" aria-hidden="true">
@@ -648,7 +647,7 @@
           <article class="story-chapter story-chapter-together reveal" style="--delay:240ms">
             <div class="story-copy">
               <h3 class="story-chapter-title"><span>2017</span><span aria-hidden="true">-</span><span data-en="Growing together" data-id="Tumbuh bersama">Growing together</span></h3>
-              <p class="story-chapter-copy" data-en="In 2015, life took us on separate paths. Andi moved to Jayapura for work, while Widya remained in Yogyakarta to pursue her studies. Despite the distance, fate brought us together once again in 2017." data-id="Pada 2015, jalan hidup membawa kami ke arah berbeda. Andi pindah ke Jayapura untuk bekerja, sementara Widya tetap di Yogyakarta untuk melanjutkan studi. Meski terpisah jarak, takdir mempertemukan kami kembali pada 2017.">In 2015, life took us on separate paths. Andi moved to Jayapura for work, while Widya remained in Yogyakarta to pursue her studies. Despite the distance, fate brought us together once again in 2017.</p>
+              <p class="story-chapter-copy" data-en="As time went by, life took us in different directions. In 2015, Andi moved to Jayapura for work, while Widya continued her studies in Yogyakarta. Though miles apart, our stories were not over. Two years later, in 2017, life brought us back into each other's lives." data-id="Seiring berjalannya waktu, kehidupan membawa kami ke arah yang berbeda. Pada tahun 2015, Andi pindah ke Jayapura untuk bekerja, sementara Widya melanjutkan pendidikannya di Yogyakarta. Meski terbentang jarak di antara kami, kisah kami ternyata belum usai. Dua tahun kemudian, pada 2017, kehidupan kembali mempertemukan kami dalam satu cerita.">As time went by, life took us in different directions. In 2015, Andi moved to Jayapura for work, while Widya continued her studies in Yogyakarta. Though miles apart, our stories were not over. Two years later, in 2017, life brought us back into each other's lives.</p>
             </div>
             <div class="story-icon-strip" aria-hidden="true">
               <img src="/_assets/tabung_our_story.png" alt="" loading="lazy" decoding="async">
@@ -713,8 +712,9 @@
               </span>
               <div>
                 <h3 data-en="Dress code" data-id="Tema pakaian">Dress code</h3>
-                <p class="details-dress-lead" data-en="Soft, nature-inspired tones" data-id="Warna lembut bernuansa alam">Soft, nature-inspired tones</p>
-                <p data-en="Formal attire. Take inspiration from sage, taupe, sand, and cream." data-id="Busana formal. Palet sage, taupe, sand, dan cream menjadi inspirasi.">Formal attire. Take inspiration from sage, taupe, sand, and cream.</p>
+                <p class="details-dress-lead" data-en="Formal attire, with comfort in mind. All colours are welcome!" data-id="Busana formal dengan mengutamakan kenyamanan. Semua warna dipersilakan!">Formal attire, with comfort in mind. All colours are welcome!</p>
+                <p class="details-dress-copy" data-en="For those who wish to complement our wedding palette, we suggest shades of emerald green and red-burgundy." data-id="Bagi yang ingin menyelaraskan busana dengan palet pernikahan kami, kami menyarankan nuansa hijau zamrud dan merah burgundi.">For those who wish to complement our wedding palette, we suggest shades of emerald green and red-burgundy.</p>
+                <p class="details-dress-copy" data-en="As this is an outdoor celebration, we kindly recommend avoiding stilettos. Comfortable footwear is encouraged!" data-id="Karena perayaan berlangsung di luar ruangan, kami menyarankan untuk menghindari sepatu hak stiletto. Alas kaki yang nyaman lebih disarankan!">As this is an outdoor celebration, we kindly recommend avoiding stilettos. Comfortable footwear is encouraged!</p>
                 <div class="details-dress-art" aria-hidden="true">
                   <img class="details-fish" src="/_assets/ikan_lompat_details.png" alt="" loading="lazy" decoding="async">
                   <img class="details-couple" src="/_assets/itu_apa_details.png" alt="" loading="lazy" decoding="async">
